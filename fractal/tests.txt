@@ -1,0 +1,17 @@
+// For Julia
+
+./fractol julia
+./fractol julia 0.89
+./fractol julia "   1.25" "-0.09"
+./fractol julia "   1.25abc" "-0.a09"
+./fractol julia "--0.25" "-0.a09"
+./fractol julia "+0.25" "-0.a09"
+./fractol julia " "
+./fractol julia " " " "
+
+
+// For mandelbrot
+
+./fractol "mandelbrot"
+./fractol "mandelbrot123"
+./fractol "  mandelbrot   "
