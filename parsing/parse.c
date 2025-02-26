@@ -25,26 +25,36 @@ int main(int ac, char **av)
             printf("%s",file_check);
             while(++i < ft_strlen(file_check))
             {   
-                if((file_check[i] == 'N' && file_check[i + 1] == 'O') || 
+                if(file_check[i] == ' ')
+                    continue;
+                else if((file_check[i] == 'N' && file_check[i + 1] == 'O') || 
                 (file_check[i] == 'S' && file_check[i + 1] == 'O') || 
                 (file_check[i] == 'W' && file_check[i + 1] == 'E') ||
                 (file_check[i] == 'E' && file_check[i + 1] == 'A'))
                 {   
                     i += 1;
                     while(file_check[++i] == ' ' && file_check[i] != '\0');
-                    if(i == ft_strlen(file_check) - 1)
-                        printf("not valid\n");
-                    else
-                    {
-                        printf("enter else\n");
+                    if(i != ft_strlen(file_check) - 1)
                         valid++;
-                        file_check = get_next_line(file);
-                    }
                 }
-                else if(file_check[i] == 'F')
+                else if(file_check[i] == 'F' || file_check[i] == 'C')
+                {
+                    i += 1;
+                    while(file_check[++i])
+                    {
+                        if(file_check[i] == ' ')
+                            continue;
+                        if(file_check[i] >= '0' && file_check[i] <= '9')
+                        {
+                            while(file_check[i] >= '0' && file_check[i] <= '9')
+                                i++;
+                            
+                        }
+                    }
                     valid++;
-                else if(file_check[i] == 'C')
-                    valid++;
+                }
+                else
+                    break;
             }
             file_check = get_next_line(file);
         }
@@ -54,6 +64,6 @@ int main(int ac, char **av)
     {
         error_msg("Invalid Args");
     }
-    return 1;
+    return 0;
 
 }
