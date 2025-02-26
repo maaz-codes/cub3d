@@ -1,12 +1,18 @@
 #ifndef CUB3D_H
 # define CUB3D_H
 
+# define BUFFER_SIZE 10
+
 # include "mlx/mlx.h"
 # include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
 # include <math.h>
 # include <sys/time.h>
+# include <fcntl.h>
+# include <limits.h>
+# include <string.h>
+# include <unistd.h>
 
 // MLX
 #define screenWidth 1640
@@ -63,8 +69,28 @@ typedef struct  s_cub
 	double 			rot_speed;
 }               t_cub;
 
+typedef struct s_list
+{
+	char			*content;
+	struct s_list	*next;
+}					t_list;
+
+//libft 
+int					ft_strncmp(const char *s1, const char *s2, size_t n);
+int					ft_strlen(const char *s);
 // main.c
-int cub_rendering(t_cub *cub);
-int	handle_key_release(int keycode, t_cub *cub);
+int 				cub_rendering(t_cub *cub);
+int					handle_key_release(int keycode, t_cub *cub);
+
+// get_next_line.c
+char				*get_next_line(int fd);
+t_list				*ft_lstlast(t_list *lst);
+void				ft_append(t_list **list, char *buf);
+int					lentillnewline(t_list *list);
+int					found_newline(t_list *list);
+void				copy_str(t_list *list, char *str);
+void				clean_node(t_list **list, int len, int i);
+char				*get_theline(t_list *list);
+void				ft_lstclear(t_list **lst);
 
 #endif
