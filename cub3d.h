@@ -69,11 +69,17 @@ typedef struct  s_cub
 	double 			rot_speed;
 }               t_cub;
 
+// get next line
 typedef struct s_list
 {
 	char			*content;
 	struct s_list	*next;
 }					t_list;
+
+typedef struct parsing
+{
+	int				**check_valid;
+}	t_parsing;
 
 //libft 
 int					ft_strncmp(const char *s1, const char *s2, size_t n);
