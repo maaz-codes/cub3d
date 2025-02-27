@@ -11,6 +11,7 @@ int main(int ac, char **av)
     char *file_check;
     int i;
     int valid;
+    int rgb_check;
 
     if(ac == 2)
     {   
@@ -40,18 +41,46 @@ int main(int ac, char **av)
                 else if(file_check[i] == 'F' || file_check[i] == 'C')
                 {
                     i += 1;
+                    rgb_check = 0;
                     while(file_check[++i])
-                    {
-                        if(file_check[i] == ' ')
+                    {   
+                        if(rgb_check == 2)
+                        {   
+                            while(file_check[++i] == ' ' && file_check[i])
+                            if(!file_check[i])
+                                break;
+                            while(file_check[++i])
+                            {
+                                if(file_check[i] >= '0' && file_check[i] <= '9')
+                                    continue;
+                                else
+                                    break;
+                            }
+                            while(file_check[i] == ' ' && file_check[i])
+                                i++;
+                            if(file_check[i] == '\n')
+                                rgb_check++;
+                            else
+                                break;
+                        }
+                        else if(file_check[i] == ' ')
                             continue;
-                        if(file_check[i] >= '0' && file_check[i] <= '9')
-                        {
+                        else if(file_check[i] >= '0' && file_check[i] <= '9')
+                        {   
                             while(file_check[i] >= '0' && file_check[i] <= '9')
                                 i++;
-                            
+                            while(file_check[i] == ' ' && file_check[i])
+                                i++;
+                            if(file_check[i] == ',')
+                                rgb_check++;
+                            else
+                                break;
                         }
+                        else
+                            break;
                     }
-                    valid++;
+                    if(rgb_check == 3)
+                        valid++;
                 }
                 else
                     break;
@@ -59,11 +88,9 @@ int main(int ac, char **av)
             file_check = get_next_line(file);
         }
         printf("\ncontent: %d\n",valid);
+        printf("valid rgb: %d\n",rgb_check);
     }
     else
-    {
         error_msg("Invalid Args");
-    }
     return 0;
-
 }
