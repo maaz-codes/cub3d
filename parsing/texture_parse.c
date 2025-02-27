@@ -1,0 +1,64 @@
+#include "../cub3d.h"
+
+int check_which_texture(char *file_check, int i)
+{
+    if((file_check[i] == 'N' && file_check[i + 1] == 'O') || 
+        (file_check[i] == 'S' && file_check[i + 1] == 'O') || 
+        (file_check[i] == 'W' && file_check[i + 1] == 'E') ||
+        (file_check[i] == 'E' && file_check[i + 1] == 'A'))
+        return 1;
+    else if((file_check[i] == 'F') || (file_check[i] == 'C'))
+        return 2;
+    else
+        return 0;
+}
+
+int check_if_fc(char *file_check, int i)
+{
+    if(file_check[i] == 'F' || file_check[i] == 'C')
+    {
+        if(file_check[i + 1] != ' ')
+            return (0);
+    }
+    else
+        if(file_check[i + 2] != ' ')
+            return (0);
+    return(1);
+}
+
+int check_texture(t_parsing *parse, int file, int *valid)
+{
+    int i;
+    int which_texture;
+    char *file_check;
+
+    file_check = get_next_line(file);
+    while(file_check)
+    {
+        i = -1;
+        while(++i < ft_strlen(file_check))
+        {
+            while(file_check[i] == ' ')
+                i++;
+            if(file_check[i] == '\n')
+                break;
+            if(check_which_texture(file_check, i))
+            {   
+                which_texture = check_which_texture(file_check, i);
+                if(!check_if_fc(file_check, i))
+                    return (0);
+                check_valid_values(file_check, i, parse, "texture");
+                while(file_check[++i] == ' ' && file_check[i] != '\0');
+                if(i != ft_strlen(file_check) - 1 && which_texture == 1)
+                    (*valid) += 1;
+                while(file_check[i])
+                    i++;
+            }
+            else
+                return (0);
+        }
+        file_check = get_next_line(file);
+    }
+    close(file);
+    return (1);
+}

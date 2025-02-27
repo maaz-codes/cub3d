@@ -99,4 +99,10 @@ void				clean_node(t_list **list, int len, int i);
 char				*get_theline(t_list *list);
 void				ft_lstclear(t_list **lst);
 
+//parsing
+int 				check_texture(t_parsing *parse, int file, int *valid);
+int 				check_which_texture(char *file_check, int i);
+void 				check_valid_values(char *file_check, int i, t_parsing *parse, char *mode);
+int 				check_rgb(t_parsing *parse, int file, int *valid);
+
 #endif

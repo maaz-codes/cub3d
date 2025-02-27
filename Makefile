@@ -6,6 +6,8 @@ NAME = cub3d
 # cub3d.c \
 
 SRC =   parsing/parse.c \
+		parsing/texture_parse.c \
+		parsing/rgb_parse.c \
 		get_next_line/get_next_line.c \
 		get_next_line/get_next_line_utils.c \
 			libft/ft_strncmp.c \
