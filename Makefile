@@ -30,8 +30,9 @@ all: $(NAME)
 
 $(NAME): $(OBJ)
 	@echo "compiling..."
-	@$(MAKE) all -C mlx
-	@$(CC) $(CFLAGS) $(MLX_FLAGS) $(OBJ) -o $(NAME)
+	# @$(MAKE) all -C mlx
+	# $(MLX_FLAGS)
+	@$(CC) $(CFLAGS) $(OBJ) -o $(NAME)
 	@echo "Compilation finished: try: ./$(NAME)"
 
 %.o: %.c

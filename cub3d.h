@@ -13,6 +13,7 @@
 # include <limits.h>
 # include <string.h>
 # include <unistd.h>
+# include <stdint.h>
 
 // MLX
 #define screenWidth 1640
