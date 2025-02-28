@@ -45,23 +45,26 @@ int is_valid(t_parsing *parse)
         return 0;
 }
 
-int init_parsing(t_parsing **parse)
+
+int init_parse_struct(t_parsing **parse)
 {   
     int i;
     *parse = malloc(sizeof(t_parsing));
     if(!(*parse))
         return 0;
-    (*parse)->check_valid = malloc(6 * sizeof(int *));
+    (*parse)->check_valid = malloc(6 * sizeof(int **));
     if(!(*parse)->check_valid)
         return 0;
     i = -1;
     while(++i < 6)
     {
-        (*parse)->check_valid[i] = malloc(1 * sizeof(int));
+        (*parse)->check_valid[i] = malloc(1 * sizeof(int*));
         if(!(*parse)->check_valid[i])
-            return 0;
+            return (0);
         *(*parse)->check_valid[i] = 0;
     }
+    if(!init_textures_and_rgb(parse))
+        return (0);
     return 1;
 }
 
@@ -74,120 +77,64 @@ int file_open(char *av)
     return(file);
 }
 
-
-
-int main(int ac, char **av)
-{   
+int check_parse(t_parsing *parse, char *file)
+{
     int texture_count;
     int rgb_count;
-    t_parsing *parse;
 
     texture_count = 0;
     rgb_count = 0;
+
+    if(!check_texture(parse, file_open(file), &texture_count))
+    {
+        error_msg("Invalid texture\n");
+        return 0;
+    }
+    if(!check_rgb(parse, file_open(file), &rgb_count))
+    {
+        error_msg("Invalid rgb\n");
+        return 0;
+    }
+    printf("\ncontent: %d\n",texture_count);
+    printf("\ncontent: %d\n",rgb_count);
+    for(int check = 0; check < 6; check++)
+        printf("value: %d\n",parse->check_valid[check][0]);
+    if(is_valid(parse) && texture_count + rgb_count == 6)
+    {
+        printf("VALUES VALID\n");
+        return (1);
+    }
+    else
+    {
+        printf("VALUES ERROR\n");
+        return (0);
+    }
+}
+
+int main(int ac, char **av)
+{      
+    t_parsing *parse;
+
     if(ac == 2)
     {   
-        
-        if(!init_parsing(&parse))
+        if(!init_parse_struct(&parse))
             return 1;
-        if(!check_texture(parse, file_open(av[1]), &texture_count))
-        {
-            error_msg("Invalid Texture\n");
+        if(!check_parse(parse, av[1]))
             return 1;
-        }
-        if(!check_rgb(parse, file_open(av[1]), &rgb_count))
-        {
-            error_msg("Invalid RGB\n");
+        if((!save_texture(parse,file_open(av[1])) 
+            || !save_rgb(parse, file_open(av[1]))))
             return 1;
+        for(int f = 0; f < 4; f++)
+            printf("textures : %s\n",parse->textures[f]);
+        for(int f = 0; f < 2; f++)
+        {   
+            printf("rgb %d ",f);
+            for(int x = 0; x < 3; x++)
+            {
+                printf("%d ",parse->rgb[f][x]);
+            }
+            printf("\n");
         }
-
-        // file_check = get_next_line(file);
-        // while(file_check)
-        // {   
-        //     i = -1;
-        //     printf("%s",file_check);
-        //     while(++i < ft_strlen(file_check))
-        //     {   
-        //         if(file_check[i] == ' ')
-        //             continue;
-        //         else if((file_check[i] == 'N' && file_check[i + 1] == 'O') || 
-        //         (file_check[i] == 'S' && file_check[i + 1] == 'O') || 
-        //         (file_check[i] == 'W' && file_check[i + 1] == 'E') ||
-        //         (file_check[i] == 'E' && file_check[i + 1] == 'A'))
-        //         {   
-        //             if(file_check[i + 2] != ' ')
-        //                 break;
-        //             check_valid_values(file_check, i, parse);
-        //             while(file_check[++i] == ' ' && file_check[i] != '\0');
-        //             if(i != ft_strlen(file_check) - 1)
-        //                 valid++;
-        //         }
-        //         else if(file_check[i] == 'F' || file_check[i] == 'C')
-        //         {   
-        //             check_valid_values(file_check, i, parse);
-        //             i += 1;
-        //             rgb_check = 0;
-        //             while(file_check[++i])
-        //             {   
-        //                 if(rgb_check == 2)
-        //                 {   
-        //                     while(file_check[++i] == ' ' && file_check[i])
-        //                     if(!file_check[i])
-        //                         break;
-        //                     while(file_check[++i])
-        //                     {
-        //                         if(file_check[i] >= '0' && file_check[i] <= '9')
-        //                             continue;
-        //                         else
-        //                             break;
-        //                     }
-        //                     while(file_check[i] == ' ' && file_check[i])
-        //                         i++;
-        //                     if(file_check[i] == '\n')
-        //                         rgb_check++;
-        //                     else
-        //                         break;
-        //                 }
-        //                 else if(file_check[i] == ' ')
-        //                     continue;
-        //                 else if(file_check[i] >= '0' && file_check[i] <= '9')
-        //                 {   
-        //                     while(file_check[++i])
-        //                     {
-        //                         if(file_check[i] >= '0' && file_check[i] <= '9')
-        //                             continue;
-        //                         else
-        //                             break;
-        //                     }
-        //                     while(file_check[i] == ' ' && file_check[i])
-        //                         i++;
-        //                     if(file_check[i] == ',' && (file_check[i + 1] == ' ' 
-        //                     || (file_check[i] >= '0' && file_check[i] <= '9')))
-        //                         rgb_check++;
-        //                     else
-        //                         break;
-        //                 }
-        //                 else
-        //                     break;
-        //             }
-        //             if(rgb_check == 3)
-        //                 valid++;
-        //         }
-        //         else
-        //             break;
-        //     }
-        //     file_check = get_next_line(file);
-        // }
-        printf("\ncontent: %d\n",texture_count);
-        printf("\ncontent: %d\n",rgb_count);
-        // printf("valid rgb: %d\n",rgb_check);
-        for(int check = 0; check < 6; check++)
-        {
-            printf("value: %d\n",parse->check_valid[check][0]);
-        }
-        if(is_valid(parse) && texture_count + rgb_count == 6)
-            printf("VALUES VALID\n");
-        else
-            printf("VALUES ERROR\n");
     }
     else
         error_msg("Invalid Args");

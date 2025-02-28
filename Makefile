@@ -8,10 +8,17 @@ NAME = cub3d
 SRC =   parsing/parse.c \
 		parsing/texture_parse.c \
 		parsing/rgb_parse.c \
+		parsing/save_input.c \
 		get_next_line/get_next_line.c \
 		get_next_line/get_next_line_utils.c \
 			libft/ft_strncmp.c \
 			libft/ft_strlen.c \
+			libft/ft_strlcpy.c \
+			libft/ft_calloc.c \
+			libft/ft_strtrim.c \
+			libft/ft_bzero.c \
+			libft/ft_strchr.c \
+			libft/ft_atoi.c \
 
 OBJ = $(SRC:.c=.o)
 

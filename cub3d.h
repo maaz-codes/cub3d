@@ -79,11 +79,19 @@ typedef struct s_list
 typedef struct parsing
 {
 	int				**check_valid;
+	char			**textures;
+	int				**rgb;
 }	t_parsing;
 
 //libft 
 int					ft_strncmp(const char *s1, const char *s2, size_t n);
 int					ft_strlen(const char *s);
+void				*ft_calloc(size_t nmemb, size_t size);
+char				*ft_strtrim(char const *s1, char const *set);
+size_t				ft_strlcpy(char *dst, const char *src, size_t dstsize);
+void				ft_bzero(void *s, size_t n);
+char				*ft_strchr(const char *s, int c);
+int					ft_atoi(const char *nptr);
 // main.c
 int 				cub_rendering(t_cub *cub);
 int					handle_key_release(int keycode, t_cub *cub);
@@ -100,9 +108,13 @@ char				*get_theline(t_list *list);
 void				ft_lstclear(t_list **lst);
 
 //parsing
+int 				init_textures_and_rgb(t_parsing **parse);
+int 				file_open(char *av);
 int 				check_texture(t_parsing *parse, int file, int *valid);
 int 				check_which_texture(char *file_check, int i);
 void 				check_valid_values(char *file_check, int i, t_parsing *parse, char *mode);
 int 				check_rgb(t_parsing *parse, int file, int *valid);
+int 				save_texture(t_parsing *parse, int file);
+int 				save_rgb(t_parsing *parse, int file);
 
 #endif

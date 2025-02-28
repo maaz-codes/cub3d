@@ -42,8 +42,10 @@ int one_and_two_rgb(char *file_check, int *i, int *rgb_check)
     }
     while(file_check[(*i)] == ' ' && file_check[(*i)])
         (*i) += 1;
-    if(file_check[(*i)] == ',' && (file_check[(*i) + 1] == ' ' 
-    || (file_check[(*i)] >= '0' && file_check[(*i)] <= '9')))
+    if((file_check[(*i)] == ',' && (file_check[(*i) + 1] == ' '))
+        || file_check[(*i)] == ',' 
+        || ((file_check[(*i)] >= '0' && 
+        file_check[(*i)] <= '9') && file_check[*i - 1] != ' '))
     {   
         (*rgb_check) += 1;
         return (1);
