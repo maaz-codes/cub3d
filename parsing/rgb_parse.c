@@ -53,10 +53,37 @@ int one_and_two_rgb(char *file_check, int *i, int *rgb_check)
     else
         return (0);
 }
+
+int rgb_loop(char *file_check, int *i, int *rgb_check, int *valid)
+{   
+    while(file_check[*i])
+    {   
+        if((*rgb_check) == 2)
+        {
+            if(!last_rgb(file_check, &(*i), &(*rgb_check)))
+                break;
+        }
+        else if(file_check[(*i)] == ' ')
+            (*i) += 1;
+        else if(file_check[(*i)] >= '0' && file_check[(*i)] <= '9')
+        {   
+            if(!one_and_two_rgb(file_check, &(*i), &(*rgb_check)))
+                break;
+        }
+        else
+            break;
+        (*i) += 1;
+    }
+    if((*rgb_check) == 3)
+        (*valid) += 1;
+    else
+        return (0);
+    return(1);
+}
+
 int check_rgb(t_parsing *parse, int file, int *valid)
 {
     int i;
-    (void)valid;
     char *file_check;
     int rgb_check;
 
@@ -70,26 +97,8 @@ int check_rgb(t_parsing *parse, int file, int *valid)
             if(file_check[i] == 'F' || file_check[i] == 'C')
             {   
                 check_valid_values(file_check, i, parse, "rgb");
-                while(file_check[++i])
-                {   
-                    if(rgb_check == 2)
-                    {
-                        if(!last_rgb(file_check, &i, &rgb_check))
-                            break;
-                    }
-                    else if(file_check[i] == ' ')
-                        continue;
-                    else if(file_check[i] >= '0' && file_check[i] <= '9')
-                    {   
-                        if(!one_and_two_rgb(file_check, &i, &rgb_check))
-                            break;
-                    }
-                    else
-                        break;
-                }
-                if(rgb_check == 3)
-                    (*valid) += 1;
-                else
+                i += 1;
+                if(!rgb_loop(file_check, &i, &rgb_check, &(*valid)))
                     return (0);
             }
         }
