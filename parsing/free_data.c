@@ -5,7 +5,7 @@ void free_double(char **str, int size)
     int i;
 
     i = -1;
-    while(++i < size)
+    while(++i < size && str[i] != NULL)
         free(str[i]);
     free(str);
 }

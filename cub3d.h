@@ -1,7 +1,7 @@
 #ifndef CUB3D_H
 # define CUB3D_H
 
-# define BUFFER_SIZE 10
+# define BUFFER_SIZE 100
 
 # include "mlx/mlx.h"
 # include <stdio.h>

@@ -14,6 +14,14 @@ int check_which_texture(char *file_check, int i)
         return 5;
     else if(file_check[i] == 'C')
         return 6;
+    else if((file_check[i] == '1' && file_check[i + 1] == '0') || 
+        (file_check[i] == '1' && file_check[i + 1] == '1') || 
+        (file_check[i] == '1' && file_check[i + 1] == 'N') ||
+        (file_check[i] == '1' && file_check[i + 1] == 'S') ||
+        (file_check[i] == '1' && file_check[i + 1] == 'E') ||
+        (file_check[i] == '1' && file_check[i + 1] == 'W') ||
+        (file_check[i] == '1' && file_check[i + 1] == ' '))
+        return 7;
     else
         return 0;
 }
@@ -43,7 +51,10 @@ int texture_loop(char *file_check, int *i, t_parsing *parse, int *valid)
     if((*i) != ft_strlen(file_check) - 1 && which_texture < 5)
         (*valid) += 1;
     while(file_check[(*i)])
+    {
+        printf("%c",file_check[(*i)]);
         (*i) += 1;
+    }
     return (1);
 }
 
