@@ -93,6 +93,7 @@ size_t				ft_strlcpy(char *dst, const char *src, size_t dstsize);
 void				ft_bzero(void *s, size_t n);
 char				*ft_strchr(const char *s, int c);
 int					ft_atoi(const char *nptr);
+char				**ft_split(char const *s, char c);
 // main.c
 int 				cub_rendering(t_cub *cub);
 int					handle_key_release(int keycode, t_cub *cub);

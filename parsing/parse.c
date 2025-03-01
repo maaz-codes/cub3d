@@ -120,10 +120,20 @@ int main(int ac, char **av)
         if(!init_parse_struct(&parse))
             return 1;
         if(!check_parse(parse, av[1]))
+        {
+            printf("Invalid\n");
             return 1;
-        if((!save_texture(parse,file_open(av[1])) 
-            || !save_rgb(parse, file_open(av[1]))))
+        }
+        if(!save_texture(parse,file_open(av[1])))
+        {
+            printf("Invalid texture\n");
             return 1;
+        }
+        if(!save_rgb(parse, file_open(av[1])))
+        {
+            printf("Invalid number\n");
+            return 1;
+        }
         for(int f = 0; f < 4; f++)
             printf("textures : %s\n",parse->textures[f]);
         for(int f = 0; f < 2; f++)
