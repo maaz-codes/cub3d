@@ -1,15 +1,5 @@
 #include "../cub3d.h"
 
-void free_double_char(char **str, int size)
-{
-    int i;
-
-    i = -1;
-    while(++i < size)
-        free(str[i]);
-    free(str);
-}
-
 int set_values_rgb(char *file_check, t_parsing *parse, char *pos,int rgb_pos)
 {   
     char **remove_comma;
@@ -28,13 +18,14 @@ int set_values_rgb(char *file_check, t_parsing *parse, char *pos,int rgb_pos)
         rgb_num = ft_atoi(remove_space);
         if(rgb_num > 255 || ft_strlen(remove_space) > 4)
         {
-            free_double_char(remove_comma, 3);
+            free_double(remove_comma, 3);
             free(remove_space);
             return (0);
         }
         parse->rgb[rgb_pos][i] = rgb_num;
         free(remove_space);
     }
+    free_double(remove_comma, 3);
     return (1);
 }
 
@@ -59,6 +50,7 @@ int save_rgb(t_parsing *parse, int file)
                 if(!set_values_rgb(file_check, parse,"C",1))
                     return (0);
         }
+        free(file_check);
         file_check = get_next_line(file);
     }
     close(file);

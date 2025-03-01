@@ -93,6 +93,7 @@ int check_rgb(t_parsing *parse, int file, int *valid)
                     return (0);
             }
         }
+        free(file_check);
         file_check = get_next_line(file);
     }
     close(file);

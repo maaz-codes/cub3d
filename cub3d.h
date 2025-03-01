@@ -109,6 +109,10 @@ void				clean_node(t_list **list, int len, int i);
 char				*get_theline(t_list *list);
 void				ft_lstclear(t_list **lst);
 
+//freeing
+void 				free_double(char **str, int size);
+void 				free_int(int **num, int size);
+void 				free_data(t_parsing *parse);
 //parsing
 int 				init_textures_and_rgb(t_parsing **parse);
 int 				file_open(char *av);

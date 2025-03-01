@@ -61,6 +61,7 @@ int check_texture(t_parsing *parse, int file, int *valid)
             else
                 return (0);
         }
+        free(file_check);
         file_check = get_next_line(file);
     }
     close(file);

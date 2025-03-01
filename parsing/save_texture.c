@@ -63,6 +63,7 @@ int save_texture(t_parsing *parse, int file)
                     return (0);
             }
         }
+        free(file_check);
         file_check = get_next_line(file);
     }
     close(file);

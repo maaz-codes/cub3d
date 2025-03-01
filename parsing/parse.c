@@ -111,6 +111,20 @@ int check_parse(t_parsing *parse, char *file)
     }
 }
 
+void print_info(t_parsing *parse)
+{   
+    for(int f = 0; f < 4; f++)
+        printf("textures : %s\n",parse->textures[f]);
+    for(int f = 0; f < 2; f++)
+    {   
+        printf("rgb %d ",f);
+        for(int x = 0; x < 3; x++)
+        {
+            printf("%d ",parse->rgb[f][x]);
+        }
+        printf("\n");
+    }
+}
 int main(int ac, char **av)
 {      
     t_parsing *parse;
@@ -134,17 +148,8 @@ int main(int ac, char **av)
             printf("Invalid number\n");
             return 1;
         }
-        for(int f = 0; f < 4; f++)
-            printf("textures : %s\n",parse->textures[f]);
-        for(int f = 0; f < 2; f++)
-        {   
-            printf("rgb %d ",f);
-            for(int x = 0; x < 3; x++)
-            {
-                printf("%d ",parse->rgb[f][x]);
-            }
-            printf("\n");
-        }
+        print_info(parse);
+        free_data(parse);
     }
     else
         error_msg("Invalid Args");
