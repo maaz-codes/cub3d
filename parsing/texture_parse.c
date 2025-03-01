@@ -30,33 +30,41 @@ int check_if_fc(char *file_check, int i)
             return (0);
     return(1);
 }
+int texture_loop(char *file_check, int *i, t_parsing *parse, int *valid)
+{
+    int which_texture;
+
+    which_texture = check_which_texture(file_check, (*i));
+    if(!check_if_fc(file_check, (*i)))
+        return (0);
+    check_valid_values(file_check, (*i), parse, "texture");
+    while(file_check[(*i)] == ' ' && file_check[(*i)] != '\0')
+        (*i) += 1;
+    if((*i) != ft_strlen(file_check) - 1 && which_texture < 5)
+        (*valid) += 1;
+    while(file_check[(*i)])
+        (*i) += 1;
+    return (1);
+}
 
 int check_texture(t_parsing *parse, int file, int *valid)
 {
     int i;
-    int which_texture;
     char *file_check;
 
     file_check = get_next_line(file);
     while(file_check)
     {
         i = -1;
-        while(++i < ft_strlen(file_check))
+        while(i < ft_strlen(file_check))
         {
-            while(file_check[i] == ' ')
-                i++;
+            while(file_check[++i] == ' ');
             if(file_check[i] == '\n')
                 break;
             if(check_which_texture(file_check, i))
-            {   
-                which_texture = check_which_texture(file_check, i);
-                if(!check_if_fc(file_check, i))
+            {
+                if(!texture_loop(file_check, &i, parse, &(*valid)))
                     return (0);
-                check_valid_values(file_check, i, parse, "texture");
-                while(file_check[++i] == ' ' && file_check[i] != '\0');
-                if(i != ft_strlen(file_check) - 1 && which_texture < 5)
-                    (*valid) += 1;
-                while(file_check[++i]);
             }
             else
                 return (0);

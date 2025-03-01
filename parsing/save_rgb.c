@@ -18,8 +18,7 @@ int set_values_rgb(char *file_check, t_parsing *parse, char *pos,int rgb_pos)
         rgb_num = ft_atoi(remove_space);
         if(rgb_num > 255 || ft_strlen(remove_space) > 4)
         {
-            free_double(remove_comma, 3);
-            free(remove_space);
+            (free_double(remove_comma, 3),free(remove_space));
             return (0);
         }
         parse->rgb[rgb_pos][i] = rgb_num;
