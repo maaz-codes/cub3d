@@ -98,16 +98,16 @@ int check_parse(t_parsing *parse, char *file)
         printf("\nerror map\n");
         return (0);
     }
-    // if(!check_texture(parse, file_open(file), &texture_count))
-    // {   
-    //     (free_data(parse), error_msg("Invalid texture\n"));
-    //     return 0;
-    // }
-    // if(!check_rgb(parse, file_open(file), &rgb_count))
-    // {
-    //     (free_data(parse), error_msg("Invalid rgb\n"));
-    //     return 0;
-    // }
+    if(!check_txt(parse, &texture_count))
+    {
+        printf("error textures\n");
+        return (0);
+    }
+    if(!rgb_check(parse, &rgb_count))
+    {
+        error_msg("Invalid rgb\n");
+        return 0;
+    }
     printf("\ncontent: %d\n",texture_count);
     printf("\ncontent: %d\n",rgb_count);
     for(int check = 0; check < 6; check++)
@@ -151,17 +151,17 @@ int main(int ac, char **av)
             printf("Invalid\n");
             return 1;
         }
-        // if(!save_texture(parse,file_open(av[1])))
-        // {
-        //     printf("Invalid texture\n");
-        //     return 1;
-        // }
-        // if(!save_rgb(parse, file_open(av[1])))
-        // {
-        //     printf("Invalid number\n");
-        //     return 1;
-        // }
-        // print_info(parse);
+        if(!save_texture(parse,file_open(av[1])))
+        {
+            printf("Invalid texture\n");
+            return 1;
+        }
+        if(!save_rgb(parse, file_open(av[1])))
+        {
+            printf("Invalid number\n");
+            return 1;
+        }
+        print_info(parse);
         free_data(parse);
     }
     else

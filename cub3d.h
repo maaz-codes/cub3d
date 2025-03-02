@@ -116,7 +116,7 @@ char				*get_theline(t_list *list);
 void				ft_lstclear(t_list **lst);
 
 //freeing
-void 				free_double(char **str);
+void 				free_double(char **str, int size);
 void 				free_int(int **num, int size);
 void 				free_data(t_parsing *parse);
 
@@ -133,5 +133,8 @@ void 				check_valid_values(char *file_check, int i, t_parsing *parse, char *mod
 int 				check_rgb(t_parsing *parse, int file, int *valid);
 int 				save_texture(t_parsing *parse, int file);
 int 				save_rgb(t_parsing *parse, int file);
+
+int 				check_txt(t_parsing *parse, int *valid);
+int 				rgb_check(t_parsing *parse, int *valid);
 
 #endif
