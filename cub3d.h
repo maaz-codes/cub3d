@@ -1,7 +1,7 @@
 #ifndef CUB3D_H
 # define CUB3D_H
 
-# define BUFFER_SIZE 100
+# define BUFFER_SIZE 1000
 
 # include "mlx/mlx.h"
 # include <stdio.h>
@@ -78,7 +78,10 @@ typedef struct s_list
 }					t_list;
 
 typedef struct parsing
-{
+{	
+	int				row;
+	char			**file_data;
+	char			**map;
 	int				**check_valid;
 	char			**textures;
 	int				**rgb;
@@ -94,6 +97,8 @@ void				ft_bzero(void *s, size_t n);
 char				*ft_strchr(const char *s, int c);
 int					ft_atoi(const char *nptr);
 char				**ft_split(char const *s, char c);
+char				*ft_strdup(const char *s1);
+
 // main.c
 int 				cub_rendering(t_cub *cub);
 int					handle_key_release(int keycode, t_cub *cub);
@@ -110,10 +115,14 @@ char				*get_theline(t_list *list);
 void				ft_lstclear(t_list **lst);
 
 //freeing
-void 				free_double(char **str, int size);
+void 				free_double(char **str);
 void 				free_int(int **num, int size);
 void 				free_data(t_parsing *parse);
+
 //parsing
+void 				get_rows(t_parsing *parse, int file);
+int 				get_file_data(t_parsing *parse, int file);
+int 				get_map(t_parsing *parse);
 int 				init_textures_and_rgb(t_parsing **parse);
 int 				file_open(char *av);
 int 				check_texture(t_parsing *parse, int file, int *valid);

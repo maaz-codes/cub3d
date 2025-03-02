@@ -11,6 +11,8 @@ SRC =   parsing/parse.c \
 		parsing/save_texture.c \
 		parsing/save_rgb.c \
 		parsing/free_data.c \
+		parsing/get_map.c \
+		parsing/get_file_data.c \
 		get_next_line/get_next_line.c \
 		get_next_line/get_next_line_utils.c \
 			libft/ft_strncmp.c \
@@ -22,10 +24,11 @@ SRC =   parsing/parse.c \
 			libft/ft_strchr.c \
 			libft/ft_atoi.c \
 			libft/ft_split.c \
+			libft/ft_strdup.c \
 
 OBJ = $(SRC:.c=.o)
 
-CC = cc -g3
+CC = cc 
 CFLAGS = -Wall -Wextra -Werror
 MLX_FLAGS = -Lmlx -lmlx -framework OpenGL -framework AppKit
 

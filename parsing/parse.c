@@ -85,6 +85,15 @@ int check_parse(t_parsing *parse, char *file)
     texture_count = 0;
     rgb_count = 0;
 
+    get_rows(parse, file_open(file));
+    parse->file_data = malloc(parse->row + 1);
+    if(!parse->file_data)
+        return(0);
+    get_file_data(parse, file_open(file));
+    for(int f = 0;f < 33;f++)
+        printf("%s",parse->file_data[f]);
+    if(!get_map(parse))
+        return (0);
     if(!check_texture(parse, file_open(file), &texture_count))
     {
         error_msg("Invalid texture\n");

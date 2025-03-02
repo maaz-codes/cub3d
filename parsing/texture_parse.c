@@ -51,11 +51,27 @@ int texture_loop(char *file_check, int *i, t_parsing *parse, int *valid)
     if((*i) != ft_strlen(file_check) - 1 && which_texture < 5)
         (*valid) += 1;
     while(file_check[(*i)])
-    {
-        printf("%c",file_check[(*i)]);
         (*i) += 1;
-    }
     return (1);
+}
+
+int all_there_val(t_parsing *parse)
+{
+    int i;
+    int check;
+
+    i = -1;
+    check = 0;
+    while(++i < 6)
+    {   
+        printf("%d\n",parse->check_valid[i][0]);
+        if(parse->check_valid[i][0] == 1)
+            check++;
+    }
+    if(check == 6)
+        return (1);
+    else
+        return (0);
 }
 
 int check_texture(t_parsing *parse, int file, int *valid)

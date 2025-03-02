@@ -17,7 +17,7 @@ int valid_num(int rgb_num, char *remove_space, int skipper, char **remove_comma)
 {
     if(rgb_num > 255 || ft_strlen(remove_space + skipper) > 4)
     {
-        (free_double(remove_comma, 3),free(remove_space));
+        (free_double(remove_comma),free(remove_space));
         return (0);
     }
     return (1);
@@ -46,7 +46,7 @@ int set_values_rgb(char *file_check, t_parsing *parse, char *pos,int rgb_pos)
         parse->rgb[rgb_pos][i] = rgb_num;
         free(remove_space);
     }
-    free_double(remove_comma, 3);
+    free_double(remove_comma);
     return (1);
 }
 
