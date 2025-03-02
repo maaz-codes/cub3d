@@ -148,17 +148,17 @@ int main(int ac, char **av)
             return 1;
         if(!check_parse(parse, av[1]))
         {
-            printf("Invalid\n");
+            (free_data(parse),printf("Invalid\n"));
             return 1;
         }
         if(!save_texture(parse,file_open(av[1])))
         {
-            printf("Invalid texture\n");
+            (free_data(parse),printf("Invalid texture\n"));
             return 1;
         }
         if(!save_rgb(parse, file_open(av[1])))
         {
-            printf("Invalid number\n");
+            (free_data(parse),printf("Invalid number\n"));
             return 1;
         }
         print_info(parse);

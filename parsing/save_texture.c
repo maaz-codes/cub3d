@@ -8,6 +8,9 @@ int init_textures_and_rgb(t_parsing **parse)
     (*parse)->textures = malloc((4 + 1) * sizeof(char *));
     if(!(*parse)->textures)
         return (0);
+    while(++i < 4)
+        (*parse)->textures[i] = NULL;
+    i = -1;
     (*parse)->textures[4] = NULL;
     (*parse)->rgb = malloc(2 * sizeof(int *));
     if(!(*parse)->rgb)

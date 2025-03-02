@@ -40,9 +40,10 @@ int set_values_rgb(char *file_check, t_parsing *parse, char *pos,int rgb_pos)
     {
         remove_space = ft_strtrim(remove_comma[i]," ");
         skipper = skipper_val(remove_space);
+        printf("remove space val: %s\n", remove_space);
         rgb_num = ft_atoi(remove_space + skipper);
         if(!valid_num(rgb_num, remove_space, skipper, remove_comma))
-            return(1);
+            return(0);
         parse->rgb[rgb_pos][i] = rgb_num;
         free(remove_space);
     }
@@ -50,30 +51,34 @@ int set_values_rgb(char *file_check, t_parsing *parse, char *pos,int rgb_pos)
     return (1);
 }
 
+
 int save_rgb(t_parsing *parse, int file)
 {
     char *file_check;
-    (void)parse;
+    int  still_valid;
     int i;
 
+    still_valid = 1;
     file_check = get_next_line(file);
     while(file_check)
     {   
         i = -1;
         while(++i < ft_strlen(file_check))
         {   
-            if(check_which_texture(file_check, i) == 5)
+            if(check_which_texture(file_check, i) == 5 && still_valid == 1)
             {
                 if(!set_values_rgb(file_check, parse,"F",0))
-                    return (0);
+                    still_valid = 0;
             }
-            else if(check_which_texture(file_check, i) == 6)
+            else if(check_which_texture(file_check, i) == 6 && still_valid == 1)
                 if(!set_values_rgb(file_check, parse,"C",1))
-                    return (0);
+                    still_valid = 0;
         }
         free(file_check);
         file_check = get_next_line(file);
     }
     close(file);
+    if(!still_valid)
+        return 0;
     return 1;
 }

@@ -25,7 +25,12 @@ void free_data(t_parsing *parse)
     if(parse->check_valid)
         free_int(parse->check_valid, 6);
     if(parse->textures)
-        free_double(parse->textures, 4);
+    {
+        if(!parse->textures[0])
+            free(parse->textures);
+        else
+            free_double(parse->textures, 4);
+    }
     if(parse->rgb)
         free_int(parse->rgb,2);
     if(parse->file_data)
