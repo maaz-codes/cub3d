@@ -86,24 +86,28 @@ int check_parse(t_parsing *parse, char *file)
     rgb_count = 0;
 
     get_rows(parse, file_open(file));
-    parse->file_data = malloc(parse->row + 1);
+    parse->file_data = malloc((parse->row + 1) * sizeof(char **));
     if(!parse->file_data)
         return(0);
+    parse->file_data[parse->row] = NULL;
     get_file_data(parse, file_open(file));
-    for(int f = 0;f < 33;f++)
-        printf("%s",parse->file_data[f]);
     if(!get_map(parse))
         return (0);
-    if(!check_texture(parse, file_open(file), &texture_count))
+    if(!parse_map(parse))
     {
-        error_msg("Invalid texture\n");
-        return 0;
+        printf("\nerror map\n");
+        return (0);
     }
-    if(!check_rgb(parse, file_open(file), &rgb_count))
-    {
-        error_msg("Invalid rgb\n");
-        return 0;
-    }
+    // if(!check_texture(parse, file_open(file), &texture_count))
+    // {   
+    //     (free_data(parse), error_msg("Invalid texture\n"));
+    //     return 0;
+    // }
+    // if(!check_rgb(parse, file_open(file), &rgb_count))
+    // {
+    //     (free_data(parse), error_msg("Invalid rgb\n"));
+    //     return 0;
+    // }
     printf("\ncontent: %d\n",texture_count);
     printf("\ncontent: %d\n",rgb_count);
     for(int check = 0; check < 6; check++)
@@ -147,17 +151,17 @@ int main(int ac, char **av)
             printf("Invalid\n");
             return 1;
         }
-        if(!save_texture(parse,file_open(av[1])))
-        {
-            printf("Invalid texture\n");
-            return 1;
-        }
-        if(!save_rgb(parse, file_open(av[1])))
-        {
-            printf("Invalid number\n");
-            return 1;
-        }
-        print_info(parse);
+        // if(!save_texture(parse,file_open(av[1])))
+        // {
+        //     printf("Invalid texture\n");
+        //     return 1;
+        // }
+        // if(!save_rgb(parse, file_open(av[1])))
+        // {
+        //     printf("Invalid number\n");
+        //     return 1;
+        // }
+        // print_info(parse);
         free_data(parse);
     }
     else

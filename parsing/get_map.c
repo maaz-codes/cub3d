@@ -14,21 +14,35 @@ int get_location(char **file_data)
             while(file_data[row][len] == ' ')
                 len++;
             if(check_which_texture(file_data[row],len) == 7)
-                return (row + 1);
+                return (row);
             len++;
         }
         row++;
     }
     return (0);
 }
+
 int get_map(t_parsing *parse)
 {   
-    (void)parse;
-    // int start;
-
-    // start = get_location(parse->file_data);
-    // printf("row length %d\n",parse->row);
-
+    int i;
+    int map_loc;
     
+    i = 0;
+    map_loc = get_location(parse->file_data);
+    parse->map_length = parse->row - map_loc;
+    parse->map = malloc((parse->row - map_loc + 1) * sizeof(char **));
+    if(!parse->map)
+        return (0);
+    while(map_loc < parse->row)
+    {
+        parse->map[i] = ft_calloc(ft_strlen(parse->file_data[map_loc]) + 1,sizeof(char));
+        if(!parse->map[i])
+            return(0);
+        ft_strlcpy(parse->map[i],parse->file_data[map_loc],ft_strlen(parse->file_data[map_loc]) + 1);
+        printf("%s",parse->map[i]);
+        map_loc++;
+        i++;
+    }
+    parse->map[i] = NULL;
     return (1);
 }

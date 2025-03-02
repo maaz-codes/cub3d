@@ -12,10 +12,21 @@ void get_rows(t_parsing *parse, int file)
     while(file_check)
     {   
         i = 0;
-        if(file_check[i] == '\n')
-            row++;
-        while(file_check[i])
+        
+        while(i < ft_strlen(file_check))
         {   
+            if(file_check[i] == '\n')
+            {
+                row++;
+                break;
+            }
+            else if(file_check[i] != '\n' && file_check[i])
+            {
+                row++;
+                break;
+            }
+            else if(file_check[i] == '\0')
+                break;
             i++;
         }
         free(file_check);
@@ -27,17 +38,39 @@ void get_rows(t_parsing *parse, int file)
 
 int get_file_data(t_parsing *parse, int file)
 {   
+    // (void)parse;
     char *file_check;
+    int  i;
     int  row;
     
     row = 0;
     file_check = get_next_line(file);
     while(file_check)
-    {
-        if(file_check)
-        {   
-            parse->file_data[row] = ft_strdup(file_check);
-            row++;
+    {   
+        i = 0;
+        while(i < ft_strlen(file_check))
+        {
+            if(file_check[i] == '\n')
+            {   
+                parse->file_data[row] = ft_calloc(2,sizeof(char *));
+                if(!parse->file_data[row])
+                    return(0);
+                ft_strlcpy(parse->file_data[row],"\n",2);
+                row += 1;
+                break;
+            }
+            else if(file_check[i] != '\n')
+            {   
+                parse->file_data[row] = ft_calloc(ft_strlen(file_check) + 1,sizeof(char *));
+                if(!parse->file_data[row])
+                    return(0);
+                ft_strlcpy(parse->file_data[row],file_check,ft_strlen(file_check) + 1);
+                row += 1;
+                break;
+            }
+            else if(file_check[i] == '\0')
+                break;
+            i++;
         }
         free(file_check);
         file_check = get_next_line(file);

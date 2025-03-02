@@ -21,10 +21,14 @@ void free_int(int **num, int size)
 }
 
 void free_data(t_parsing *parse)
-{
-    free_int(parse->check_valid, 6);
-    free_double(parse->textures);
-    free_int(parse->rgb,2);
-    free_double(parse->file_data);
+{   
+    if(parse->check_valid)
+        free_int(parse->check_valid, 6);
+    if(parse->textures)
+        free_double(parse->textures);
+    if(parse->rgb)
+        free_int(parse->rgb,2);
+    if(parse->file_data)
+        free_double(parse->file_data);
     free(parse);
 }

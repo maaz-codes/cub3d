@@ -80,6 +80,7 @@ typedef struct s_list
 typedef struct parsing
 {	
 	int				row;
+	int				map_length;
 	char			**file_data;
 	char			**map;
 	int				**check_valid;
@@ -120,10 +121,11 @@ void 				free_int(int **num, int size);
 void 				free_data(t_parsing *parse);
 
 //parsing
+int 				init_textures_and_rgb(t_parsing **parse);
 void 				get_rows(t_parsing *parse, int file);
 int 				get_file_data(t_parsing *parse, int file);
 int 				get_map(t_parsing *parse);
-int 				init_textures_and_rgb(t_parsing **parse);
+int 				parse_map(t_parsing *parse);
 int 				file_open(char *av);
 int 				check_texture(t_parsing *parse, int file, int *valid);
 int 				check_which_texture(char *file_check, int i);
