@@ -1,15 +1,5 @@
 #include "../cub3d.h"
 
-
-int valid_player(char **map, int row, int i, t_parsing *parse)
-{   
-    (void)map;
-    (void)row;
-    (void)i;
-    (void)parse;
-    return (1);
-}
-
 int check_direction(char player)
 {
     if(player == 'N' || player == 'S'||
@@ -36,13 +26,12 @@ int valid_nsew(char **map, int row, int i)
     if(map[row][i - 1] == '1' || map[row][i - 1] == '0' ||
         check_direction(map[row][i - 1]))
         check++;
-    // printf("check val: %d\n",check);
     if(check == 4)
         return (1);
     return (0);
-
 }
-int zero_check(char **map, int row, int i)
+
+int player_zero_check(char **map, int row, int i)
 {   
     if(i == 0 || map[row][i + 1] == '\0' || i > ft_strlen(map[row - 1]) ||
         i > ft_strlen(map[row + 1]))
@@ -89,11 +78,10 @@ int one_check(char **map, int row, int i)
     return (1);
 }
 
-int checkpoint(char **map, int row, int i, t_parsing *parse)
+int checkpoint(char **map, int row, int i)
 {
     while(map[row][i])
     {   
-        // printf("map char: %c\n",map[row][i]);
         if(map[row][i] == '1' || map[row][i] == ' ')
         {
             if(!one_check(map, row, i))
@@ -104,14 +92,9 @@ int checkpoint(char **map, int row, int i, t_parsing *parse)
         {   
             if(map[row][i] == '\n')
                 break;
-            else if(map[row][i] == '0')
+            else if(map[row][i] == '0' || check_direction(map[row][i]))
             {   
-                if(!zero_check(map,row,i))
-                    return (0);
-            }
-            else if(check_direction(map[row][i]))
-            {
-                if(!valid_player(map,row,i,parse))
+                if(!player_zero_check(map,row,i))
                     return (0);
             }
             else
@@ -173,15 +156,44 @@ int check_bottom(t_parsing *parse)
     while(++row < parse->map_length)
     {
         i = -1;
-        while(++i < ft_strlen(map[row]) && map[row][i] == '\n')
-        {   
-            if(map[row][i] != '1' || map[row][i] != ' ' || 
-            map[row][i] != '0' || map[row][i] != 'N' || map[row][i] != 'S' ||
-            map[row][i] != 'E' || map[row][i] != 'W')
-                return(0);
+        if(map[row][0] == '\n')
+            row++;
+        else
+        {
+            while(++i < ft_strlen(map[row]) && map[row][i] == '\n')
+            {   
+                if(map[row][i] != '1' || map[row][i] != ' ' || 
+                map[row][i] != '0' || map[row][i] != 'N' || map[row][i] != 'S' ||
+                map[row][i] != 'E' || map[row][i] != 'W' || map[row][i] != '\n')
+                    return(0);
+            }
         }
     }
     return(1);
+}
+
+int one_player(t_parsing *parse)
+{
+    int i;
+    int row;
+    char **map;
+    int player;
+
+    player = 0;
+    map = parse->map;
+    row = -1;
+    while(++row < parse->map_length)
+    {
+        i = -1;
+        while(++i < ft_strlen(map[row]) && map[row][i] != '\n')
+        {   
+            if(check_direction(map[row][i]))
+                player++;
+            if(player > 1)
+                return (0);
+        }
+    }
+    return (1);
 }
 
 int parse_map(t_parsing *parse)
@@ -192,34 +204,25 @@ int parse_map(t_parsing *parse)
 
     map = parse->map;
     row = -1;
-    if(!check_top_down(map,last_row(parse)) || !check_bottom(parse))
-    {
-        printf("first error\n");
+    if(!check_top_down(map,last_row(parse)) || !check_bottom(parse) ||
+        !one_player(parse))
         return (0);
-    }
-    printf("\nparse map area\n");
     while(++row < parse->map_length)
     {   
         i = -1;
-        printf("row num: %d\n",row);
-        while(i < ft_strlen(map[row]))
+        while(i < ft_strlen(map[row]) && map[row][i] != '\n')
         {   
             if(row == 0)
                 break;
             else if(row == last_row(parse))
-            {
-                printf("final index: %d\n",row);
                 return (1);
-            }
             while(map[row][++i] == ' ');
             if(check_which_texture(map[row],i) == 7)
             {   
-                if(!checkpoint(map,row,i,parse))
+                if(!checkpoint(map,row,i))
                     return (0);
                 break;
             }
-            else if(map[row][i] == '\n')
-                break;
             else
                 return (0);
         }
