@@ -26,15 +26,9 @@ int player_zero_check(char **map, int row, int i)
 {   
     if(i == 0 || map[row][i + 1] == '\0' || i > ft_strlen(map[row - 1]) ||
         i > ft_strlen(map[row + 1]))
-    {
-        printf("error one\n");
         return (0);
-    }
     if(map[row][i + 1] == ' ' || map[row][i - 1] == ' ')
-    {
-        printf("error two\n");
         return (0);
-    }
     if(valid_nsew(map, row, i))
         return (1);
     return (0);
