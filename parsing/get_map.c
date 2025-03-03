@@ -9,6 +9,20 @@ int check_direction(char player)
         return (0);
 }
 
+int only_spaces(char *map)
+{   
+    int i;
+
+    i = 0;
+    while(map[i] != '\n')
+    {
+        if(map[i] != ' ')
+            return (0);
+        i++;
+    }
+    return (1);
+}
+
 int get_location(char **file_data)
 {
     int row;
