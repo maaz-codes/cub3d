@@ -2,7 +2,6 @@
 
 void get_rows(t_parsing *parse, int file)
 {
-    (void)parse;
     char *file_check;
     int  i;
     int  row;
@@ -38,7 +37,6 @@ void get_rows(t_parsing *parse, int file)
 
 int get_file_data(t_parsing *parse, int file)
 {   
-    // (void)parse;
     char *file_check;
     int  i;
     int  row;
