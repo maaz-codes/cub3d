@@ -100,12 +100,12 @@ int check_parse(t_parsing *parse, char *file)
     }
     if(!check_txt(parse, &texture_count))
     {
-        printf("error textures\n");
+        printf("\nerror textures\n");
         return (0);
     }
     if(!rgb_check(parse, &rgb_count))
     {
-        error_msg("Invalid rgb\n");
+        error_msg("\nInvalid rgb\n");
         return 0;
     }
     printf("\ncontent: %d\n",texture_count);

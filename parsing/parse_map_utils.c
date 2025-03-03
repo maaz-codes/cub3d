@@ -31,16 +31,19 @@ int last_row(t_parsing *parse)
 {
     int row;
     int i;
+    char **map;
 
+    map = parse->map;
     row = parse->map_length - 1;
     while(row > 0)
     {   
-        i = -1;
-        while(parse->map[row][i] != '\n')
+        i = 0;
+        while(map[row][i] != '\n')
         {   
-            while(parse->map[row][++i] == ' ');
-            if(check_which_texture(parse->map[row],i) == 7)
+            while(map[row][i] == ' ');
+            if(check_which_texture(map[row],i) == 7)
                 return (row);
+            i++;
         }
         row--;
     }

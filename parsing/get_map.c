@@ -66,6 +66,7 @@ int get_map(t_parsing *parse)
         map_loc++;
         i++;
     }
+    printf("\n");
     parse->map[i] = NULL;
     return (1);
 }
