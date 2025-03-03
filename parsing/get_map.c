@@ -1,5 +1,14 @@
 #include "../cub3d.h"
 
+int check_direction(char player)
+{
+    if(player == 'N' || player == 'S'||
+    player == 'E' || player == 'W')
+        return (1);
+    else
+        return (0);
+}
+
 int get_location(char **file_data)
 {
     int row;

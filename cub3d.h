@@ -124,8 +124,6 @@ void 				free_data(t_parsing *parse);
 int 				init_textures_and_rgb(t_parsing **parse);
 void 				get_rows(t_parsing *parse, int file);
 int 				get_file_data(t_parsing *parse, int file);
-int 				get_map(t_parsing *parse);
-int 				parse_map(t_parsing *parse);
 int 				file_open(char *av);
 int 				check_texture(t_parsing *parse, int file, int *valid);
 int 				check_which_texture(char *file_check, int i);
@@ -136,5 +134,20 @@ int 				save_rgb(t_parsing *parse, int file);
 
 int 				check_txt(t_parsing *parse, int *valid);
 int 				rgb_check(t_parsing *parse, int *valid);
+
+//parsing map
+int 				get_map(t_parsing *parse);
+int 				parse_map(t_parsing *parse);
+int 				checkpoint(char **map, int row, int i);
+int 				last_row(t_parsing *parse);
+int 				check_top_down(char **map,int last_row);
+int 				check_bottom(t_parsing *parse);
+int 				one_player(t_parsing *parse);
+int 				check_direction(char player);
+int 				one_check(char **map, int row, int i);
+int 				only_spaces(char *map);
+int 				player_zero_check(char **map, int row, int i);
+int 				valid_nsew(char **map, int row, int i);
+
 
 #endif

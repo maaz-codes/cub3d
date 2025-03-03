@@ -14,6 +14,7 @@ SRC =   parsing/parse.c \
 		parsing/get_map.c \
 		parsing/get_file_data.c \
 		parsing/parse_map.c \
+		parsing/parse_map_utils.c \
 		get_next_line/get_next_line.c \
 		get_next_line/get_next_line_utils.c \
 			libft/ft_strncmp.c \
