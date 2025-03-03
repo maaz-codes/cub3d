@@ -1,127 +1,15 @@
 #include "../cub3d.h"
 
-void error_msg(char *str)
+void print_validity(int texture, int rgb, t_parsing *parse)
 {
-    printf("%s\n",str);
-}
-
-void check_valid_values(char *file_check, int i, t_parsing *parse, char *mode)
-{   
-    if(!ft_strncmp(mode,"texture",8))
-    {
-        if(file_check[i] == 'N' && file_check[i + 1] == 'O')
-            parse->check_valid[0][0] += 1;
-        else if(file_check[i] == 'S' && file_check[i + 1] == 'O')
-            parse->check_valid[1][0] += 1;
-        else if(file_check[i] == 'W' && file_check[i + 1] == 'E')
-            parse->check_valid[2][0] += 1;
-        else if(file_check[i] == 'E' && file_check[i + 1] == 'A')
-            parse->check_valid[3][0] += 1;
-    }
-    else if(!ft_strncmp(mode,"rgb",3))
-    {
-        if(file_check[i] == 'F' && file_check[i + 1] == ' ')
-            parse->check_valid[4][0] += 1;
-        else if(file_check[i] == 'C' && file_check[i + 1] == ' ')
-            parse->check_valid[5][0] += 1;
-    }
-}
-
-int is_valid(t_parsing *parse)
-{
-    int i;
-    int check;
-
-    i = -1;
-    check = 0;
-    while(++i < 6)
-    {
-        if(parse->check_valid[i][0] == 1)
-            check++;
-    }
-    if(check == 6)
-        return 1;
-    else
-        return 0;
-}
-
-
-int init_parse_struct(t_parsing **parse)
-{   
-    int i;
-    *parse = malloc(sizeof(t_parsing));
-    if(!(*parse))
-        return 0;
-    (*parse)->check_valid = malloc(6 * sizeof(int **));
-    if(!(*parse)->check_valid)
-        return 0;
-    i = -1;
-    while(++i < 6)
-    {
-        (*parse)->check_valid[i] = malloc(1 * sizeof(int*));
-        if(!(*parse)->check_valid[i])
-            return (0);
-        *(*parse)->check_valid[i] = 0;
-    }
-    if(!init_textures_and_rgb(parse))
-        return (0);
-    return 1;
-}
-
-int file_open(char *av)
-{   
-    int file;
-    file = open(av,O_RDONLY);
-    if(file == -1)
-        error_msg("Invalid file\n");
-    return(file);
-}
-
-int check_parse(t_parsing *parse, char *file)
-{
-    int texture_count;
-    int rgb_count;
-
-    texture_count = 0;
-    rgb_count = 0;
-
-    get_rows(parse, file_open(file));
-    parse->file_data = malloc((parse->row + 1) * sizeof(char **));
-    if(!parse->file_data)
-        return(0);
-    parse->file_data[parse->row] = NULL;
-    get_file_data(parse, file_open(file));
-    if(!get_map(parse))
-        return (0);
-    if(!parse_map(parse))
-    {
-        printf("\nerror map\n");
-        return (0);
-    }
-    if(!check_txt(parse, &texture_count))
-    {
-        printf("\nerror textures\n");
-        return (0);
-    }
-    if(!rgb_check(parse, &rgb_count))
-    {
-        error_msg("\nInvalid rgb\n");
-        return 0;
-    }
-    printf("\ncontent: %d\n",texture_count);
-    printf("\ncontent: %d\n",rgb_count);
+    printf("\ntexture: %d\n",texture);
+    printf("rgb: %d\n",rgb);
     for(int check = 0; check < 6; check++)
         printf("value: %d\n",parse->check_valid[check][0]);
-    if(is_valid(parse) && texture_count + rgb_count == 6)
-    {
+    if(is_valid(parse) && texture + rgb == 6)
         printf("VALUES VALID\n");
-        return (1);
-    }
     else
-    {
         printf("VALUES ERROR\n");
-        return (0);
-    }
 }
 
 void print_info(t_parsing *parse)
@@ -138,33 +26,86 @@ void print_info(t_parsing *parse)
         printf("\n");
     }
 }
-int main(int ac, char **av)
-{      
+
+int check_parsing(t_parsing *parse, int *texture_count, int *rgb_count)
+{
+    if(!parse_map(parse))
+    {
+        printf("\nInvalid Map\n");
+        return (0);
+    }
+    if(!check_txt(parse, &(*texture_count), -1, -1))
+    {
+        printf("\nInvalid Textures/RGB\n");
+        return (0);
+    }
+    if(!rgb_check(parse, &(*rgb_count)))
+    {
+        printf("\nInvalid rgb\n");
+        return 0;
+    }
+    return (1);
+}
+int check_parse(t_parsing *parse, char *file)
+{
+    int texture_count;
+    int rgb_count;
+
+    texture_count = 0;
+    rgb_count = 0;
+
+    get_rows(parse, file_open(file));
+    if(!init_file_data(parse))
+        return (0);
+    get_file_data(parse, file_open(file));
+    if(!get_map(parse))
+        return (0);
+    if(!check_parsing(parse, &texture_count, &rgb_count))
+        return (0);
+    print_validity(texture_count, rgb_count, parse);
+    if(is_valid(parse) && texture_count + rgb_count == 6)
+        return (1);
+    else
+        return (0);
+}
+
+int parse_init_save(char **av)
+{
+    int file_check;
     t_parsing *parse;
 
+    file_check = file_open(av[1]);
+        
+    if(!init_parse_struct(&parse) || !file_check)
+    {
+        close(file_check);
+        return (0);
+    }
+    close(file_check);
+    if(!check_parse(parse, av[1]))
+    {
+        free_data(parse);
+        return (0);
+    }
+    if(!save_texture(parse,file_open(av[1])) || 
+        !save_rgb(parse, file_open(av[1])))
+    {
+        free_data(parse);
+        return (0);
+    }
+    print_info(parse);
+    free_data(parse);
+    return (1);
+}
+
+int main(int ac, char **av)
+{      
     if(ac == 2)
     {   
-        if(!init_parse_struct(&parse))
-            return 1;
-        if(!check_parse(parse, av[1]))
-        {
-            (free_data(parse),printf("Invalid\n"));
-            return 1;
-        }
-        if(!save_texture(parse,file_open(av[1])))
-        {
-            (free_data(parse),printf("Invalid texture\n"));
-            return 1;
-        }
-        if(!save_rgb(parse, file_open(av[1])))
-        {
-            (free_data(parse),printf("Invalid number\n"));
-            return 1;
-        }
-        print_info(parse);
-        free_data(parse);
+        if(!parse_init_save(av))
+            return (1);
     }
     else
-        error_msg("Invalid Args");
+        printf("Invalid Args");
     return 0;
 }

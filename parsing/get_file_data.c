@@ -11,21 +11,14 @@ void get_rows(t_parsing *parse, int file)
     while(file_check)
     {   
         i = 0;
-        
         while(i < ft_strlen(file_check))
         {   
-            if(file_check[i] == '\n')
+            if(file_check[i] == '\n' || 
+                (file_check[i] != '\n' && file_check[i]))
             {
                 row++;
                 break;
             }
-            else if(file_check[i] != '\n' && file_check[i])
-            {
-                row++;
-                break;
-            }
-            else if(file_check[i] == '\0')
-                break;
             i++;
         }
         free(file_check);
@@ -33,6 +26,29 @@ void get_rows(t_parsing *parse, int file)
     }
     parse->row = row;
     close(file);
+}
+
+int apppend_file(t_parsing *parse, int *row, char *file_check, int i)
+{
+    if(file_check[i] == '\n')
+    {   
+        parse->file_data[*row] = ft_calloc(2,sizeof(char *));
+        if(!parse->file_data[*row])
+            return(0);
+        ft_strlcpy(parse->file_data[*row],"\n",2);
+        (*row) += 1;
+        return (1);
+    }
+    else if(file_check[i] != '\n')
+    {   
+        parse->file_data[*row] = ft_calloc(ft_strlen(file_check) + 1,sizeof(char *));
+        if(!parse->file_data[*row])
+            return(0);
+        ft_strlcpy(parse->file_data[*row],file_check,ft_strlen(file_check) + 1);
+        (*row) += 1;
+        return (1);
+    }
+    return (0);
 }
 
 int get_file_data(t_parsing *parse, int file)
@@ -48,25 +64,9 @@ int get_file_data(t_parsing *parse, int file)
         i = 0;
         while(i < ft_strlen(file_check))
         {
-            if(file_check[i] == '\n')
-            {   
-                parse->file_data[row] = ft_calloc(2,sizeof(char *));
-                if(!parse->file_data[row])
-                    return(0);
-                ft_strlcpy(parse->file_data[row],"\n",2);
-                row += 1;
-                break;
-            }
-            else if(file_check[i] != '\n')
-            {   
-                parse->file_data[row] = ft_calloc(ft_strlen(file_check) + 1,sizeof(char *));
-                if(!parse->file_data[row])
-                    return(0);
-                ft_strlcpy(parse->file_data[row],file_check,ft_strlen(file_check) + 1);
-                row += 1;
-                break;
-            }
-            else if(file_check[i] == '\0')
+            if(!apppend_file(parse, &row, file_check,i))
+                return (0);
+            else
                 break;
             i++;
         }

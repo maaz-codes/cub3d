@@ -1,7 +1,16 @@
 map parsing
 
+//DONE ---------------------------
 empty line on the map
 1 is next to 1, 0, N, S, E, W
 0 is surrounded by 1 or one player
-all walls are enclosed
+all walls are enclosed 
+//DONE ----------------------------
+
+norminette
+
+get_file_data.c - DONE
+parse.c 
+save_rgb.c - DONE
+texture_parse.c - DONE
 

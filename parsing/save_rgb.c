@@ -40,7 +40,6 @@ int set_values_rgb(char *file_check, t_parsing *parse, char *pos,int rgb_pos)
     {
         remove_space = ft_strtrim(remove_comma[i]," ");
         skipper = skipper_val(remove_space);
-        printf("remove space val: %s\n", remove_space);
         rgb_num = ft_atoi(remove_space + skipper);
         if(!valid_num(rgb_num, remove_space, skipper, remove_comma))
             return(0);
@@ -66,11 +65,9 @@ int save_rgb(t_parsing *parse, int file)
         while(++i < ft_strlen(file_check))
         {   
             if(check_which_texture(file_check, i) == 5 && still_valid == 1)
-            {
                 if(!set_values_rgb(file_check, parse,"F",0))
                     still_valid = 0;
-            }
-            else if(check_which_texture(file_check, i) == 6 && still_valid == 1)
+            if(check_which_texture(file_check, i) == 6 && still_valid == 1)
                 if(!set_values_rgb(file_check, parse,"C",1))
                     still_valid = 0;
         }

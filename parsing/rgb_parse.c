@@ -107,31 +107,3 @@ int rgb_check(t_parsing *parse, int *valid)
     }
     return (1);
 }
-
-int check_rgb(t_parsing *parse, int file, int *valid)
-{
-    int i;
-    char *file_check;
-    int rgb_check;
-
-    file_check = get_next_line(file);
-    while(file_check)
-    {   
-        i = -1;
-        while(++i < ft_strlen(file_check))
-        {
-            rgb_check = 0;
-            if(file_check[i] == 'F' || file_check[i] == 'C')
-            {   
-                check_valid_values(file_check, i, parse, "rgb");
-                i += 1;
-                if(!rgb_loop(file_check, &i, &rgb_check, &(*valid)))
-                    return (0);
-            }
-        }
-        free(file_check);
-        file_check = get_next_line(file);
-    }
-    close(file);
-    return (1);
-}

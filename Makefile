@@ -6,6 +6,7 @@ NAME = cub3d
 # cub3d.c \
 
 SRC =   parsing/parse.c \
+		parsing/parse_utils.c \
 		parsing/texture_parse.c \
 		parsing/rgb_parse.c \
 		parsing/save_texture.c \

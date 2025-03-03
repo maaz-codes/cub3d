@@ -54,6 +54,7 @@ int one_check(char **map, int row, int i)
     }
     return (1);
 }
+
 int pass_through(char **map, int *i, int row, t_parsing *parse)
 {
     if(row == last_row(parse))
