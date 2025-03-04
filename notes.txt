@@ -1,6 +1,6 @@
 --------problems---------
 
-segfault when moving N,S,E,W ? (bruh D:)
+segfault when moving N,S,E,W when wall hit (bruh D:)
 
 
 ----------todo------------
