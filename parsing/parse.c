@@ -19,7 +19,7 @@ void	print_info(t_parsing *parse, char **av)
 	printf("SO %s\n", parse->textures[1]);
 	printf("WE %s\n", parse->textures[2]);
 	printf("EA %s\n", parse->textures[3]);
-	printf(" \n");
+	printf("\n");
 	print_rgb_map(parse);
 	printf("\n");
 }
@@ -28,17 +28,17 @@ int	check_parsing(t_parsing *parse, int *texture_count, int *rgb_count)
 {
 	if (!parse_map(parse))
 	{
-		printf("\nInvalid Map\n");
+		printf("Invalid Map\n");
 		return (0);
 	}
 	if (!check_txt(parse, &(*texture_count), -1, -1))
 	{
-		printf("\nInvalid Textures/RGB\n");
+		printf("Invalid Textures/RGB\n");
 		return (0);
 	}
 	if (!rgb_check(parse, &(*rgb_count)))
 	{
-		printf("\nInvalid rgb\n");
+		printf("Invalid RGB\n");
 		return (0);
 	}
 	return (1);

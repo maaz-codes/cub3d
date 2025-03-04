@@ -52,10 +52,7 @@ int	one_check(char **map, int row, int i)
 	{
 		if (ft_strlen(map[row - 1]) == 1 || ft_strlen(map[row + 1]) == 1
 			|| only_spaces(map[row - 1]) || only_spaces(map[row + 1]))
-		{
-			printf("enter error\n");
 			return (0);
-		}
 		return (1);
 	}
 	return (1);
