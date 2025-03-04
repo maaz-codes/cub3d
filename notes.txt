@@ -1,6 +1,6 @@
 --------problems---------
 
-segfault when moving left
+segfault when moving N,S,E,W ? (bruh D:)
 
 
 ----------todo------------
