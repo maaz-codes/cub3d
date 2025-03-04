@@ -89,6 +89,7 @@ int	parse_init_save(char **av)
 		return (0);
 	}
 	print_info(parse, av);
+    get_player_modif_map(parse);
 	free_data(parse);
 	return (1);
 }

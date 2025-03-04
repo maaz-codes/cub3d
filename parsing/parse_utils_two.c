@@ -12,19 +12,91 @@
 
 #include "../cub3d.h"
 
-void	print_validity(int texture, int rgb, t_parsing *parse)
-{
-	int	check;
+// void	print_validity(int texture, int rgb, t_parsing *parse)
+// {
+// 	int	check;
 
-	check = -1;
-	printf("\ntexture: %d\n", texture);
-	printf("rgb: %d\n", rgb);
-	while (++check < 6)
-		printf("value: %d\n", parse->check_valid[check][0]);
-	if (is_valid(parse) && texture + rgb == 6)
-		printf("VALUES VALID\n");
-	else
-		printf("VALUES ERROR\n");
+// 	check = -1;
+// 	printf("\ntexture: %d\n", texture);
+// 	printf("rgb: %d\n", rgb);
+// 	while (++check < 6)
+// 		printf("value: %d\n", parse->check_valid[check][0]);
+// 	if (is_valid(parse) && texture + rgb == 6)
+// 		printf("VALUES VALID\n");
+// 	else
+// 		printf("VALUES ERROR\n");
+// }
+
+void	get_xy_val(t_parsing *parse)
+{
+	int y;
+	int x;
+
+	y = -1;
+	while(++y < parse->map_length)
+	{
+		x = -1;
+		while(parse->map[y][++x] != '\n' && parse->map[y][x])
+		{
+			if(parse->map[y][x] == 'W' || parse->map[y][x] == 'E'
+			|| parse->map[y][x] == 'N' || parse->map[y][x] == 'S')
+			{
+				parse->x_pos = x + 1;
+				parse->y_pos = y + 1;
+				break;
+			}
+		}
+	}
+	printf("x_val: %d\n",parse->x_pos);
+	printf("y_val: %d\n",parse->y_pos);
+}
+
+void	modif_map(t_parsing *parse)
+{
+	int y;
+	int x;
+
+	y = -1;
+	while(++y < parse->map_length)
+	{	
+		x = -1;
+		while(parse->map[y][++x] != '\n' && parse->map[y][x])
+		{
+			if(parse->map[y][x] == 'W' || parse->map[y][x] == 'E'
+			|| parse->map[y][x] == 'N' || parse->map[y][x] == 'S')
+			{
+				parse->map[y][x] = '0';
+				break;
+			}
+		}
+	}
+	printf("\nnew map\n");
+	for(int f = 0; f < parse->map_length; f++)
+		printf("%s",parse->map[f]);
+	printf("\n");
+}
+void	get_player_modif_map(t_parsing *parse)
+{
+	int y;
+	int x;
+
+	y = -1;
+	while(++y < parse->map_length)
+	{	
+		x = -1;
+		while(parse->map[y][++x] != '\n' && parse->map[y][x])
+		{
+			if(parse->map[y][x] == 'W' || parse->map[y][x] == 'E'
+			|| parse->map[y][x] == 'N' || parse->map[y][x] == 'S')
+			{
+				parse->player = parse->map[y][x];
+				break;
+			}
+		}
+	}
+	printf("\nplayer : %c\n",parse->player);
+	get_xy_val(parse);
+	modif_map(parse);
 }
 
 void	print_rgb_map(t_parsing *parse)

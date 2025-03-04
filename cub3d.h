@@ -86,7 +86,14 @@ typedef struct parsing
 	int				**check_valid;
 	char			**textures;
 	int				**rgb;
+	char			player;
+	int				x_pos;
+	int				y_pos;
 }	t_parsing;
+
+// main.c
+int 				cub_rendering(t_cub *cub);
+int					handle_key_release(int keycode, t_cub *cub);
 
 //libft 
 int					ft_strncmp(const char *s1, const char *s2, size_t n);
@@ -100,9 +107,6 @@ int					ft_atoi(const char *nptr);
 char				**ft_split(char const *s, char c);
 char				*ft_strdup(const char *s1);
 
-// main.c
-int 				cub_rendering(t_cub *cub);
-int					handle_key_release(int keycode, t_cub *cub);
 
 // get_next_line.c
 char				*get_next_line(int fd);
@@ -134,8 +138,9 @@ int 				save_rgb(t_parsing *parse, int file);
 int 				check_txt(t_parsing *parse, int *valid, int row, int i);
 int 				rgb_check(t_parsing *parse, int *valid);
 int 				is_valid(t_parsing *parse);
-void 				print_validity(int texture, int rgb, t_parsing *parse);
+// void 				print_validity(int texture, int rgb, t_parsing *parse);
 void 				print_rgb_map(t_parsing *parse);
+void				get_player_modif_map(t_parsing *parse);
 
 //parsing map
 int 				get_map(t_parsing *parse);
