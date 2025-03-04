@@ -1,0 +1,9 @@
+--------problems---------
+
+segfault when moving left
+
+
+----------todo------------
+
+rendering textures
+tilt degree
