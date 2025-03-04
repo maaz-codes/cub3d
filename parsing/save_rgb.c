@@ -42,7 +42,6 @@ int	set_values_rgb(char *file_check, t_parsing *parse, char *pos, int rgb_pos)
 	char	*trim_pos;
 	int		rgb_num;
 	int		i;
-	int		skipper;
 
 	i = -1;
 	trim_pos = ft_strtrim(file_check, pos);
@@ -51,9 +50,9 @@ int	set_values_rgb(char *file_check, t_parsing *parse, char *pos, int rgb_pos)
 	while (++i < 3 && remove_comma[i] != NULL)
 	{
 		remove_space = ft_strtrim(remove_comma[i], " ");
-		skipper = skipper_val(remove_space);
-		rgb_num = ft_atoi(remove_space + skipper);
-		if (!valid_num(rgb_num, remove_space, skipper, remove_comma))
+		rgb_num = ft_atoi(remove_space + skipper_val(remove_space));
+		if (!valid_num(rgb_num, remove_space,
+			skipper_val(remove_space), remove_comma))
 			return (0);
 		parse->rgb[rgb_pos][i] = rgb_num;
 		free(remove_space);
