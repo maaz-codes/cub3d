@@ -134,6 +134,8 @@ int 				save_rgb(t_parsing *parse, int file);
 int 				check_txt(t_parsing *parse, int *valid, int row, int i);
 int 				rgb_check(t_parsing *parse, int *valid);
 int 				is_valid(t_parsing *parse);
+void 				print_validity(int texture, int rgb, t_parsing *parse);
+void 				print_rgb_map(t_parsing *parse);
 
 //parsing map
 int 				get_map(t_parsing *parse);
