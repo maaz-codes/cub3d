@@ -16,7 +16,7 @@ void cub_init(t_cub *cub)
     cub->img.img = mlx_new_image(cub->connection, screenWidth, screenHeight);
     cub->img.addr = mlx_get_data_addr(cub->img.img, &cub->img.bits_per_pixel, &cub->img.line_length, &cub->img.endian);
 
-    cub->posX = 22;
+    cub->posX = 12;
     cub->posY = 12;
 
     cub->dirX = -1;
@@ -131,7 +131,7 @@ int	handle_key_release(int keycode, t_cub *cub)
     {
         printf("KEY_MINUS PRESSED!\n");
         if(cub->map[(int)(cub->posX)][(int)cub->posY] == WALKABLE) 
-            cub->posY += 1;
+            cub->posY -= 1;
     }
     cub_rendering(cub);
     return (1);

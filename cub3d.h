@@ -9,8 +9,8 @@
 # include <sys/time.h>
 
 // MLX
-#define screenWidth 1640
-#define screenHeight 1480
+#define screenWidth 1280
+#define screenHeight 1024 
 #define mapWidth 24
 #define mapHeight 24
 
@@ -24,12 +24,19 @@
 #define COLOR_MAGENTA 0xFF00FF
 
 // KEYS
-# define KEY_LEFT 123
-# define KEY_RIGHT 124
-# define KEY_UP 126
-# define KEY_DOWN 125
-# define KEY_PLUS 24      
-# define KEY_MINUS 27     
+// # define KEY_LEFT 123
+// # define KEY_RIGHT 124
+// # define KEY_UP 126
+// # define KEY_DOWN 125
+// # define KEY_PLUS 24      
+// # define KEY_MINUS 27     
+
+# define KEY_LEFT 0
+# define KEY_RIGHT 2
+# define KEY_UP 13
+# define KEY_DOWN 1
+# define KEY_PLUS 14      
+# define KEY_MINUS 12   
 
 // GENERAL
 # define TRUE 1
