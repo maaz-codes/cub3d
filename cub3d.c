@@ -95,7 +95,7 @@ int	handle_key_release(int keycode, t_cub *cub)
         // if(cub->map[(int)(cub->posX + cub->dirX * cub->move_speed)][(int)cub->posY] == WALKABLE) 
             // cub->posX = cub->posX + cub->dirX * cub->move_speed;
         if(cub->map[(int)(cub->posX)][(int)cub->posY] == WALKABLE) 
-            cub->posX -= 1;
+            cub->posX -= 0.2;
         // if(cub->map[(int)cub->posX][(int)(cub->posY + cub->dirY * cub->move_speed)] == WALKABLE) 
         //     cub->posY = cub->posY;
     } 
@@ -103,7 +103,7 @@ int	handle_key_release(int keycode, t_cub *cub)
     {
         printf("KEY_DOWN PRESSED!\n");
         if(cub->map[(int)(cub->posX)][(int)cub->posY] == WALKABLE) 
-            cub->posX += 1;
+            cub->posX += 0.2;
     } 
     else if (keycode == KEY_LEFT)
     {
@@ -111,7 +111,7 @@ int	handle_key_release(int keycode, t_cub *cub)
         // if(cub->map[(int)(cub->posX + cub->dirX * cub->move_speed)][(int)cub->posY] == WALKABLE) 
             // cub->posX = cub->posX + cub->dirX * cub->move_speed;
         if(cub->map[(int)(cub->posX)][(int)cub->posY] == WALKABLE) 
-            cub->posY -= 1;
+            cub->posY -= 0.2;
         // if(cub->map[(int)cub->posX][(int)(cub->posY + cub->dirY * cub->move_speed)] == WALKABLE) 
         //     cub->posY = cub->posY;
     } 
@@ -119,19 +119,19 @@ int	handle_key_release(int keycode, t_cub *cub)
     {
         printf("KEY_RIGHT PRESSED!\n");
         if(cub->map[(int)(cub->posX)][(int)cub->posY] == WALKABLE) 
-            cub->posY += 1;
+            cub->posY += 0.2;
     }
     else if (keycode == KEY_PLUS)
     {
         printf("KEY_PLUS PRESSED!\n");
         if(cub->map[(int)(cub->posX)][(int)cub->posY] == WALKABLE) 
-            cub->posY += 1;
+            cub->posY += 0.2;
     }
     else if (keycode == KEY_MINUS)
     {
         printf("KEY_MINUS PRESSED!\n");
         if(cub->map[(int)(cub->posX)][(int)cub->posY] == WALKABLE) 
-            cub->posY -= 1;
+            cub->posY -= 0.2;
     }
     cub_rendering(cub);
     return (1);
@@ -219,7 +219,7 @@ int cub_rendering(t_cub *cub)
             }
             // printf("SegFal6\n");
             //Check if ray has hit a wall
-            if(cub->map[mapX][mapY] > 0) hit = 1;
+            if(cub->map[mapX][mapY] > '0') hit = 1;
         }
         // printf("SegFal7\n");
         if (side == 0) 
@@ -242,7 +242,7 @@ int cub_rendering(t_cub *cub)
         // printf("SegFal8\n");
         switch(cub->map[mapX][mapY])
         {
-            case 1:  color = COLOR_RED;    break; //red
+            case '1':  color = COLOR_RED;    break; //red
             case 2:  color = COLOR_GREEN;  break; //green
             case 3:  color = COLOR_BLUE;   break; //blue
             case 4:  color = COLOR_WHITE;  break; //white
@@ -351,7 +351,7 @@ int main(int ac, char **av)
         };
 
         cub = (t_cub *)malloc(1024 * 100);
-        cub->map = worldMap;
+        cub->map = parse->map;
         
         if (gettimeofday(&cub->start_time, NULL) == 0)
             printf("Started!\n");

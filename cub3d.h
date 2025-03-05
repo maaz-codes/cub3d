@@ -48,7 +48,7 @@
 // GENERAL
 # define TRUE 1
 # define FALSE 0
-# define WALKABLE 0
+# define WALKABLE 48
 
 
 typedef struct s_img
@@ -65,7 +65,8 @@ typedef struct  s_cub
     void			*connection;
 	void			*win;
 	t_img			img;
-	int 			(*map)[mapHeight];
+	// int 			(*map)[mapHeight];
+	char			**map;
 	struct timeval 	start_time;
 	double			posX;
 	double			posY;
