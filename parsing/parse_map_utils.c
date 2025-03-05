@@ -47,13 +47,13 @@ int	last_row(t_parsing *parse)
 
 	map = parse->map;
 	row = parse->map_length - 1;
-	while (row > 0)
-	{
+	while (row >= 0)
+	{	
 		i = 0;
 		while (map[row][i] != '\n')
 		{
 			while (map[row][i] == ' ')
-				;
+				i++;
 			if (check_which_texture(map[row], i) == 7)
 				return (row);
 			i++;
@@ -81,7 +81,6 @@ int	 check_top_down(char **map, int last_row)
 			return (0);
 		i++;
 	}
-	printf("out");
 	return (1);
 }
 
@@ -110,7 +109,6 @@ int	check_bottom(t_parsing *parse)
 			}
 		}
 	}
-	printf("out\n");
 	return (1);
 }
 
@@ -140,6 +138,5 @@ int	one_player(t_parsing *parse)
 		printf("No Player\n");
 		return (0);
 	}
-	printf("out\n");
 	return (1);
 }

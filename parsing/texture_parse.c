@@ -32,7 +32,8 @@ int	check_which_texture(char *file_check, int i)
 		|| (file_check[i] == '1' && file_check[i + 1] == 'S')
 		|| (file_check[i] == '1' && file_check[i + 1] == 'E')
 		|| (file_check[i] == '1' && file_check[i + 1] == 'W')
-		|| (file_check[i] == '1' && file_check[i + 1] == ' '))
+		|| (file_check[i] == '1' && file_check[i + 1] == ' ')
+		|| (file_check[i] == '1'))
 		return (7);
 	else
 		return (0);

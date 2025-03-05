@@ -67,7 +67,6 @@ int	one_check(char **map, int row, int i)
 
 int	pass_through(char **map, int *i, int row, t_parsing *parse)
 {	
-	printf("pass through\n");
 	if (row == last_row(parse))
 		return (1);
 	while (map[row][*i] == ' ')
@@ -91,9 +90,6 @@ int	parse_map(t_parsing *parse)
 	map = parse->map;
 	row = 0;
 
-	printf("map length: %d\n",parse->map_length);
-	for(int f = 0; f < parse->map_length; f++)
-		printf("bruh\n")
 	if (!check_top_down(map, last_row(parse)) || !check_bottom(parse)
 		|| !one_player(parse)) 
 		return (0);

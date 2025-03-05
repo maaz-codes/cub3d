@@ -67,7 +67,7 @@ int	get_map(t_parsing *parse)
 	map_loc = get_location(parse->file_data);
 	if(!map_loc)
 		return (0);
-	parse->map_length = (parse->row - map_loc) + 1;
+	parse->map_length = (parse->row - map_loc);
 	parse->map = malloc((parse->row - map_loc + 1) * sizeof(char **));
 	if (!parse->map)
 		return (0);
