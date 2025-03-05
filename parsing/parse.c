@@ -56,9 +56,15 @@ int	check_parse(t_parsing *parse, char *file)
 		return (0);
 	get_file_data(parse, file_open(file));
 	if (!get_map(parse))
+	{
+		printf("No Map\n");
 		return (0);
+	}
 	if (!check_parsing(parse, &texture_count, &rgb_count))
+	{
+		printf("error parse\n");
 		return (0);
+	}
 	if (is_valid(parse) && texture_count + rgb_count == 6)
 		return (1);
 	else
