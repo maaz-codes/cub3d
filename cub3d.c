@@ -9,15 +9,15 @@ void	my_mlx_pixel_put(t_img *data, int x, int y, int color)
 	*(unsigned int *)dst = color;
 }
 
-void cub_init(t_cub *cub)
+void cub_init(t_cub *cub, t_parsing *parse)
 {
     cub->connection = mlx_init();
     cub->win = mlx_new_window(cub->connection, screenWidth, screenHeight, "cub3D");
     cub->img.img = mlx_new_image(cub->connection, screenWidth, screenHeight);
     cub->img.addr = mlx_get_data_addr(cub->img.img, &cub->img.bits_per_pixel, &cub->img.line_length, &cub->img.endian);
 
-    cub->posX = 12;
-    cub->posY = 12;
+    cub->posX = parse->x_pos;
+    cub->posY = parse->y_pos;
 
     cub->dirX = -1;
     cub->dirY = 0;
@@ -317,7 +317,7 @@ int main(int ac, char **av)
 
     if(ac == 2)
     {
-        if(!parse_init_save(av))
+        if(!parse_init_save(&parse, av))
             return (0);
         int worldMap[mapWidth][mapHeight]=
         {
@@ -355,7 +355,7 @@ int main(int ac, char **av)
         else    
             return (write(2, "Time-function failed:(\n", 24), 1);
 
-        cub_init(cub);
+        cub_init(cub, parse);
         cub_rendering(cub);
         // mlx_loop_hook(cub->connection, cub_rendering, cub);
         mlx_key_hook(cub->win, handle_key_release, cub);
@@ -363,7 +363,7 @@ int main(int ac, char **av)
 
         mlx_destroy_window(cub->connection, cub->win);
         free(cub->connection);
-        free_data(parse);
+        // free_data(parse);
     }
     else
         printf("Invalid Args\n");

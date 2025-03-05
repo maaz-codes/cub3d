@@ -5,5 +5,14 @@ segfault when moving N,S,E,W when wall hit (bruh D:)
 
 ----------todo------------
 
+add map and render
 rendering textures
-tilt degree
+rotation of player degree
+
+
+----------added-----------
+
+parsing, get_next_line, libft, maps folder
+WASDQE movement
+parse->x_pos, parse->y_pos
+

@@ -133,7 +133,7 @@ void 				free_int(int **num, int size);
 void 				free_data(t_parsing *parse);
 
 //parsing
-int					parse_init_save(char **av);
+int					parse_init_save(t_parsing **parse, char **av);
 int 				init_textures_and_rgb(t_parsing **parse);
 int 				init_parse_struct(t_parsing **parse);
 int 				init_file_data(t_parsing *parse);
@@ -150,6 +150,8 @@ int 				is_valid(t_parsing *parse);
 // void 				print_validity(int texture, int rgb, t_parsing *parse);
 void 				print_rgb_map(t_parsing *parse);
 void				get_player_modif_map(t_parsing *parse);
+void				print_info(t_parsing *parse, char **av);
+void				print_rgb_map(t_parsing *parse);
 
 //parsing map
 int 				get_map(t_parsing *parse);

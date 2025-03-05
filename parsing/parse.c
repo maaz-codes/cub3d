@@ -65,31 +65,30 @@ int	check_parse(t_parsing *parse, char *file)
 		return (0);
 }
 
-int	parse_init_save(char **av)
+int	parse_init_save(t_parsing **parse, char **av)
 {
 	int			file_check;
-	t_parsing	*parse;
 
 	file_check = file_open(av[1]);
-	if (!init_parse_struct(&parse) || !file_check)
+	if (!init_parse_struct(parse) || !file_check)
 	{
 		close(file_check);
 		return (0);
 	}
 	close(file_check);
-	if (!check_parse(parse, av[1]))
+	if (!check_parse(*parse, av[1]))
 	{
-		free_data(parse);
+		free_data(*parse);
 		return (0);
 	}
-	if (!save_texture(parse, file_open(av[1]))
-		|| !save_rgb(parse, file_open(av[1])))
+	if (!save_texture(*parse, file_open(av[1]))
+		|| !save_rgb(*parse, file_open(av[1])))
 	{
-		free_data(parse);
+		free_data(*parse);
 		return (0);
 	}
-	print_info(parse, av);
-    get_player_modif_map(parse);
+	print_info(*parse, av);
+    get_player_modif_map(*parse);
 	return (1);
 }
 
