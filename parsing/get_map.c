@@ -67,10 +67,11 @@ int	get_map(t_parsing *parse)
 	map_loc = get_location(parse->file_data);
 	if(!map_loc)
 		return (0);
-	parse->map_length = parse->row - map_loc;
+	parse->map_length = (parse->row - map_loc) + 1;
 	parse->map = malloc((parse->row - map_loc + 1) * sizeof(char **));
 	if (!parse->map)
 		return (0);
+	parse->map[i] = NULL;
 	while (map_loc < parse->row)
 	{
 		parse->map[i] = ft_calloc(ft_strlen(parse->file_data[map_loc]) + 1,
@@ -83,6 +84,5 @@ int	get_map(t_parsing *parse)
 		i++;
 	}
 	printf("\n");
-	parse->map[i] = NULL;
 	return (1);
 }

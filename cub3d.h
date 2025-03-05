@@ -143,7 +143,7 @@ int 				file_open(char *av);
 int 				check_which_texture(char *file_check, int i);
 void 				check_valid_values(char *file_check, int i, t_parsing *parse, char *mode);
 int 				save_texture(t_parsing *parse, int file);
-int 				save_rgb(t_parsing *parse, int file);
+int					rgb_save(t_parsing *parse);
 int 				check_txt(t_parsing *parse, int *valid, int row, int i);
 int 				rgb_check(t_parsing *parse, int *valid);
 int 				is_valid(t_parsing *parse);
@@ -166,5 +166,4 @@ int 				one_check(char **map, int row, int i);
 int 				only_spaces(char *map);
 int 				player_zero_check(char **map, int row, int i);
 int 				valid_nsew(char **map, int row, int i);
-
 #endif

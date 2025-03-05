@@ -25,9 +25,9 @@ int	skipper_val(char *remove_space)
 	return (skipper);
 }
 
-int	valid_num(int rgb_num, char *remove_space, int skipper, char **remove_comma)
+int	valid_num(int rgb_num, char *remove_space, char **remove_comma)
 {
-	if (rgb_num > 255 || ft_strlen(remove_space + skipper) > 4)
+	if (rgb_num > 255)
 	{
 		(free_double(remove_comma, 3), free(remove_space));
 		return (0);
@@ -46,13 +46,13 @@ int	set_values_rgb(char *file_check, t_parsing *parse, char *pos, int rgb_pos)
 	i = -1;
 	trim_pos = ft_strtrim(file_check, pos);
 	remove_comma = ft_split(trim_pos, ',');
+	printf("remove comma: %s\n",trim_pos);
 	free(trim_pos);
 	while (++i < 3 && remove_comma[i] != NULL)
 	{
 		remove_space = ft_strtrim(remove_comma[i], " ");
 		rgb_num = ft_atoi(remove_space + skipper_val(remove_space));
-		if (!valid_num(rgb_num, remove_space,
-			skipper_val(remove_space), remove_comma))
+		if (!valid_num(rgb_num, remove_space, remove_comma))
 			return (0);
 		parse->rgb[rgb_pos][i] = rgb_num;
 		free(remove_space);
@@ -61,31 +61,27 @@ int	set_values_rgb(char *file_check, t_parsing *parse, char *pos, int rgb_pos)
 	return (1);
 }
 
-int	save_rgb(t_parsing *parse, int file)
+int	rgb_save(t_parsing *parse)
 {
-	char	*file_check;
-	int		still_valid;
+	char	**file_check;
 	int		i;
+	int		row;
 
-	still_valid = 1;
-	file_check = get_next_line(file);
-	while (file_check)
+	row = -1;
+	file_check = parse->file_data;
+	while (++row < parse->row)
 	{
-		i = -1;
-		while (++i < ft_strlen(file_check))
-		{
-			if (check_which_texture(file_check, i) == 5 && still_valid == 1)
-				if (!set_values_rgb(file_check, parse, "F", 0))
-					still_valid = 0;
-			if (check_which_texture(file_check, i) == 6 && still_valid == 1)
-				if (!set_values_rgb(file_check, parse, "C", 1))
-					still_valid = 0;
+		i = 0;
+		while (file_check[row][i])
+		{	
+			if (check_which_texture(file_check[row], i) == 5)
+				if (!set_values_rgb(file_check[row], parse, "F", 0))
+					return (0);
+			if (check_which_texture(file_check[row], i) == 6)
+				if (!set_values_rgb(file_check[row], parse, "C", 1))
+					return (0);
+			i++;
 		}
-		free(file_check);
-		file_check = get_next_line(file);
 	}
-	close(file);
-	if (!still_valid)
-		return (0);
 	return (1);
 }

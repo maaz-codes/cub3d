@@ -31,6 +31,7 @@ int	valid_nsew(char **map, int row, int i)
 		check++;
 	if (check == 4)
 		return (1);
+	printf("Not Enclosed Properly\n");
 	return (0);
 }
 
@@ -38,9 +39,15 @@ int	player_zero_check(char **map, int row, int i)
 {
 	if (i == 0 || map[row][i + 1] == '\0' || i > ft_strlen(map[row - 1]) ||
 		i > ft_strlen(map[row + 1]))
+	{
+		printf("Not Enclosed Properly\n");
 		return (0);
+	}
 	if (map[row][i + 1] == ' ' || map[row][i - 1] == ' ')
+	{
+		printf("Not Enclosed Properly\n");
 		return (0);
+	}
 	if (valid_nsew(map, row, i))
 		return (1);
 	return (0);
@@ -50,7 +57,7 @@ int	one_check(char **map, int row, int i)
 {
 	if (map[row][i] == '1')
 	{
-		if (ft_strlen(map[row - 1]) == 1 || ft_strlen(map[row + 1]) == 1
+		if (map[row - 1][i] == 1 || map[row + 1][i] == 1
 			|| only_spaces(map[row - 1]) || only_spaces(map[row + 1]))
 			return (0);
 		return (1);
@@ -59,7 +66,8 @@ int	one_check(char **map, int row, int i)
 }
 
 int	pass_through(char **map, int *i, int row, t_parsing *parse)
-{
+{	
+	printf("pass through\n");
 	if (row == last_row(parse))
 		return (1);
 	while (map[row][*i] == ' ')
@@ -82,24 +90,26 @@ int	parse_map(t_parsing *parse)
 
 	map = parse->map;
 	row = 0;
-	
+
+	printf("map length: %d\n",parse->map_length);
+	for(int f = 0; f < parse->map_length; f++)
+		printf("bruh\n")
 	if (!check_top_down(map, last_row(parse)) || !check_bottom(parse)
-		|| !one_player(parse))
-	{
-		printf("enter here\n");
+		|| !one_player(parse)) 
 		return (0);
-	}
 	while (++row < parse->map_length)
 	{
-		i = 0;
-		while (i < ft_strlen(map[row]) && map[row][i] != '\n')
-		{
+		i = -1;
+		while (map[row][++i])
+		{	
 			if (pass_through(map, &i, row, parse) == 0)
 				return (0);
 			else if (pass_through(map, &i, row, parse) == 1)
 				return (1);
 			else if (pass_through(map, &i, row, parse) == 2)
 				break ;
+			else
+				break;
 		}
 	}
 	return (1);

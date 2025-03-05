@@ -61,10 +61,7 @@ int	check_parse(t_parsing *parse, char *file)
 		return (0);
 	}
 	if (!check_parsing(parse, &texture_count, &rgb_count))
-	{
-		printf("error parse\n");
 		return (0);
-	}
 	if (is_valid(parse) && texture_count + rgb_count == 6)
 		return (1);
 	else
@@ -83,13 +80,15 @@ int	parse_init_save(t_parsing **parse, char **av)
 	}
 	close(file_check);
 	if (!check_parse(*parse, av[1]))
-	{
-		free_data(*parse);
+		return (0);
+	if(!save_texture(*parse, file_open(av[1])))
+	{	
+		printf("Error texture\n");
 		return (0);
 	}
-	if (!save_texture(*parse, file_open(av[1]))
-		|| !save_rgb(*parse, file_open(av[1])))
-	{
+	if (!rgb_save(*parse))
+	{	
+		printf("Error rgb\n");
 		free_data(*parse);
 		return (0);
 	}
@@ -97,17 +96,3 @@ int	parse_init_save(t_parsing **parse, char **av)
     get_player_modif_map(*parse);
 	return (1);
 }
-
-// int	main(int ac, char **av)
-// {	
-// 	t_parsing *parse;
-// 	if (ac == 2)
-// 	{
-// 		if (!parse_init_save(av))
-// 			return (1);
-// 		free_data(parse);
-// 	}
-// 	else
-// 		printf("Invalid Args");
-// 	return (0);
-// }

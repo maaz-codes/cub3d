@@ -74,7 +74,7 @@ int	rgb_loop(char *file_check, int *i, int *rgb_check, int *valid)
 			if (!last_rgb(file_check, &(*i), &(*rgb_check)))
 				break ;
 		}
-		else if (file_check[(*i)] == ' ')
+		if(file_check[(*i)] == ' ' || file_check[(*i)] == ',')
 			(*i) += 1;
 		else if (file_check[(*i)] >= '0' && file_check[(*i)] <= '9')
 		{
@@ -82,8 +82,7 @@ int	rgb_loop(char *file_check, int *i, int *rgb_check, int *valid)
 				break ;
 		}
 		else
-			break ;
-		(*i) += 1;
+			break;
 	}
 	if ((*rgb_check) == 3)
 		(*valid) += 1;

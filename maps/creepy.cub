@@ -9,9 +9,10 @@
            WE                                                                         textures/simonkraft/respawn_anchor_side3.xpm 
 
 
-     F 123              , 221,                                                        254
               EA textures/simonkraft/respawn_anchor_side2.xpm
-      C 181,    222       ,              123
+              
+   F    133   ,  1,   2   
+      C     123,   1,   2  
 
 
 

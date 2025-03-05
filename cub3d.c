@@ -318,7 +318,10 @@ int main(int ac, char **av)
     if(ac == 2)
     {
         if(!parse_init_save(&parse, av))
+        {
+            free_data(parse);
             return (0);
+        }
         int worldMap[mapWidth][mapHeight]=
         {
             {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},

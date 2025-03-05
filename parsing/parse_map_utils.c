@@ -63,24 +63,25 @@ int	last_row(t_parsing *parse)
 	return (0);
 }
 
-int	check_top_down(char **map, int last_row)
+int	 check_top_down(char **map, int last_row)
 {
 	int	i;
 
 	i = 0;
-	while (map[0][i] && map[0][i] != '\n')
+	while (map[0][i])
 	{
-		if (map[0][i] != '1' && map[0][i] != ' ')
+		if (map[0][i] != '1' && map[0][i] != ' ' && map[0][i] != '\n')
 			return (0);
 		i++;
 	}
 	i = 0;
-	while (map[last_row][i] && map[last_row][i] != '\n')
+	while (map[last_row][i])
 	{
-		if (map[last_row][i] != '1' && map[last_row][i] != ' ')
+		if (map[last_row][i] != '1' && map[last_row][i] != ' ' && map[0][i] != '\n')
 			return (0);
 		i++;
 	}
+	printf("out");
 	return (1);
 }
 
@@ -109,6 +110,7 @@ int	check_bottom(t_parsing *parse)
 			}
 		}
 	}
+	printf("out\n");
 	return (1);
 }
 
@@ -133,5 +135,11 @@ int	one_player(t_parsing *parse)
 				return (0);
 		}
 	}
+	if(player == 0)
+	{
+		printf("No Player\n");
+		return (0);
+	}
+	printf("out\n");
 	return (1);
 }
