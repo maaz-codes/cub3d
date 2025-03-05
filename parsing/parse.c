@@ -65,7 +65,10 @@ int	check_parse(t_parsing *parse, char *file)
 	if (is_valid(parse) && texture_count + rgb_count == 6)
 		return (1);
 	else
+	{
+		printf("Invalid Values\n");
 		return (0);
+	}
 }
 
 int	parse_init_save(t_parsing **parse, char **av)
