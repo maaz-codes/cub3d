@@ -41,8 +41,8 @@ void	get_xy_val(t_parsing *parse)
 			if(parse->map[y][x] == 'W' || parse->map[y][x] == 'E'
 			|| parse->map[y][x] == 'N' || parse->map[y][x] == 'S')
 			{
-				parse->x_pos = x + 1;
-				parse->y_pos = y + 1;
+				parse->x_pos = x;
+				parse->y_pos = y;
 				break;
 			}
 		}
