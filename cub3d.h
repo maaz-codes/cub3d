@@ -136,7 +136,7 @@ void 				free_data(t_parsing *parse);
 //parsing
 int					parse_init_save(t_parsing **parse, char **av);
 int 				init_textures_and_rgb(t_parsing **parse);
-int 				init_parse_struct(t_parsing **parse);
+int 				init_parse_struct(t_parsing **parse, char **av);
 int 				init_file_data(t_parsing *parse);
 void 				get_rows(t_parsing *parse, int file);
 int 				get_file_data(t_parsing *parse, int file);

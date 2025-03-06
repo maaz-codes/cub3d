@@ -6,7 +6,7 @@
 /*   By: rcreer <rcreer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 17:54:28 by rcreer            #+#    #+#             */
-/*   Updated: 2025/03/04 17:54:58 by rcreer           ###   ########.fr       */
+/*   Updated: 2025/03/06 18:13:13 by rcreer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,9 +52,10 @@ int	is_valid(t_parsing *parse)
 		return (0);
 }
 
-int init_parse_struct(t_parsing **parse)
+int init_parse_struct(t_parsing **parse, char **av)
 {
 	int i;
+	
 	*parse = malloc(sizeof(t_parsing));
 	if (!(*parse))
 		return 0;
@@ -69,6 +70,10 @@ int init_parse_struct(t_parsing **parse)
 			return (0);
 		*(*parse)->check_valid[i] = 0;
 	}
+	(*parse)->map = NULL;
+	(*parse)->file_data = NULL;
+	(*parse)->textures = NULL;
+	(*parse)->rgb = NULL;
 	if (!init_textures_and_rgb(parse))
 		return (0);
 	return 1;

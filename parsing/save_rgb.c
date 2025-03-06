@@ -6,7 +6,7 @@
 /*   By: rcreer <rcreer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 18:04:31 by rcreer            #+#    #+#             */
-/*   Updated: 2025/03/04 18:05:42 by rcreer           ###   ########.fr       */
+/*   Updated: 2025/03/06 17:46:27 by rcreer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,16 +46,18 @@ int	set_values_rgb(char *file_check, t_parsing *parse, char *pos, int rgb_pos)
 	i = -1;
 	trim_pos = ft_strtrim(file_check, pos);
 	remove_comma = ft_split(trim_pos, ',');
-	printf("remove comma: %s\n",trim_pos);
 	free(trim_pos);
 	while (++i < 3 && remove_comma[i] != NULL)
 	{
 		remove_space = ft_strtrim(remove_comma[i], " ");
 		rgb_num = ft_atoi(remove_space + skipper_val(remove_space));
-		if (!valid_num(rgb_num, remove_space, remove_comma))
+		if (!ft_strncmp(remove_space,"\n",1) || !valid_num(rgb_num, remove_space, remove_comma))
+		{
+			free(remove_space);
 			return (0);
-		parse->rgb[rgb_pos][i] = rgb_num;
+		}
 		free(remove_space);
+		parse->rgb[rgb_pos][i] = rgb_num;
 	}
 	free_double(remove_comma, 3);
 	return (1);

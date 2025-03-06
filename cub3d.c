@@ -310,35 +310,48 @@ int cub_rendering(t_cub *cub)
     return (1);
 }
 
+// int valid_cub_file(char **av)
+// {
+    
+// }
 int main(int ac, char **av)
 {
     t_cub *cub;
     t_parsing *parse;
 
     if(ac == 2)
-    {
+    {   
+        int file_check;
+
+        file_check = file_open(av[1]);
+        if(!file_check)
+        {
+            close(file_check);
+            return (0);
+        }
+        close(file_check);
         if(!parse_init_save(&parse, av))
         {
             free_data(parse);
             return (0);
         }
-        cub = (t_cub *)malloc(1024 * 100);
-        cub->map = parse->map;
+        // cub = (t_cub *)malloc(1024 * 100);
+        // cub->map = parse->map;
         
-        if (gettimeofday(&cub->start_time, NULL) == 0)
-            printf("Started!\n");
-        else    
-            return (write(2, "Time-function failed:(\n", 24), 1);
+        // if (gettimeofday(&cub->start_time, NULL) == 0)
+        //     printf("Started!\n");
+        // else    
+        //     return (write(2, "Time-function failed:(\n", 24), 1);
 
-        cub_init(cub, parse);
-        cub_rendering(cub);
-        // mlx_loop_hook(cub->connection, cub_rendering, cub);
-        mlx_key_hook(cub->win, handle_key_release, cub);
-        mlx_loop(cub->connection);
+        // cub_init(cub, parse);
+        // cub_rendering(cub);
+        // // mlx_loop_hook(cub->connection, cub_rendering, cub);
+        // mlx_key_hook(cub->win, handle_key_release, cub);
+        // mlx_loop(cub->connection);
 
-        mlx_destroy_window(cub->connection, cub->win);
-        free(cub->connection);
-        // free_data(parse);
+        // mlx_destroy_window(cub->connection, cub->win);
+        // free(cub->connection);
+        free_data(parse);
     }
     else
         printf("Invalid Args\n");

@@ -6,7 +6,7 @@
 /*   By: rcreer <rcreer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 17:53:00 by rcreer            #+#    #+#             */
-/*   Updated: 2025/03/04 17:54:19 by rcreer           ###   ########.fr       */
+/*   Updated: 2025/03/06 17:47:37 by rcreer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,15 +73,8 @@ int	check_parse(t_parsing *parse, char *file)
 
 int	parse_init_save(t_parsing **parse, char **av)
 {
-	int			file_check;
-
-	file_check = file_open(av[1]);
-	if (!init_parse_struct(parse) || !file_check)
-	{
-		close(file_check);
+	if (!init_parse_struct(parse, av))
 		return (0);
-	}
-	close(file_check);
 	if (!check_parse(*parse, av[1]))
 		return (0);
 	if(!save_texture(*parse, file_open(av[1])))
@@ -91,8 +84,7 @@ int	parse_init_save(t_parsing **parse, char **av)
 	}
 	if (!rgb_save(*parse))
 	{	
-		printf("Error rgb\n");
-		free_data(*parse);
+		printf("Invalid RGB\n");
 		return (0);
 	}
 	print_info(*parse, av);

@@ -6,7 +6,7 @@
 /*   By: rcreer <rcreer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 18:02:12 by rcreer            #+#    #+#             */
-/*   Updated: 2025/03/04 18:02:25 by rcreer           ###   ########.fr       */
+/*   Updated: 2025/03/06 18:15:04 by rcreer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,5 +49,6 @@ void	free_data(t_parsing *parse)
 		free_double(parse->file_data, parse->row);
 	if (parse->map)
 		free_double(parse->map, parse->map_length);
-	free(parse);
+	if(parse)
+		free(parse);
 }
