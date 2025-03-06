@@ -313,9 +313,18 @@ int cub_rendering(t_cub *cub)
 int valid_cub_file(char *file_name)
 {
     int i;
+    char buffer[1];
+    int file_check;
 
     i = -1;
-    while(file_name[++i] != '.');
+    file_check = file_open(file_name);
+    if(!file_check)
+    {
+        (printf("Invalid File\n"),close(file_check));
+        return (0);
+    }
+    close(file_check);
+    while(file_name[++i] != '.' && file_name[i]);
     if(i == ft_strlen(file_name))
         return (0);
     else
@@ -323,10 +332,44 @@ int valid_cub_file(char *file_name)
         if(!ft_strncmp(file_name + i,".cub",3))
             return (1);
         else
+        {
+            printf("Not a .cub file\n");
             return (0);
+        }
     }
     return (0);
 }
+
+int valid_xpm_file(t_parsing *parse)
+{   
+    int row;
+    int i;
+    char **textures;
+
+    row = -1;
+    textures = parse->textures;
+    while(++row < 4)
+    {
+        i = -1;
+        while(textures[row][++i] != '.' 
+            && textures[row][i])
+        if(i == ft_strlen(textures[row]))
+        {
+            printf("Not a .xpm file");
+            return (0);
+        }
+        else
+        {
+            if(ft_strncmp(textures[row] + i,".xpm",3))
+            {
+                printf("Not a .xpm file\n");
+                return (0);
+            }
+        }
+    }
+    return (1);
+}
+
 int main(int ac, char **av)
 {
     t_cub *cub;
@@ -334,16 +377,16 @@ int main(int ac, char **av)
 
     if(ac == 2)
     {   
-        int file_check;
+        
+        if(!valid_cub_file(av[1]))
+            return (0);
 
-        file_check = file_open(av[1]);
-        if(!file_check || !valid_cub_file(av[1]))
+        if(!parse_init_save(&parse, av))
         {
-            close(file_check);
+            free_data(parse);
             return (0);
         }
-        close(file_check);
-        if(!parse_init_save(&parse, av))
+        if(!valid_xpm_file(parse))
         {
             free_data(parse);
             return (0);

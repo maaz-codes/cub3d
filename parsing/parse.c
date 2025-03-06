@@ -6,7 +6,7 @@
 /*   By: rcreer <rcreer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 17:53:00 by rcreer            #+#    #+#             */
-/*   Updated: 2025/03/06 17:47:37 by rcreer           ###   ########.fr       */
+/*   Updated: 2025/03/06 19:13:57 by rcreer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ int	check_parse(t_parsing *parse, char *file)
 	get_file_data(parse, file_open(file));
 	if (!get_map(parse))
 	{
-		printf("No Map\n");
+		printf("Invalid Map\n");
 		return (0);
 	}
 	if (!check_parsing(parse, &texture_count, &rgb_count))
