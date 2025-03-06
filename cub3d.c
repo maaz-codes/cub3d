@@ -310,10 +310,23 @@ int cub_rendering(t_cub *cub)
     return (1);
 }
 
-// int valid_cub_file(char **av)
-// {
-    
-// }
+int valid_cub_file(char *file_name)
+{
+    int i;
+
+    i = -1;
+    while(file_name[++i] != '.');
+    if(i == ft_strlen(file_name))
+        return (0);
+    else
+    {
+        if(!ft_strncmp(file_name + i,".cub",3))
+            return (1);
+        else
+            return (0);
+    }
+    return (0);
+}
 int main(int ac, char **av)
 {
     t_cub *cub;
@@ -324,7 +337,7 @@ int main(int ac, char **av)
         int file_check;
 
         file_check = file_open(av[1]);
-        if(!file_check)
+        if(!file_check || !valid_cub_file(av[1]))
         {
             close(file_check);
             return (0);
