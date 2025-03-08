@@ -17,7 +17,7 @@
 
 // MLX
 #define screenWidth 1280
-#define screenHeight 1024 
+#define screenHeight 1024
 #define mapWidth 24
 #define mapHeight 24
 
@@ -48,7 +48,11 @@
 // GENERAL
 # define TRUE 1
 # define FALSE 0
+
 # define WALKABLE 48
+// # define WALKABLE 0
+# define ROT_SPEED 0.1
+# define MOVE_SPEED 0.2
 
 
 typedef struct s_img
@@ -74,8 +78,23 @@ typedef struct  s_cub
 	double			dirY;
 	double			planeX;
 	double			planeY;
-	double 			move_speed;
-	double 			rot_speed;
+	double			cameraX;
+	double			rayDirX;
+	double			rayDirY;
+	int				mapX;
+	int				mapY;
+	double			sideDistX;
+	double			sideDistY;
+	double			deltaDistX;
+	double			deltaDistY;
+	double			perpWallDist;
+	int				stepX;
+	int				stepY;
+	int				side;
+	int				color;
+	double			drawStart;
+	double			drawEnd;
+	double			lineHeight;
 }               t_cub;
 
 // get next line
@@ -99,10 +118,6 @@ typedef struct parsing
 	int				x_pos;
 	int				y_pos;
 }	t_parsing;
-
-// main.c
-int cub_rendering(t_cub *cub);
-int	handle_key_release(int keycode, t_cub *cub);
 
 //libft 
 int					ft_strncmp(const char *s1, const char *s2, size_t n);
@@ -167,4 +182,18 @@ int 				one_check(char **map, int row, int i);
 int 				only_spaces(char *map);
 int 				player_zero_check(char **map, int row, int i);
 int 				valid_nsew(char **map, int row, int i);
+
+// main.c
+int 				cub_rendering(t_cub *cub);
+int					handle_key_release(int keycode, t_cub *cub);
+
+// draw_utils.c
+void				my_mlx_pixel_put(t_img *data, int x, int y, int color);
+void				color_pxl(int x, int y, int color, t_cub *cub);
+void 				draw_strip(int x, int start, int end, int color, t_cub *cub);
+
+// motion.c
+int					handle_key_release(int keycode, t_cub *cub);
+void				cub_motion(double move_x, double move_y, t_cub *cub);
+
 #endif

@@ -1,21 +1,20 @@
 NAME = cub3d
 
-# SRC = fractol.c maths.c mlx_utils.c rendering.c events.c libft.c errors.c \
-# 		mandelbrot.c julia.c 
-
-SRC = cub3d.c \
-		parsing/parse.c \
-		parsing/parse_utils.c \
-		parsing/texture_parse.c \
-		parsing/rgb_parse.c \
-		parsing/save_texture.c \
-		parsing/save_rgb.c \
-		parsing/free_data.c \
-		parsing/get_map.c \
-		parsing/get_file_data.c \
-		parsing/parse_map.c \
-		parsing/parse_map_utils.c \
-		parsing/parse_utils_two.c \
+SRC = 	cub3d.c \
+		draw_utils.c \
+		motion.c \
+			parsing/parse.c \
+			parsing/parse_utils.c \
+			parsing/texture_parse.c \
+			parsing/rgb_parse.c \
+			parsing/save_texture.c \
+			parsing/save_rgb.c \
+			parsing/free_data.c \
+			parsing/get_map.c \
+			parsing/get_file_data.c \
+			parsing/parse_map.c \
+			parsing/parse_map_utils.c \
+			parsing/parse_utils_two.c \
 		get_next_line/get_next_line.c \
 		get_next_line/get_next_line_utils.c \
 			libft/ft_strncmp.c \
@@ -32,8 +31,8 @@ SRC = cub3d.c \
 OBJ = $(SRC:.c=.o)
 
 CC = cc
-# CFLAGS = -Wall -Wextra -Werror
-MLX_FLAGS = -Lmlx -lmlx -framework OpenGL -framework AppKit
+
+MLX_FLAGS = -Lmlx -lmlx -framework OpenGL -framework AppKit -g3 -fsanitize=address
 
 all: $(NAME)
 
