@@ -90,9 +90,27 @@ int	parse_map(t_parsing *parse)
 	map = parse->map;
 	row = 0;
 
-	if (!check_top_down(map, last_row(parse)) || !check_bottom(parse)
-		|| !one_player(parse)) 
+	if(!check_top_down(map, last_row(parse)))
+	{
+		printf("go 1\n");
 		return (0);
+	}
+	if(!check_bottom(parse))
+	{
+		printf("go 2\n");
+		return (0);
+	}
+	if(!one_player(parse))
+	{
+		printf("go 3\n");
+		return (0);
+	}
+	// if (!check_top_down(map, last_row(parse)) || !check_bottom(parse)
+	// 	|| !one_player(parse)) 
+	// {
+	// 	printf("go here\n");
+	// 	return (0);
+	// }
 	while (++row < parse->map_length)
 	{
 		i = -1;

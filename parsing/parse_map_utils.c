@@ -50,12 +50,14 @@ int	last_row(t_parsing *parse)
 	while (row >= 0)
 	{	
 		i = 0;
-		while (map[row][i] != '\n')
+		while (map[row][i])
 		{
-			while (map[row][i] == ' ')
+			while (map[row][i] == ' ' || map[row][i] == '\t')
 				i++;
 			if (check_which_texture(map[row], i) == 7)
 				return (row);
+			else if(map[row][i] == '\n')
+				break;
 			else
 				return (0);
 			i++;
@@ -70,17 +72,28 @@ int	 check_top_down(char **map, int last_row)
 	int	i;
 
 	i = 0;
+	if(last_row == 0)
+	{
+		printf("last row num error\n");	
+		return (0);
+	}
 	while (map[0][i])
 	{
 		if (map[0][i] != '1' && map[0][i] != ' ' && map[0][i] != '\n')
+		{
+			printf("go top\n");
 			return (0);
+		}
 		i++;
 	}
 	i = 0;
 	while (map[last_row][i])
-	{
-		if (map[last_row][i] != '1' && map[last_row][i] != ' ' && map[0][i] != '\n')
+	{	
+		if (map[last_row][i] != '1' && map[last_row][i] != ' ' && map[last_row][i] != '\n')
+		{
+			printf("go bot\n");
 			return (0);
+		}
 		i++;
 	}
 	return (1);
