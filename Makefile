@@ -1,32 +1,12 @@
 NAME = cub3d
 
+# SRC = fractol.c maths.c mlx_utils.c rendering.c events.c libft.c errors.c \
+# 		mandelbrot.c julia.c 
+
 SRC = 	cub3d.c \
 		draw_utils.c \
 		motion.c \
-			parsing/parse.c \
-			parsing/parse_utils.c \
-			parsing/texture_parse.c \
-			parsing/rgb_parse.c \
-			parsing/save_texture.c \
-			parsing/save_rgb.c \
-			parsing/free_data.c \
-			parsing/get_map.c \
-			parsing/get_file_data.c \
-			parsing/parse_map.c \
-			parsing/parse_map_utils.c \
-			parsing/parse_utils_two.c \
-		get_next_line/get_next_line.c \
-		get_next_line/get_next_line_utils.c \
-			libft/ft_strncmp.c \
-			libft/ft_strlen.c \
-			libft/ft_strlcpy.c \
-			libft/ft_calloc.c \
-			libft/ft_strtrim.c \
-			libft/ft_bzero.c \
-			libft/ft_strchr.c \
-			libft/ft_atoi.c \
-			libft/ft_split.c \
-			libft/ft_strdup.c \
+		ray_casting.c \
 
 OBJ = $(SRC:.c=.o)
 
@@ -39,7 +19,7 @@ all: $(NAME)
 $(NAME): $(OBJ)
 	@echo "compiling..."
 	@$(MAKE) all -C mlx
-	@$(CC) $(CFLAGS) $(MLX_FLAGS) $(OBJ) -o $(NAME)
+	@$(CC) $(MLX_FLAGS) $(OBJ) -o $(NAME)
 	@echo "Compilation finished: try: ./$(NAME)"
 
 %.o: %.c

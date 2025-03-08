@@ -1,148 +1,37 @@
 #include "cub3d.h"
 
-void cub_init(t_cub *cub, t_parsing *parse)
+t_tex *get_texture(char *path, t_cub *cub)
+{
+    t_tex   *tex;
+	void	*img;
+	int		img_width;
+	int		img_height;
+
+    tex = malloc(1024);
+    tex->img.img = mlx_xpm_file_to_image(cub->connection, path, &img_width, &img_height);
+    tex->img.addr = mlx_get_data_addr(tex->img.img, &tex->img.bits_per_pixel, &tex->img.line_length, &tex->img.endian);
+    tex->ht = img_height;
+    tex->wd = img_width;
+    return (tex);
+}
+
+void cub_init(t_cub *cub)
 {
     cub->connection = mlx_init();
     cub->win = mlx_new_window(cub->connection, screenWidth, screenHeight, "cub3D");
     cub->img.img = mlx_new_image(cub->connection, screenWidth, screenHeight);
     cub->img.addr = mlx_get_data_addr(cub->img.img, &cub->img.bits_per_pixel, &cub->img.line_length, &cub->img.endian);
 
-    cub->posX = parse->x_pos;
-    cub->posY = parse->y_pos;
+    cub->posX = 22;
+    cub->posY = 12;
 
     cub->dirX = -1;
     cub->dirY = 0;
 
     cub->planeX = 0;
     cub->planeY = 0.66;
-}
 
-void print_map(char **map)
-{
-    int i = 0;
-
-    while (i < 5)
-    {
-        int j = 0;
-        while (j < 10)
-        {
-            printf("%c", map[i][j]);
-            j++;
-        }
-        printf("\n");
-        i++;
-    }
-}
-
-unsigned long getTicks(t_cub *cub) 
-{
-    struct timeval tv;
-    struct timeval tick;
-
-    gettimeofday(&tv, NULL);
-    tick.tv_sec = tv.tv_sec - cub->start_time.tv_sec;
-    tick.tv_usec = tv.tv_usec - cub->start_time.tv_usec;
-    return (tick.tv_sec * 1000) + (tick.tv_usec / 1000); // Convert to milliseconds
-}
-
-int get_color(t_cub *cub)
-{
-    int dir;
-    int color;
-
-    dir = cub->map[cub->mapX][cub->mapY];
-    if (dir == 1)
-        color = COLOR_RED;
-    else if (dir == 2)
-        color = COLOR_GREEN;
-    else if (dir == 3)
-        color = COLOR_BLUE;
-    else if (dir == 4)
-        color = COLOR_WHITE;
-    else
-        color = COLOR_YELLOW;
-    if (cub->side == 1)
-        color /= 2;
-    return (color);
-}
-
-void perform_dda(t_cub *cub)
-{
-    int hit;
-
-    hit = 0;
-    while(hit == 0)
-    {
-        //jump to next map square, either in x-direction, or in y-direction
-        if(cub->sideDistX < cub->sideDistY)
-        {
-            cub->sideDistX += cub->deltaDistX;
-            cub->mapX += cub->stepX;
-            cub->side = 0;
-        }
-        else
-        {
-            cub->sideDistY += cub->deltaDistY;
-            cub->mapY += cub->stepY;
-            cub->side = 1;
-        }
-        //Check if ray has hit a wall
-        if(cub->map[cub->mapX][cub->mapY] > '0') 
-            hit = 1;
-    }
-}
-
-void get_drawing_coords(t_cub *cub)
-{
-    cub->lineHeight = (int)(screenHeight / cub->perpWallDist);
-    cub->drawStart = -cub->lineHeight / 2 + screenHeight / 2;
-    if(cub->drawStart < 0) 
-        cub->drawStart = 0;
-    cub->drawEnd = cub->lineHeight / 2 + screenHeight / 2;
-    if(cub->drawEnd >= screenHeight)
-        cub->drawEnd = screenHeight - 1;
-}
-
-void init_rays(int x, t_cub *cub)
-{
-    cub->cameraX = 2 * x / (double)screenWidth - 1; //x-coordinate in camera space
-    cub->rayDirX = cub->dirX + cub->planeX * cub->cameraX;
-    cub->rayDirY = cub->dirY + cub->planeY * cub->cameraX;
-    cub->mapX = (int)cub->posX;
-    cub->mapY = (int)cub->posY; 
-    if (cub->rayDirX == 0)
-        cub->deltaDistX = 1e30;
-    else
-        cub->deltaDistX = fabs(1 / cub->rayDirX);
-    if (cub->rayDirY == 0)
-        cub->deltaDistY = 1e30;
-    else
-        cub->deltaDistY = fabs(1 / cub->rayDirY);
-}
-
-void perform_ray_casting(int x, t_cub *cub)
-{
-    init_rays(x, cub);
-    if(cub->rayDirX < 0)
-    {
-        cub->stepX = -1;
-        cub->sideDistX = (cub->posX - cub->mapX) * cub->deltaDistX;
-    }
-    else
-    {
-        cub->stepX = 1;
-        cub->sideDistX = (cub->mapX + 1.0 - cub->posX) * cub->deltaDistX;
-    }
-    if(cub->rayDirY < 0)
-    {
-        cub->stepY = -1;
-        cub->sideDistY = (cub->posY - cub->mapY) * cub->deltaDistY;
-    }
-    else
-    {
-        cub->stepY = 1;
-        cub->sideDistY = (cub->mapY + 1.0 - cub->posY) * cub->deltaDistY;
-    }
+    cub->north = get_texture("./green_tex.xpm", cub);
 }
 
 int cub_rendering(t_cub *cub)
@@ -168,88 +57,62 @@ int cub_rendering(t_cub *cub)
     return (1);
 }
 
-int valid_cub_file(char *file_name)
+void render_tex()
 {
-    int i;
-    char buffer[1];
-    int file_check;
+    void	*mlx;
+	void	*img;
+    char	*relative_path = "./green_tex.xpm";
+	int		img_width;
+	int		img_height;
 
-    i = -1;
-    file_check = file_open(file_name);
-    if(!file_check)
-    {
-        (printf("Invalid File\n"),close(file_check));
-        return (0);
-    }
-    close(file_check);
-    while(file_name[++i] != '.' && file_name[i]);
-    if(i == ft_strlen(file_name))
-        return (0);
-    else
-    {
-        if(!ft_strncmp(file_name + i,".cub",3))
-            return (1);
-        else
-        {
-            printf("Not a .cub file\n");
-            return (0);
-        }
-    }
-    return (0);
-}
-
-int valid_xpm_file(t_parsing *parse)
-{   
-    int row;
-    int i;
-    char **textures;
-
-    row = -1;
-    textures = parse->textures;
-    while(++row < 4)
-    {
-        i = -1;
-        while(textures[row][++i] != '.' 
-            && textures[row][i])
-        if(i == ft_strlen(textures[row]))
-        {
-            printf("Not a .xpm file");
-            return (0);
-        }
-        else
-        {
-            if(ft_strncmp(textures[row] + i,".xpm",3))
-            {
-                printf("Not a .xpm file\n");
-                return (0);
-            }
-        }
-    }
-    return (1);
+	mlx = mlx_init();
+	img = mlx_xpm_file_to_image(mlx, relative_path, &img_width, &img_height);
+    void *win = mlx_new_window(mlx, img_width, img_height, "cub3D");
+    mlx_put_image_to_window(mlx, win, img, 0, 0);
+    mlx_loop(mlx);
+    mlx_destroy_window(mlx, win);
 }
 
 int main(int ac, char **av)
 {
-    t_cub       *cub;
-    t_parsing   *parse;
+    t_cub *cub;
 
-    if(ac == 2)
-    {   
-        if(!valid_cub_file(av[1]))
-            return (0);
-        if(!parse_init_save(&parse, av))
-            return (free_data(parse), 0);
-        if(!valid_xpm_file(parse))
-            return (free_data(parse), 0);
-        cub = (t_cub *)malloc(1024 * 100);
-        cub->map = parse->map;
-        cub_init(cub, parse);
-        cub_rendering(cub);
-        mlx_key_hook(cub->win, handle_key_release, cub);
-        mlx_loop(cub->connection);
-        // free(cub->connection);
-        // free_data(parse);
-    }
-    else
-        printf("Invalid Args\n");
+    int worldMap[mapWidth][mapHeight] =
+    {
+        {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
+        {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+        {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+        {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+        {1,0,0,0,0,0,2,2,2,2,2,0,0,0,0,3,0,3,0,3,0,0,0,1},
+        {1,0,0,0,0,0,2,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,1},
+        {1,0,0,0,0,0,2,0,0,0,2,0,0,0,0,3,0,0,0,3,0,0,0,1},
+        {1,0,0,0,0,0,2,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,1},
+        {1,0,0,0,0,0,2,2,0,2,2,0,0,0,0,3,0,3,0,3,0,0,0,1},
+        {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+        {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+        {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+        {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+        {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+        {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+        {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+        {1,4,4,4,4,4,4,4,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+        {1,4,0,4,0,0,0,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+        {1,4,0,0,0,0,5,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+        {1,4,0,4,0,0,0,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+        {1,4,0,4,4,4,4,4,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+        {1,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+        {1,4,4,4,4,4,4,4,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+        {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}
+    };
+
+    // render_tex();
+
+    cub = (t_cub *)malloc(1024 * 100);
+    cub->map = worldMap;
+    cub_init(cub);
+    cub_rendering(cub);
+    mlx_key_hook(cub->win, handle_key_release, cub);
+    mlx_loop(cub->connection);
+    mlx_destroy_window(cub->connection, cub->win);
+	free(cub->connection);
 }
