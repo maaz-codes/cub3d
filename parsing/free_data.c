@@ -52,3 +52,30 @@ void	free_data(t_parsing *parse)
 	if(parse)
 		free(parse);
 }
+
+int valid_cub_file(char *file_name)
+{
+    int i;
+    char buffer[1];
+    int file_check;
+
+    i = -1;
+    file_check = file_open(file_name);
+    if(!file_check)
+        return (close(file_check), 0);
+    close(file_check);
+    while(file_name[++i] != '.' && file_name[i]);
+    if(i == ft_strlen(file_name))
+        return (0);
+    else
+    {
+        if(!ft_strncmp(file_name + i,".cub",3))
+            return (1);
+        else
+        {
+            printf("Not a .cub file\n");
+            return (0);
+        }
+    }
+    return (0);
+}

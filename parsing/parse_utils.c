@@ -85,7 +85,7 @@ int file_open(char *av)
 	file = open(av, O_RDONLY);
 	if (file == -1)
 	{
-		printf("Invalid file\n");
+		printf("Invalid File\n");
 		return (0);
 	}
 	return (file);

@@ -168,66 +168,6 @@ int cub_rendering(t_cub *cub)
     return (1);
 }
 
-int valid_cub_file(char *file_name)
-{
-    int i;
-    char buffer[1];
-    int file_check;
-
-    i = -1;
-    file_check = file_open(file_name);
-    if(!file_check)
-    {
-        (printf("Invalid File\n"),close(file_check));
-        return (0);
-    }
-    close(file_check);
-    while(file_name[++i] != '.' && file_name[i]);
-    if(i == ft_strlen(file_name))
-        return (0);
-    else
-    {
-        if(!ft_strncmp(file_name + i,".cub",3))
-            return (1);
-        else
-        {
-            printf("Not a .cub file\n");
-            return (0);
-        }
-    }
-    return (0);
-}
-
-int valid_xpm_file(t_parsing *parse)
-{   
-    int row;
-    int i;
-    char **textures;
-
-    row = -1;
-    textures = parse->textures;
-    while(++row < 4)
-    {
-        i = -1;
-        while(textures[row][++i] != '.' 
-            && textures[row][i])
-        if(i == ft_strlen(textures[row]))
-        {
-            printf("Not a .xpm file");
-            return (0);
-        }
-        else
-        {
-            if(ft_strncmp(textures[row] + i,".xpm",3))
-            {
-                printf("Not a .xpm file\n");
-                return (0);
-            }
-        }
-    }
-    return (1);
-}
-
 int main(int ac, char **av)
 {
     t_cub       *cub;
@@ -239,16 +179,14 @@ int main(int ac, char **av)
             return (0);
         if(!parse_init_save(&parse, av))
             return (free_data(parse), 0);
-        if(!valid_xpm_file(parse))
-            return (free_data(parse), 0);
-        cub = (t_cub *)malloc(1024 * 100);
-        cub->map = parse->map;
-        cub_init(cub, parse);
-        cub_rendering(cub);
-        mlx_key_hook(cub->win, handle_key_release, cub);
-        mlx_loop(cub->connection);
+        // cub = (t_cub *)malloc(1024 * 100);
+        // cub->map = parse->map;
+        // cub_init(cub, parse);
+        // cub_rendering(cub);
+        // mlx_key_hook(cub->win, handle_key_release, cub);
+        // mlx_loop(cub->connection);
         // free(cub->connection);
-        // free_data(parse);
+        free_data(parse);
     }
     else
         printf("Invalid Args\n");

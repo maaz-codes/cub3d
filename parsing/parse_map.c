@@ -103,8 +103,6 @@ int	parse_map(t_parsing *parse)
 			else if (pass_through(map, &i, row, parse) == 1)
 				return (1);
 			else if (pass_through(map, &i, row, parse) == 2)
-				break ;
-			else
 				break;
 		}
 	}

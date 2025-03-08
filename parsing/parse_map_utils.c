@@ -13,7 +13,7 @@
 #include "../cub3d.h"
 
 int	checkpoint(char **map, int row, int i)
-{
+{	
 	while (map[row][i])
 	{
 		if (map[row][i] == '1' || map[row][i] == ' ')
@@ -56,6 +56,8 @@ int	last_row(t_parsing *parse)
 				i++;
 			if (check_which_texture(map[row], i) == 7)
 				return (row);
+			else
+				return (0);
 			i++;
 		}
 		row--;

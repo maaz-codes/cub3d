@@ -87,7 +87,36 @@ int	parse_init_save(t_parsing **parse, char **av)
 		printf("Invalid RGB\n");
 		return (0);
 	}
+	if(!valid_xpm_file(*parse))
+		return (0);
 	print_info(*parse, av);
     get_player_modif_map(*parse);
 	return (1);
+}
+
+int valid_xpm_file(t_parsing *parse)
+{   
+    int row;
+    int i;
+    char **textures;
+
+    row = -1;
+    textures = parse->textures;
+    while(++row < 4)
+    {
+        i = -1;
+        while(textures[row][++i] != '.' 
+            && textures[row][i]);
+        if(i == ft_strlen(textures[row]))
+        {   
+            printf("Not a .xpm file");
+            return (0);
+        }
+        else
+        {   
+            if(ft_strncmp(textures[row] + i,".xpm",3))
+                return (printf("Not a .xpm file\n"),0);
+        }
+    }
+    return (1);
 }

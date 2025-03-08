@@ -168,6 +168,8 @@ void 				print_rgb_map(t_parsing *parse);
 void				get_player_modif_map(t_parsing *parse);
 void				print_info(t_parsing *parse, char **av);
 void				print_rgb_map(t_parsing *parse);
+int 				valid_xpm_file(t_parsing *parse);
+int 				valid_cub_file(char *file_name);
 
 //parsing map
 int 				get_map(t_parsing *parse);
