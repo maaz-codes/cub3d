@@ -7,6 +7,7 @@ SRC = 	cub3d.c \
 		draw_utils.c \
 		motion.c \
 		ray_casting.c \
+		textures.c \
 
 OBJ = $(SRC:.c=.o)
 

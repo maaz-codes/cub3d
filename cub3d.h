@@ -88,6 +88,9 @@ typedef struct  s_cub
 	double			drawEnd;
 	double			lineHeight;
 	t_tex			*north;
+	t_tex			*south;
+	t_tex			*east;
+	t_tex			*west;
 }               t_cub;
 
 // main.c
@@ -111,7 +114,14 @@ void 			perform_dda(t_cub *cub);
 void 			init_rays(int x, t_cub *cub);
 void 			perform_ray_casting(int x, t_cub *cub);
 
+// textures.c
+t_tex 			*get_texture(char *path, t_cub *cub);
+void 			draw_tex(int x, int start, int end, t_cub *cub);
+int 			get_texture_pixel(t_cub *cub, int x, int y);
+
 // game_utils.c
 void 			print_map(char **map);
 unsigned long 	getTicks(t_cub *cub);
+
+
 #endif
