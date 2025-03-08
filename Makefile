@@ -1,8 +1,7 @@
 NAME = cub3d
 
-SRC = 	cub3d.c \
-		draw_utils.c \
-		motion.c \
+		
+SRC = 	test.c \
 			parsing/parse.c \
 			parsing/parse_utils.c \
 			parsing/texture_parse.c \
@@ -15,31 +14,32 @@ SRC = 	cub3d.c \
 			parsing/parse_map.c \
 			parsing/parse_map_utils.c \
 			parsing/parse_utils_two.c \
-		get_next_line/get_next_line.c \
-		get_next_line/get_next_line_utils.c \
-			libft/ft_strncmp.c \
-			libft/ft_strlen.c \
-			libft/ft_strlcpy.c \
-			libft/ft_calloc.c \
-			libft/ft_strtrim.c \
-			libft/ft_bzero.c \
-			libft/ft_strchr.c \
-			libft/ft_atoi.c \
-			libft/ft_split.c \
-			libft/ft_strdup.c \
+				get_next_line/get_next_line.c \
+				get_next_line/get_next_line_utils.c \
+					libft/ft_strncmp.c \
+					libft/ft_strlen.c \
+					libft/ft_strlcpy.c \
+					libft/ft_calloc.c \
+					libft/ft_strtrim.c \
+					libft/ft_bzero.c \
+					libft/ft_strchr.c \
+					libft/ft_atoi.c \
+					libft/ft_split.c \
+					libft/ft_strdup.c \
 
 OBJ = $(SRC:.c=.o)
 
-CC = cc
-
+CC = cc -g3
+# CFLAGS = -Wall -Wextra -Werror
 MLX_FLAGS = -Lmlx -lmlx -framework OpenGL -framework AppKit -g3 -fsanitize=address
 
 all: $(NAME)
 
 $(NAME): $(OBJ)
 	@echo "compiling..."
-	@$(MAKE) all -C mlx
-	@$(CC) $(CFLAGS) $(MLX_FLAGS) $(OBJ) -o $(NAME)
+	#@$(MAKE) all -C mlx
+	#$(MLX_FLAGS)
+	@$(CC) $(CFLAGS) $(OBJ) -o $(NAME)
 	@echo "Compilation finished: try: ./$(NAME)"
 
 %.o: %.c

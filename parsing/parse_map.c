@@ -57,8 +57,7 @@ int	one_check(char **map, int row, int i)
 {
 	if (map[row][i] == '1')
 	{
-		if (map[row - 1][i] == 1 || map[row + 1][i] == 1
-			|| only_spaces(map[row - 1]) || only_spaces(map[row + 1]))
+		if (only_spaces(map[row - 1]) || only_spaces(map[row + 1]))
 			return (0);
 		return (1);
 	}
@@ -91,20 +90,11 @@ int	parse_map(t_parsing *parse)
 	row = 0;
 
 	if(!check_top_down(map, last_row(parse)))
-	{
-		printf("go 1\n");
 		return (0);
-	}
 	if(!check_bottom(parse))
-	{
-		printf("go 2\n");
 		return (0);
-	}
 	if(!one_player(parse))
-	{
-		printf("go 3\n");
 		return (0);
-	}
 	// if (!check_top_down(map, last_row(parse)) || !check_bottom(parse)
 	// 	|| !one_player(parse)) 
 	// {

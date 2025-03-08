@@ -53,7 +53,7 @@ int	set_values_rgb(char *file_check, t_parsing *parse, char *pos, int rgb_pos)
 		rgb_num = ft_atoi(remove_space + skipper_val(remove_space));
 		if (!ft_strncmp(remove_space,"\n",1) || !valid_num(rgb_num, remove_space, remove_comma))
 		{
-			free(remove_space);
+			(free(remove_space),free_double(remove_comma, 3));
 			return (0);
 		}
 		free(remove_space);

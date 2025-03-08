@@ -73,27 +73,18 @@ int	 check_top_down(char **map, int last_row)
 
 	i = 0;
 	if(last_row == 0)
-	{
-		printf("last row num error\n");	
 		return (0);
-	}
 	while (map[0][i])
 	{
 		if (map[0][i] != '1' && map[0][i] != ' ' && map[0][i] != '\n')
-		{
-			printf("go top\n");
 			return (0);
-		}
 		i++;
 	}
 	i = 0;
 	while (map[last_row][i])
 	{	
 		if (map[last_row][i] != '1' && map[last_row][i] != ' ' && map[last_row][i] != '\n')
-		{
-			printf("go bot\n");
 			return (0);
-		}
 		i++;
 	}
 	return (1);

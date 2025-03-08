@@ -109,7 +109,7 @@ int valid_xpm_file(t_parsing *parse)
             && textures[row][i]);
         if(i == ft_strlen(textures[row]))
         {   
-            printf("Not a .xpm file");
+            printf("Not a .xpm file\n");
             return (0);
         }
         else
