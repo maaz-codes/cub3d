@@ -15,13 +15,14 @@
 #define mapHeight 5
 
 // COLORS
-#define COLOR_WHITE   0xFFFFFF
-#define COLOR_RED     0x00FF0000  // (255, 0, 0)
-#define COLOR_GREEN   0x0000FF00  // (0, 255, 0)
-#define COLOR_BLUE    0x000000FF  // (0, 0, 255)
-#define COLOR_YELLOW  0x00FFFF00  // (255, 255, 0)
-#define COLOR_PURPLE 0x800080
-#define COLOR_MAGENTA 0xFF00FF
+# define COLOR_BLACK 	0x000000
+# define COLOR_WHITE   	0xFFFFFF
+# define COLOR_RED     	0x00FF0000  
+# define COLOR_GREEN   	0x0000FF00 
+# define COLOR_BLUE    	0x000000FF 
+# define COLOR_YELLOW  	0x00FFFF00
+# define COLOR_PURPLE 	0x800080
+# define COLOR_MAGENTA 	0xFF00FF
 
 // KEYS
 # define KEY_W 13     

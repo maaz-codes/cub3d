@@ -22,8 +22,8 @@ void cub_init(t_cub *cub)
     cub->posX = 1 + 0.5;
     cub->posY = 1 + 0.5;
     init_textures(cub);
-    cub->ceil = COLOR_WHITE;
-    cub->floor = COLOR_YELLOW;
+    cub->ceil = COLOR_BLACK;
+    cub->floor = COLOR_WHITE;
     cub->map_ht = mapHeight;
     cub->map_wd = mapWidth;
 }

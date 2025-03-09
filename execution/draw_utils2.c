@@ -22,12 +22,20 @@ void 	draw_strip(int x, int start, int end, t_cub *cub)
     floor = end;
     while (ceil < start + 10)
     {
-        color_pxl(x, ceil, cub->ceil, cub);
+        if ((rand() % 10000) + 1 == 1)
+            color_pxl(x, ceil, COLOR_WHITE, cub);
+        else if ((rand() % 10000) + 1 == 2)
+            color_pxl(x, ceil, COLOR_PURPLE, cub);
+        else
+            color_pxl(x, ceil, cub->ceil, cub);
         ceil++;
     }
     while (floor < screenHeight)
     {
-        color_pxl(x, floor, cub->floor, cub);
+        if (floor % 10 == 0)
+            color_pxl(x, floor, COLOR_BLACK, cub);
+        else
+            color_pxl(x, floor, cub->floor, cub);
         floor++;
     }
     draw_tex(x, start, end, cub);

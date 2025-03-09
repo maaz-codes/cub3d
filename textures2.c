@@ -2,10 +2,10 @@
 
 void init_textures(t_cub *cub)
 {
-    cub->north = get_texture("./textures/purple_tex.xpm", cub);
-    cub->south = get_texture("./textures/green_tex.xpm", cub);
-    cub->east = get_texture("./textures/red_tex.xpm", cub);
-    cub->west = get_texture("./textures/green_tex.xpm", cub);
+    cub->north = get_texture("./textures/leopard/xpm/north.xpm", cub);
+    cub->south = get_texture("./textures/leopard/xpm/south.xpm", cub);
+    cub->east = get_texture("./textures/leopard/xpm/east.xpm", cub);
+    cub->west = get_texture("./textures/leopard/xpm/west.xpm", cub);
 }
 
 t_tex *get_texture(char *path, t_cub *cub)
