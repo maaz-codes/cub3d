@@ -3,14 +3,13 @@
 void cub_motion(double move_x, double move_y, t_cub *cub)
 {
     // bound check
-    if (move_x >= 0 && move_x < mapWidth && move_y >= 0 && move_y < mapHeight)
-        if (cub->map[(int)move_x][(int)move_y] == WALKABLE)
-        {
-            printf("WALKing: mx:%f | my:%f\n", move_x, move_y);
+    if (move_x > 1 && move_x < cub->map_ht && move_y > 1 && move_y < cub->map_wd)
+    {
+        if (cub->map[(int)move_x][(int)cub->posY] == WALKABLE)
             cub->posX = move_x;
+        if (cub->map[(int)cub->posX][(int)move_y] == WALKABLE)
             cub->posY = move_y;
-        }
-    // cub_rendering(cub);
+    }
 }
 
 void rotation(int dir, t_cub *cub)
@@ -40,16 +39,16 @@ void motion(double *mx, double *my, int dir, t_cub *cub)
     if (dir == KEY_UP)
     {
         *mx = cub->posX + (cub->dirX * MOVE_SPEED);
-        *my = cub->posY;
+        *my = cub->posY + (cub->dirY * MOVE_SPEED);
     }
     else if (dir == KEY_DOWN)
     {
         *mx = cub->posX - (cub->dirX * MOVE_SPEED);
-        *my = cub->posY;
+        *my = cub->posY - (cub->dirY * MOVE_SPEED);
     }
     else if (dir == KEY_LEFT)
     {
-        *mx = cub->posX;
+        *mx = cub->posX + (cub->dirX * MOVE_SPEED);
         *my = cub->posY + (cub->dirY * MOVE_SPEED);
     }
     else if (dir == KEY_RIGHT)
@@ -64,6 +63,8 @@ int	handle_key_event(int keycode, t_cub *cub)
     double move_x;
     double move_y;
 
+    move_x = 0;
+    move_y = 0;
     if (keycode == KEY_UP || keycode == KEY_DOWN || 
         keycode == KEY_LEFT || keycode == KEY_RIGHT)
     {

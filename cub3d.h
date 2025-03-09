@@ -13,8 +13,8 @@
 // #define screenHeight 1480
 #define screenWidth 1280
 #define screenHeight 1080
-#define mapWidth 24
-#define mapHeight 24
+#define mapWidth 10
+#define mapHeight 5
 
 // COLORS
 #define COLOR_WHITE   0xFFFFFF
@@ -62,7 +62,7 @@ typedef struct  s_cub
     void			*connection;
 	void			*win;
 	t_img			img;
-	int 			(*map)[mapHeight];
+	int 			(*map)[mapWidth];
 	struct timeval 	start_time;
 	double			posX;
 	double			posY;
@@ -93,6 +93,8 @@ typedef struct  s_cub
 	int				ceil;
 	int				floor;
 	int				direc;
+	int				map_ht;
+	int				map_wd;
 }               t_cub;
 
 // main.c
