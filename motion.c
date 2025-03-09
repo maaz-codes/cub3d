@@ -10,7 +10,7 @@ void cub_motion(double move_x, double move_y, t_cub *cub)
             cub->posX = move_x;
             cub->posY = move_y;
         }
-    cub_rendering(cub);
+    // cub_rendering(cub);
 }
 
 void rotation(int dir, t_cub *cub)
@@ -59,7 +59,7 @@ void motion(double *mx, double *my, int dir, t_cub *cub)
     }
 }
 
-int	handle_key_release(int keycode, t_cub *cub)
+int	handle_keypress(int keycode, t_cub *cub)
 {
     double move_x;
     double move_y;

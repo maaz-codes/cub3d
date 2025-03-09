@@ -95,7 +95,7 @@ typedef struct  s_cub
 
 // main.c
 int 			cub_rendering(t_cub *cub);
-int				handle_key_release(int keycode, t_cub *cub);
+int				handle_keypress(int keycode, t_cub *cub);
 
 // draw_utils.c
 void			my_mlx_pixel_put(t_img *data, int x, int y, int color);

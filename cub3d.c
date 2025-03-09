@@ -12,10 +12,10 @@ void cub_init(t_cub *cub)
     cub->dirY = 0;
     cub->planeX = 0;
     cub->planeY = 0.66;
-    cub->north = get_texture("./green_tex.xpm", cub);
-    cub->south = get_texture("./green_tex.xpm", cub);
-    cub->east = get_texture("./red_tex.xpm", cub);
-    cub->west = get_texture("./purple_tex.xpm", cub);
+    cub->north = get_texture("./textures/green_tex.xpm", cub);
+    cub->south = get_texture("./textures/green_tex.xpm", cub);
+    cub->east = get_texture("./textures/red_tex.xpm", cub);
+    cub->west = get_texture("./textures/purple_tex.xpm", cub);
 }
 
 int cub_rendering(t_cub *cub)
@@ -76,9 +76,12 @@ int main(int ac, char **av)
     cub = (t_cub *)malloc(1024 * 100);
     cub->map = worldMap;
     cub_init(cub);
-    cub_rendering(cub);
-    mlx_key_hook(cub->win, handle_key_release, cub);
+    // cub_rendering(cub);
+    // mlx_key_hook(cub->win, handle_keypress, cub);
+    mlx_hook(cub->win, 2, 1L << 0, handle_keypress, cub);
+	mlx_loop_hook(cub->connection, cub_rendering, cub);
     mlx_loop(cub->connection);
     mlx_destroy_window(cub->connection, cub->win);
 	free(cub->connection);
+
 }

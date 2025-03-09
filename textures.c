@@ -60,7 +60,7 @@ void draw_tex(int x, int start, int end, t_cub *cub)
         jump = tex->ht / cub->lineHeight;
         tex_y = (start - (-cub->lineHeight / 2 + screenHeight / 2)) * jump;
         color = get_texture_pixel(cub, tex_x, tex_y);
-        my_mlx_pixel_put(&cub->img, x, start, color);
+        color_pxl(x, start, color, cub);
         start++;
     }
 }
