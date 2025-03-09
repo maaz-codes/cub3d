@@ -59,7 +59,7 @@ void motion(double *mx, double *my, int dir, t_cub *cub)
     }
 }
 
-int	handle_keypress(int keycode, t_cub *cub)
+int	handle_key_event(int keycode, t_cub *cub)
 {
     double move_x;
     double move_y;

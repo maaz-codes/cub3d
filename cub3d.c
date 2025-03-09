@@ -1,21 +1,53 @@
 #include "cub3d.h"
 
+void init_direction(t_cub *cub, int direc)
+{
+    if (direc == 'W')
+    {
+        cub->dirX = 0;
+        cub->dirY = -1;
+        cub->planeX = 0.66;
+        cub->planeY = 0;
+    }
+    else if (direc == 'E')
+    {
+        cub->dirX = 0;
+        cub->dirY = 1;
+        cub->planeX = -0.66;
+        cub->planeY = 0;
+    }
+    else if (direc == 'S')
+    {
+        cub->dirX = 1;
+        cub->dirY = 0;
+        cub->planeX = 0;
+        cub->planeY = 0.66;
+    }
+    else if (direc == 'N')
+    {
+        cub->dirX = -1;
+        cub->dirY = 0;
+        cub->planeX = 0;
+        cub->planeY = 0.66;
+    }
+}
+
 void cub_init(t_cub *cub)
 {
     cub->connection = mlx_init();
     cub->win = mlx_new_window(cub->connection, screenWidth, screenHeight, "cub3D");
     cub->img.img = mlx_new_image(cub->connection, screenWidth, screenHeight);
     cub->img.addr = mlx_get_data_addr(cub->img.img, &cub->img.bits_per_pixel, &cub->img.line_length, &cub->img.endian);
-    cub->posX = 22;
-    cub->posY = 12;
-    cub->dirX = -1;
-    cub->dirY = 0;
-    cub->planeX = 0;
-    cub->planeY = 0.66;
+    cub->direc = 'N';
+    init_direction(cub, cub->direc);
+    cub->posX = 1 + 0.5;
+    cub->posY = 1 + 0.5;
     cub->north = get_texture("./textures/green_tex.xpm", cub);
-    cub->south = get_texture("./textures/green_tex.xpm", cub);
-    cub->east = get_texture("./textures/red_tex.xpm", cub);
+    cub->south = get_texture("./textures/red_tex.xpm", cub);
+    cub->east = get_texture("./textures/green_tex.xpm", cub);
     cub->west = get_texture("./textures/purple_tex.xpm", cub);
+    cub->ceil = COLOR_WHITE;
+    cub->floor = COLOR_YELLOW;
 }
 
 int cub_rendering(t_cub *cub)
@@ -33,8 +65,7 @@ int cub_rendering(t_cub *cub)
         else          
             cub->perpWallDist = (cub->sideDistY - cub->deltaDistY);
         get_drawing_coords(cub);
-        cub->color = get_color(cub);
-        draw_strip(x, cub->drawStart, cub->drawEnd, cub->color, cub);   
+        draw_strip(x, cub->drawStart, cub->drawEnd, cub);
         x++;
     }
     mlx_put_image_to_window(cub->connection, cub->win, cub->img.img, 0, 0);
@@ -49,7 +80,7 @@ int main(int ac, char **av)
     {
         {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
         {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-        {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+        {1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
         {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
         {1,0,0,0,0,0,2,2,2,2,2,0,0,0,0,3,0,3,0,3,0,0,0,1},
         {1,0,0,0,0,0,2,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,1},
@@ -76,12 +107,10 @@ int main(int ac, char **av)
     cub = (t_cub *)malloc(1024 * 100);
     cub->map = worldMap;
     cub_init(cub);
-    // cub_rendering(cub);
-    // mlx_key_hook(cub->win, handle_keypress, cub);
-    mlx_hook(cub->win, 2, 1L << 0, handle_keypress, cub);
+    mlx_hook(cub->win, 2, 1L << 0, handle_key_event, cub);
+    mlx_hook(cub->win, 3, 1L << 1, handle_key_event, cub);
 	mlx_loop_hook(cub->connection, cub_rendering, cub);
     mlx_loop(cub->connection);
     mlx_destroy_window(cub->connection, cub->win);
 	free(cub->connection);
-
 }

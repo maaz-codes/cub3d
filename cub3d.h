@@ -83,7 +83,6 @@ typedef struct  s_cub
 	int				stepX;
 	int				stepY;
 	int				side;
-	int				color;
 	double			drawStart;
 	double			drawEnd;
 	double			lineHeight;
@@ -91,22 +90,24 @@ typedef struct  s_cub
 	t_tex			*south;
 	t_tex			*east;
 	t_tex			*west;
+	int				ceil;
+	int				floor;
+	int				direc;
 }               t_cub;
 
 // main.c
 int 			cub_rendering(t_cub *cub);
-int				handle_keypress(int keycode, t_cub *cub);
+int				handle_key_event(int keycode, t_cub *cub);
 
 // draw_utils.c
 void			my_mlx_pixel_put(t_img *data, int x, int y, int color);
 void			color_pxl(int x, int y, int color, t_cub *cub);
-void 			draw_strip(int x, int start, int end, int color, t_cub *cub);
-int 			get_color(t_cub *cub);
+void 			draw_strip(int x, int start, int end, t_cub *cub);
+// int 			get_color(t_cub *cub);
 void			get_drawing_coords(t_cub *cub);
-void 			draw_tex(int x, int start, int end, t_cub *cub);
 
 // motion.c
-int				handle_key_release(int keycode, t_cub *cub);
+int				handle_keypress(int keycode, t_cub *cub);
 void			cub_motion(double move_x, double move_y, t_cub *cub);
 
 // ray_casting.c
