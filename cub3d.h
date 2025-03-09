@@ -30,6 +30,14 @@
 # define KEY_D 2     
 # define KEY_LEFT 123
 # define KEY_RIGHT 124
+# define KEY_ESC 53
+
+// MLX_EVENTS
+# define ON_KEY_UP 2
+# define ON_DESTROY 17
+# define MASK_KEY_UP 1L << 0
+# define MASK_ON_DESTROY 6
+
 
 // GENERAL
 # define TRUE 1
@@ -37,6 +45,12 @@
 # define WALKABLE '0'
 # define ROT_SPEED 0.1
 # define MOVE_SPEED 0.2
+
+// ERRORS
+# define ERR_MALLOC 	4201
+# define ERR_FILE 		4202
+# define ERR_SYS_ARGS 	4203
+# define ERR_MLX	 	4204
 
 
 typedef struct 	s_img
@@ -61,7 +75,7 @@ typedef struct  s_cub
 	void			*win;
 	t_img			img;
 	char 			(*map)[mapWidth];
-	struct timeval 	start_time;
+	char 			**final_map;
 	double			posX;
 	double			posY;
 	double			dirX;
@@ -107,8 +121,13 @@ void 			draw_strip(int x, int start, int end, t_cub *cub);
 void			get_drawing_coords(t_cub *cub);
 
 // motion.c
-int				handle_keypress(int keycode, t_cub *cub);
 void			cub_motion(double move_x, double move_y, t_cub *cub);
+void 			rotation(int dir, t_cub *cub);
+void 			motion(double *mx, double *my, int dir, t_cub *cub);
+
+// events.c
+int				handle_key_event(int keycode, t_cub *cub);
+int 			handle_closing(t_cub *cub);
 
 // ray_casting.c
 void 			perform_dda(t_cub *cub);
@@ -124,5 +143,10 @@ int 			get_texture_pixel(t_cub *cub, int x, int y);
 void 			print_map(char **map);
 unsigned long 	getTicks(t_cub *cub);
 
+// errors.c
+void 			cub_slayer(t_cub *cub);
+void 			free_textures(t_cub *cub);
+void 			free_map(t_cub *cub);
+int 			error_msg(int flag);
 
 #endif

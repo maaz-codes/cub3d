@@ -28,6 +28,14 @@ void init_direction(t_cub *cub, int direc)
     }
 }
 
+void init_textures(t_cub *cub)
+{
+    cub->north = get_texture("./textures/purple_tex.xpm", cub);
+    cub->south = get_texture("./textures/green_tex.xpm", cub);
+    cub->east = get_texture("./textures/red_tex.xpm", cub);
+    cub->west = get_texture("./textures/green_tex.xpm", cub);
+}
+
 void cub_init(t_cub *cub)
 {
     cub->connection = mlx_init();
@@ -38,10 +46,7 @@ void cub_init(t_cub *cub)
     init_direction(cub, cub->direc);
     cub->posX = 1 + 0.5;
     cub->posY = 1 + 0.5;
-    cub->north = get_texture("./textures/purple_tex.xpm", cub);
-    cub->south = get_texture("./textures/green_tex.xpm", cub);
-    cub->east = get_texture("./textures/red_tex.xpm", cub);
-    cub->west = get_texture("./textures/green_tex.xpm", cub);
+    init_textures(cub);
     cub->ceil = COLOR_WHITE;
     cub->floor = COLOR_YELLOW;
     cub->map_ht = mapHeight;
@@ -82,18 +87,14 @@ int main(int ac, char **av)
         {"1000010001"},
         {"1111111111"}
     };
-
-        // {1,1,1,1,1,1,1,1,1,1},
-        // {1,0,1,0,0,0,0,0,0,1},
-        // {1,1,1,0,0,0,0,0,0,1},
-        // {1,0,0,0,0,0,0,0,0,1},
-        // {1,1,1,1,1,1,1,1,1,1}
-    cub = (t_cub *)malloc(1024 * 100);
+    cub = (t_cub *)malloc(sizeof(t_cub));
+    if (!cub)
+        exit(error_msg(ERR_MALLOC));
     cub->map = worldMap;
     cub_init(cub);
-    mlx_hook(cub->win, 2, 1L << 0, handle_key_event, cub);
+    mlx_hook(cub->win, ON_KEY_UP, MASK_KEY_UP, handle_key_event, cub);
+    mlx_hook(cub->win, ON_DESTROY, MASK_ON_DESTROY, handle_closing, cub);
 	mlx_loop_hook(cub->connection, cub_rendering, cub);
     mlx_loop(cub->connection);
-    mlx_destroy_window(cub->connection, cub->win);
-	free(cub->connection);
+    cub_slayer(cub);
 }

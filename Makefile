@@ -5,6 +5,8 @@ SRC = 	main.c \
 		motion2.c \
 		ray_casting2.c \
 		textures2.c \
+		error.c \
+		events.c \
 
 OBJ = $(SRC:.c=.o)
 

@@ -3,11 +3,18 @@
 t_tex *get_texture(char *path, t_cub *cub)
 {
     t_tex   *tex;
-	void	*img;
 	int		img_width;
 	int		img_height;
 
-    tex = malloc(1024);
+    tex = (t_tex *)malloc(sizeof(t_tex));
+    if (!tex)
+    {
+        // malloc_failed code...
+        // free full cub struct...
+        // exit...
+        cub_slayer(cub);
+        exit(error_msg(ERR_MALLOC));
+    }
     tex->img.img = mlx_xpm_file_to_image(cub->connection, path, &img_width, &img_height);
     tex->img.addr = mlx_get_data_addr(tex->img.img, &tex->img.bits_per_pixel, &tex->img.line_length, &tex->img.endian);
     tex->ht = img_height;
