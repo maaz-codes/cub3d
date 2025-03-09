@@ -1,12 +1,12 @@
 NAME = cub3d
 
 SRC = 	main.c \
-		draw_utils2.c \
-		motion2.c \
-		ray_casting2.c \
+		execution/draw_utils2.c \
+		execution/motion2.c \
+		execution/ray_casting2.c \
+		execution/events.c \
 		textures2.c \
 		error.c \
-		events.c \
 
 OBJ = $(SRC:.c=.o)
 

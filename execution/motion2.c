@@ -1,4 +1,4 @@
-#include "cub3d.h"
+#include "../cub3d.h"
 
 void cub_motion(double move_x, double move_y, t_cub *cub)
 {

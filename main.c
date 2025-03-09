@@ -72,5 +72,4 @@ int main(int ac, char **av)
     mlx_hook(cub->win, ON_DESTROY, MASK_ON_DESTROY, handle_closing, cub);
 	mlx_loop_hook(cub->connection, cub_rendering, cub);
     mlx_loop(cub->connection);
-    cub_slayer(cub);
 }

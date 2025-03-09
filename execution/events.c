@@ -1,4 +1,4 @@
-#include "cub3d.h"
+#include "../cub3d.h"
 
 int	handle_key_event(int keycode, t_cub *cub)
 {
