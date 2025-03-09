@@ -20,39 +20,18 @@ void 	draw_strip(int x, int start, int end, t_cub *cub)
 
     ceil = 0;
     floor = end;
-    while (ceil < start)
+    while (ceil < start + 10)
     {
         color_pxl(x, ceil, cub->ceil, cub);
         ceil++;
     }
-    draw_tex(x, start, end, cub);
     while (floor < screenHeight)
     {
         color_pxl(x, floor, cub->floor, cub);
         floor++;
     }
+    draw_tex(x, start, end, cub);
 }
-
-// int get_color(t_cub *cub)
-// {
-//     int dir;
-//     int color;
-
-//     dir = cub->map[cub->mapX][cub->mapY];
-//     if (dir == 1)
-//         color = COLOR_RED;
-//     else if (dir == 2)
-//         color = COLOR_GREEN;
-//     else if (dir == 3)
-//         color = COLOR_BLUE;
-//     else if (dir == 4)
-//         color = COLOR_WHITE;
-//     else
-//         color = COLOR_YELLOW;
-//     if (cub->side == 1)
-//         color /= 2;
-//     return (color);
-// }
 
 void get_drawing_coords(t_cub *cub)
 {

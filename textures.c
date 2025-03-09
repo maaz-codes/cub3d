@@ -21,14 +21,14 @@ t_tex *current_texture(t_cub *cub)
 
     if (cub->side == 0) 
     {
-        if (cub->dirX > 0)
+        if (cub->rayDirX > 0)
             tex = cub->east;
         else
             tex = cub->west;
     } 
     else 
     {
-        if (cub->dirY > 0)
+        if (cub->rayDirY > 0)
             tex = cub->south;
         else
             tex = cub->north;
