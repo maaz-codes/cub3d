@@ -20,7 +20,7 @@ void rotation(int dir, t_cub *cub)
     double cos_rot;
     double sin_rot;
     
-    if (dir == KEY_MINUS)
+    if (dir == KEY_LEFT)
         rot = ROT_SPEED;
     else
         rot = -ROT_SPEED;
@@ -36,25 +36,25 @@ void rotation(int dir, t_cub *cub)
 
 void motion(double *mx, double *my, int dir, t_cub *cub)
 {
-    if (dir == KEY_UP)
+    if (dir == KEY_W)
     {
         *mx = cub->posX + (cub->dirX * MOVE_SPEED);
         *my = cub->posY + (cub->dirY * MOVE_SPEED);
     }
-    else if (dir == KEY_DOWN)
+    else if (dir == KEY_S)
     {
         *mx = cub->posX - (cub->dirX * MOVE_SPEED);
         *my = cub->posY - (cub->dirY * MOVE_SPEED);
     }
-    else if (dir == KEY_LEFT)
+    else if (dir == KEY_D)
     {
-        *mx = cub->posX + (cub->dirX * MOVE_SPEED);
-        *my = cub->posY + (cub->dirY * MOVE_SPEED);
+        *mx = cub->posX + (cub->planeX * MOVE_SPEED);
+        *my = cub->posY + (cub->planeY * MOVE_SPEED);
     }
-    else if (dir == KEY_RIGHT)
+    else if (dir == KEY_A)
     {
-        *mx = cub->posX;
-        *my = cub->posY - (cub->dirY * MOVE_SPEED);
+        *mx = cub->posX - (cub->planeX * MOVE_SPEED);
+        *my = cub->posY - (cub->planeY * MOVE_SPEED);
     }
 }
 
@@ -65,12 +65,12 @@ int	handle_key_event(int keycode, t_cub *cub)
 
     move_x = 0;
     move_y = 0;
-    if (keycode == KEY_UP || keycode == KEY_DOWN || 
-        keycode == KEY_LEFT || keycode == KEY_RIGHT)
+    if (keycode == KEY_W || keycode == KEY_A || 
+        keycode == KEY_S || keycode == KEY_D)
     {
         motion(&move_x, &move_y, keycode, cub);
     }
-    else if (keycode == KEY_PLUS || keycode == KEY_MINUS)
+    else if (keycode == KEY_RIGHT || keycode == KEY_LEFT)
         rotation(keycode, cub);
     cub_motion(move_x, move_y, cub);
     return (1);
