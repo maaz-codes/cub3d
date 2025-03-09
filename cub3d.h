@@ -34,7 +34,7 @@
 // GENERAL
 # define TRUE 1
 # define FALSE 0
-# define WALKABLE 0
+# define WALKABLE '0'
 # define ROT_SPEED 0.1
 # define MOVE_SPEED 0.2
 
@@ -60,7 +60,7 @@ typedef struct  s_cub
     void			*connection;
 	void			*win;
 	t_img			img;
-	int 			(*map)[mapWidth];
+	char 			(*map)[mapWidth];
 	struct timeval 	start_time;
 	double			posX;
 	double			posY;

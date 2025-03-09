@@ -21,7 +21,7 @@ void perform_dda(t_cub *cub)
             cub->side = 1;
         }
         //Check if ray has hit a wall
-        if(cub->map[cub->mapX][cub->mapY] > 0) 
+        if(cub->map[cub->mapX][cub->mapY] == '1')
             hit = 1;
     }
 }
