@@ -20,7 +20,7 @@ void rotation(int dir, t_cub *cub)
     double cos_rot;
     double sin_rot;
     
-    if (dir == KEY_LEFT)
+    if (dir == KEY_RIGHT)
         rot = ROT_SPEED;
     else
         rot = -ROT_SPEED;

@@ -1,13 +1,10 @@
 NAME = cub3d
 
-# SRC = fractol.c maths.c mlx_utils.c rendering.c events.c libft.c errors.c \
-# 		mandelbrot.c julia.c 
-
-SRC = 	cub3d.c \
-		draw_utils.c \
-		motion.c \
-		ray_casting.c \
-		textures.c \
+SRC = 	main.c \
+		draw_utils2.c \
+		motion2.c \
+		ray_casting2.c \
+		textures2.c \
 
 OBJ = $(SRC:.c=.o)
 

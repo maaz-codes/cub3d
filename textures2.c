@@ -22,16 +22,16 @@ t_tex *current_texture(t_cub *cub)
     if (cub->side == 0) 
     {
         if (cub->rayDirX > 0)
-            tex = cub->east;
+            tex = cub->south;
         else
-            tex = cub->west;
+            tex = cub->north;
     } 
     else 
     {
         if (cub->rayDirY > 0)
-            tex = cub->south;
+            tex = cub->east;
         else
-            tex = cub->north;
+            tex = cub->west;
     }
     return (tex);
 }
