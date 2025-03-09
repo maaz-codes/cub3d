@@ -1,35 +1,29 @@
 #include "cub3d.h"
 
-void cub_slayer(t_cub *cub)
-{
-    // free_map(cub);
-    free_textures(cub);
-    mlx_destroy_image(cub->connection, cub->img.img);
-    mlx_destroy_window(cub->connection, cub->win);
-    free(cub->connection);
-    free(cub);
-}
-
 void free_textures(t_cub *cub)
 {
     if (cub->north)
     {
-        mlx_destroy_image(cub->connection, cub->north->img.img);
+        if (cub->north->img.img)
+            mlx_destroy_image(cub->connection, cub->north->img.img);
         free(cub->north);
     }
     if (cub->south)
     {
-        mlx_destroy_image(cub->connection, cub->south->img.img);
+        if (cub->south->img.img)
+            mlx_destroy_image(cub->connection, cub->south->img.img);
         free(cub->south);
     }
     if (cub->east)
     {
-        mlx_destroy_image(cub->connection, cub->east->img.img);
+        if (cub->east->img.img)
+            mlx_destroy_image(cub->connection, cub->east->img.img);
         free(cub->east);
     }
     if (cub->west)
     {
-        mlx_destroy_image(cub->connection, cub->west->img.img);
+        if (cub->west->img.img)
+            mlx_destroy_image(cub->connection, cub->west->img.img);
         free(cub->west);
     }
 }
@@ -59,3 +53,13 @@ int error_msg(int flag)
         write(2, "Mlx function error\n", 20);
     return (EXIT_FAILURE);
 }   
+
+void cub_slayer(t_cub *cub)
+{
+    // free_map(cub);
+    free_textures(cub);
+    mlx_destroy_image(cub->connection, cub->img.img);
+    mlx_destroy_window(cub->connection, cub->win);
+    free(cub->connection);
+    free(cub);
+}

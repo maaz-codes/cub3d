@@ -110,6 +110,8 @@ typedef struct  s_cub
 }               t_cub;
 
 // main.c
+void 			cub_spawner(t_cub *cub);
+void 			cub_init(t_cub *cub);
 int 			cub_rendering(t_cub *cub);
 int				handle_key_event(int keycode, t_cub *cub);
 
@@ -117,7 +119,6 @@ int				handle_key_event(int keycode, t_cub *cub);
 void			my_mlx_pixel_put(t_img *data, int x, int y, int color);
 void			color_pxl(int x, int y, int color, t_cub *cub);
 void 			draw_strip(int x, int start, int end, t_cub *cub);
-// int 			get_color(t_cub *cub);
 void			get_drawing_coords(t_cub *cub);
 
 // motion.c
@@ -133,9 +134,12 @@ int 			handle_closing(t_cub *cub);
 void 			perform_dda(t_cub *cub);
 void 			init_rays(int x, t_cub *cub);
 void 			perform_ray_casting(int x, t_cub *cub);
+void		 	init_direction(t_cub *cub, int direc);
 
 // textures.c
+void 			init_textures(t_cub *cub);
 t_tex 			*get_texture(char *path, t_cub *cub);
+t_tex	 		*current_texture(t_cub *cub);
 void 			draw_tex(int x, int start, int end, t_cub *cub);
 int 			get_texture_pixel(t_cub *cub, int x, int y);
 

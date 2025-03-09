@@ -1,5 +1,13 @@
 #include "cub3d.h"
 
+void init_textures(t_cub *cub)
+{
+    cub->north = get_texture("./textures/purple_tex.xpm", cub);
+    cub->south = get_texture("./textures/green_tex.xpm", cub);
+    cub->east = get_texture("./textures/red_tex.xpm", cub);
+    cub->west = get_texture("./textures/green_tex.xpm", cub);
+}
+
 t_tex *get_texture(char *path, t_cub *cub)
 {
     t_tex   *tex;
@@ -16,6 +24,12 @@ t_tex *get_texture(char *path, t_cub *cub)
         exit(error_msg(ERR_MALLOC));
     }
     tex->img.img = mlx_xpm_file_to_image(cub->connection, path, &img_width, &img_height);
+    if (!tex->img.img)
+    {
+        cub_slayer(cub);
+        error_msg(ERR_FILE);
+        exit(EXIT_FAILURE);
+    }
     tex->img.addr = mlx_get_data_addr(tex->img.img, &tex->img.bits_per_pixel, &tex->img.line_length, &tex->img.endian);
     tex->ht = img_height;
     tex->wd = img_width;

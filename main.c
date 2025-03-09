@@ -1,39 +1,14 @@
 #include "cub3d.h"
 
-void init_direction(t_cub *cub, int direc)
+void cub_spawner(t_cub *cub)
 {
-    cub->dirX = 0;
-    cub->dirY = 0;
-    cub->planeX = 0;
-    cub->planeY = 0;
-    if (direc == 'W')
-    {
-        cub->dirY = -1;
-        cub->planeX = 0.66;
-    }
-    else if (direc == 'E')
-    {
-        cub->dirY = 1;
-        cub->planeX = -0.66;
-    }
-    else if (direc == 'S')
-    {
-        cub->dirX = 1;
-        cub->planeY = 0.66;
-    }
-    else if (direc == 'N')
-    {
-        cub->dirX = -1;
-        cub->planeY = 0.66;
-    }
-}
-
-void init_textures(t_cub *cub)
-{
-    cub->north = get_texture("./textures/purple_tex.xpm", cub);
-    cub->south = get_texture("./textures/green_tex.xpm", cub);
-    cub->east = get_texture("./textures/red_tex.xpm", cub);
-    cub->west = get_texture("./textures/green_tex.xpm", cub);
+    cub->connection = NULL;
+    cub->img.img = NULL;
+    cub->img.addr = NULL;
+    cub->north = NULL;
+    cub->south = NULL;
+    cub->east = NULL;
+    cub->west = NULL;
 }
 
 void cub_init(t_cub *cub)
@@ -91,6 +66,7 @@ int main(int ac, char **av)
     if (!cub)
         exit(error_msg(ERR_MALLOC));
     cub->map = worldMap;
+    cub_spawner(cub);
     cub_init(cub);
     mlx_hook(cub->win, ON_KEY_UP, MASK_KEY_UP, handle_key_event, cub);
     mlx_hook(cub->win, ON_DESTROY, MASK_ON_DESTROY, handle_closing, cub);

@@ -67,3 +67,31 @@ void perform_ray_casting(int x, t_cub *cub)
         cub->sideDistY = (cub->mapY + 1.0 - cub->posY) * cub->deltaDistY;
     }
 }
+
+void init_direction(t_cub *cub, int direc)
+{
+    cub->dirX = 0;
+    cub->dirY = 0;
+    cub->planeX = 0;
+    cub->planeY = 0;
+    if (direc == 'W')
+    {
+        cub->dirY = -1;
+        cub->planeX = 0.66;
+    }
+    else if (direc == 'E')
+    {
+        cub->dirY = 1;
+        cub->planeX = -0.66;
+    }
+    else if (direc == 'S')
+    {
+        cub->dirX = 1;
+        cub->planeY = 0.66;
+    }
+    else if (direc == 'N')
+    {
+        cub->dirX = -1;
+        cub->planeY = 0.66;
+    }
+}
