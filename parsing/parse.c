@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rcreer <rcreer@student.42.fr>              +#+  +:+       +#+        */
+/*   By: maakhan <maakhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 17:53:00 by rcreer            #+#    #+#             */
-/*   Updated: 2025/03/06 19:13:57 by rcreer           ###   ########.fr       */
+/*   Updated: 2025/03/10 17:26:47 by maakhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,8 +87,8 @@ int	parse_init_save(t_parsing **parse, char **av)
 		printf("Invalid RGB\n");
 		return (0);
 	}
-	if(!valid_xpm_file(*parse))
-		return (0);
+	// if(!valid_xpm_file(*parse))
+	// 	return (0);
 	print_info(*parse, av);
     get_player_modif_map(*parse);
 	return (1);

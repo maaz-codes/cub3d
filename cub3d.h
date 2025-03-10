@@ -17,42 +17,67 @@
 
 // MLX
 #define screenWidth 1280
-#define screenHeight 1024
-#define mapWidth 24
-#define mapHeight 24
+#define screenHeight 1080
+#define mapWidth 10
+#define mapHeight 5
 
 // COLORS
-#define COLOR_WHITE   0xFFFFFF
-#define COLOR_RED     0x00FF0000  // (255, 0, 0)
-#define COLOR_GREEN   0x0000FF00  // (0, 255, 0)
-#define COLOR_BLUE    0x000000FF  // (0, 0, 255)
-#define COLOR_YELLOW  0x00FFFF00  // (255, 255, 0)
-#define COLOR_PURPLE 0x800080
-#define COLOR_MAGENTA 0xFF00FF
+# define COLOR_BLACK 	0x000000
+# define COLOR_WHITE   	0xFFFFFF
+# define COLOR_RED     	0x00FF0000  
+# define COLOR_GREEN   	0x0000FF00 
+# define COLOR_BLUE    	0x000000FF 
+# define COLOR_YELLOW  	0x00FFFF00
+# define COLOR_PURPLE 	0x800080
+# define COLOR_MAGENTA 	0xFF00FF
 
 // KEYS
-// # define KEY_LEFT 123
-// # define KEY_RIGHT 124
-// # define KEY_UP 126
-// # define KEY_DOWN 125
-// # define KEY_PLUS 24      
-// # define KEY_MINUS 27     
+# define KEY_W 13     
+# define KEY_A 0     
+# define KEY_S 1     
+# define KEY_D 2     
+# define KEY_LEFT 123
+# define KEY_RIGHT 124
+# define KEY_ESC 53
 
-# define KEY_LEFT 0
-# define KEY_RIGHT 2
-# define KEY_UP 13
-# define KEY_DOWN 1
-# define KEY_PLUS 14      
-# define KEY_MINUS 12   
+// MLX_EVENTS
+# define ON_KEY_UP 2
+# define ON_DESTROY 17
+# define MASK_KEY_UP 1L << 0
+# define MASK_ON_DESTROY 6  
 
 // GENERAL
 # define TRUE 1
 # define FALSE 0
-
-# define WALKABLE 48
-// # define WALKABLE 0
+# define WALKABLE '0'
 # define ROT_SPEED 0.1
 # define MOVE_SPEED 0.2
+
+// ERRORS
+# define ERR_MALLOC 	4201
+# define ERR_FILE 		4202
+# define ERR_SYS_ARGS 	4203
+# define ERR_MLX	 	4204
+
+typedef struct s_list
+{
+	char			*content;
+	struct s_list	*next;
+}					t_list;
+
+typedef struct parsing
+{	
+	int				row;
+	int				map_length;
+	char			**file_data;
+	char			**map;
+	int				**check_valid;
+	char			**textures;
+	int				**rgb;
+	char			player;
+	int				x_pos;
+	int				y_pos;
+}	t_parsing;
 
 
 typedef struct s_img
@@ -64,14 +89,19 @@ typedef struct s_img
 	int		endian;
 }			t_img;
 
+typedef struct	s_tex
+{
+	t_img	img;
+	int		ht;
+	int		wd;
+}				t_tex;
+
 typedef struct  s_cub
 {
     void			*connection;
 	void			*win;
 	t_img			img;
-	// int 			(*map)[mapHeight];
-	char			**map;
-	struct timeval 	start_time;
+	char 			**map;
 	double			posX;
 	double			posY;
 	double			dirX;
@@ -91,33 +121,20 @@ typedef struct  s_cub
 	int				stepX;
 	int				stepY;
 	int				side;
-	int				color;
 	double			drawStart;
 	double			drawEnd;
 	double			lineHeight;
+	t_tex			*north;
+	t_tex			*south;
+	t_tex			*east;
+	t_tex			*west;
+	int				ceil;
+	int				floor;
+	int				direc;
+	int				map_ht;
+	int				map_wd;
+	t_parsing		*parse;
 }               t_cub;
-
-// get next line
-typedef struct s_list
-{
-	char			*content;
-	struct s_list	*next;
-}					t_list;
-
-//parse struct
-typedef struct parsing
-{	
-	int				row;
-	int				map_length;
-	char			**file_data;
-	char			**map;
-	int				**check_valid;
-	char			**textures;
-	int				**rgb;
-	char			player;
-	int				x_pos;
-	int				y_pos;
-}	t_parsing;
 
 //libft 
 int					ft_strncmp(const char *s1, const char *s2, size_t n);
@@ -130,6 +147,7 @@ char				*ft_strchr(const char *s, int c);
 int					ft_atoi(const char *nptr);
 char				**ft_split(char const *s, char c);
 char				*ft_strdup(const char *s1);
+char				*ft_strjoin(char const *s1, char const *s2);
 
 
 // get_next_line.c
@@ -186,16 +204,44 @@ int 				player_zero_check(char **map, int row, int i);
 int 				valid_nsew(char **map, int row, int i);
 
 // main.c
-int 				cub_rendering(t_cub *cub);
-int					handle_key_release(int keycode, t_cub *cub);
+void 			cub_spawner(t_cub *cub);
+void 			cub_init(t_cub *cub, t_parsing *parse);
+int 			cub_rendering(t_cub *cub);
+int				handle_key_event(int keycode, t_cub *cub);
 
 // draw_utils.c
-void				my_mlx_pixel_put(t_img *data, int x, int y, int color);
-void				color_pxl(int x, int y, int color, t_cub *cub);
-void 				draw_strip(int x, int start, int end, int color, t_cub *cub);
+void			my_mlx_pixel_put(t_img *data, int x, int y, int color);
+void			color_pxl(int x, int y, int color, t_cub *cub);
+void 			draw_strip(int x, int start, int end, t_cub *cub);
+void			get_drawing_coords(t_cub *cub);
 
 // motion.c
-int					handle_key_release(int keycode, t_cub *cub);
-void				cub_motion(double move_x, double move_y, t_cub *cub);
+void			cub_motion(double move_x, double move_y, t_cub *cub);
+void 			rotation(int dir, t_cub *cub);
+void 			motion(double *mx, double *my, int dir, t_cub *cub);
+
+// events.c
+int				handle_key_event(int keycode, t_cub *cub);
+int 			handle_closing(t_cub *cub);
+
+// ray_casting.c
+void 			perform_dda(t_cub *cub, t_parsing *parse);
+void 			init_rays(int x, t_cub *cub);
+void 			perform_ray_casting(int x, t_cub *cub);
+void		 	init_direction(t_cub *cub, int direc);
+
+// textures.c
+void 			init_textures(t_cub *cub, t_parsing *parse);
+t_tex 			*get_texture(char *path, t_cub *cub);
+t_tex	 		*current_texture(t_cub *cub);
+void 			draw_tex(int x, int start, int end, t_cub *cub);
+int 			get_texture_pixel(t_cub *cub, int x, int y);
+
+// errors.c
+void 			cub_slayer(t_cub *cub);
+void 			free_textures(t_cub *cub);
+void 			free_map(t_cub *cub);
+int 			error_msg(int flag);
+
 
 #endif

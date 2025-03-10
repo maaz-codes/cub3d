@@ -1,7 +1,13 @@
 NAME = cub3d
 
 		
-SRC = 	test.c \
+SRC = 		main.c \
+			error.c \
+		execution/draw_utils.c \
+		execution/motion.c \
+		execution/ray_casting.c \
+		execution/events.c \
+		execution/textures.c \
 			parsing/parse.c \
 			parsing/parse_utils.c \
 			parsing/texture_parse.c \
@@ -26,6 +32,7 @@ SRC = 	test.c \
 					libft/ft_atoi.c \
 					libft/ft_split.c \
 					libft/ft_strdup.c \
+					libft/ft_strjoin.c \
 
 OBJ = $(SRC:.c=.o)
 
@@ -35,11 +42,17 @@ MLX_FLAGS = -Lmlx -lmlx -framework OpenGL -framework AppKit -g3 -fsanitize=addre
 
 all: $(NAME)
 
+# $(NAME): $(OBJ)
+# 	@echo "compiling..."
+# 	#@$(MAKE) all -C mlx
+# 	#$(MLX_FLAGS)
+# 	@$(CC) $(CFLAGS) $(OBJ) -o $(NAME)
+# 	@echo "Compilation finished: try: ./$(NAME)"
+
 $(NAME): $(OBJ)
 	@echo "compiling..."
-	#@$(MAKE) all -C mlx
-	#$(MLX_FLAGS)
-	@$(CC) $(CFLAGS) $(OBJ) -o $(NAME)
+	@$(MAKE) all -C mlx
+	@$(CC) $(MLX_FLAGS) $(OBJ) -o $(NAME)
 	@echo "Compilation finished: try: ./$(NAME)"
 
 %.o: %.c
