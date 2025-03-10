@@ -1,13 +1,10 @@
-SO textures/leopard/xpm/south.xpm
-NO textures/leopard/xpm/north.xpm
-
-
-
-WE textures/leopard/xpm/west.xpm    
+NO textures/bathroom/purple.xpm
+SO textures/bathroom/green.xpm
+WE textures/bathroom/red.xpm
+EA textures/bathroom/purple.xpm
 
 C 153,204,255
 
-EA textures/leopard/xpm/east.xpm
 
 
 
@@ -16,9 +13,6 @@ F     32,  169,    76
 111111111111111111111
 101000001000000000001
 101000001000000100001
-10000100N000000000001
-111111111111111111111
-1111    111111   1111
-1111    111111   1111 
+10000101E000000000001
 111111111111111111111
 

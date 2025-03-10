@@ -2,10 +2,14 @@
 
 void init_textures(t_cub *cub, t_parsing *parse)
 {
-    cub->north = get_texture(ft_strjoin("./", parse->textures[0]), cub);
-    cub->south = get_texture(ft_strjoin("./", parse->textures[1]), cub);
-    cub->east = get_texture(ft_strjoin("./", parse->textures[2]), cub);
-    cub->west = get_texture(ft_strjoin("./", parse->textures[3]), cub);
+    for (int i = 0; i < 4; i++)
+    {
+        printf("tex%d:%s\n", i, parse->textures[i]);
+    }
+    cub->west = get_texture(ft_strjoin("./", parse->textures[0]), cub); // north
+    cub->east = get_texture(ft_strjoin("./", parse->textures[1]), cub); // east
+    cub->north = get_texture(ft_strjoin("./", parse->textures[2]), cub); // west
+    cub->south = get_texture(ft_strjoin("./", parse->textures[3]), cub); // east
 }
 
 t_tex *get_texture(char *path, t_cub *cub)

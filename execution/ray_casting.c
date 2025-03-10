@@ -75,22 +75,22 @@ void init_direction(t_cub *cub, int direc)
     cub->dirY = 0;
     cub->planeX = 0;
     cub->planeY = 0;
-    if (direc == 'W')
+    if (direc == 'N')
     {
         cub->dirY = -1;
         cub->planeX = 0.66;
     }
-    else if (direc == 'E')
+    else if (direc == 'S')
     {
         cub->dirY = 1;
         cub->planeX = -0.66;
     }
-    else if (direc == 'S')
+    else if (direc == 'E')
     {
         cub->dirX = 1;
         cub->planeY = 0.66;
     }
-    else if (direc == 'N')
+    else if (direc == 'W')
     {
         cub->dirX = -1;
         cub->planeY = 0.66;
