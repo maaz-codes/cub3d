@@ -25,12 +25,12 @@ void 	draw_strip(int x, int start, int end, t_cub *cub)
         color_pxl(x, ceil, cub->ceil, cub);
         ceil++;
     }
+    draw_tex(x, start, end, cub);
     while (floor < screenHeight)
     {
         color_pxl(x, floor, cub->floor, cub);
         floor++;
     }
-    draw_tex(x, start, end, cub);
 }
 
 void get_drawing_coords(t_cub *cub)

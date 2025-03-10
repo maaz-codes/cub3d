@@ -6,10 +6,6 @@ void init_textures(t_cub *cub, t_parsing *parse)
     cub->south = get_texture(ft_strjoin("./", parse->textures[1]), cub);
     cub->east = get_texture(ft_strjoin("./", parse->textures[2]), cub);
     cub->west = get_texture(ft_strjoin("./", parse->textures[3]), cub);
-    // cub->north = get_texture("./textures/leopard/xpm/north.xpm", cub);
-    // cub->south = get_texture("./textures/leopard/xpm/south.xpm", cub);
-    // cub->east = get_texture("./textures/leopard/xpm/east.xpm", cub);
-    // cub->west = get_texture("./textures/leopard/xpm/west.xpm", cub);
 }
 
 t_tex *get_texture(char *path, t_cub *cub)
@@ -21,15 +17,16 @@ t_tex *get_texture(char *path, t_cub *cub)
     tex = (t_tex *)malloc(sizeof(t_tex));
     if (!tex)
     {
-        // malloc_failed code...
-        // free full cub struct...
-        // exit...
+        free(path);
+        free_data(cub->parse);
         cub_slayer(cub);
         exit(error_msg(ERR_MALLOC));
     }
     tex->img.img = mlx_xpm_file_to_image(cub->connection, path, &img_width, &img_height);
+    free(path);
     if (!tex->img.img)
     {
+        free_data(cub->parse);
         cub_slayer(cub);
         error_msg(ERR_FILE);
         exit(EXIT_FAILURE);

@@ -18,11 +18,13 @@ void cub_spawner(t_cub *cub)
 
 void cub_init(t_cub *cub, t_parsing *parse)
 {
+    cub_spawner(cub);
     cub->connection = mlx_init();
     cub->win = mlx_new_window(cub->connection, screenWidth, screenHeight, "cub3D");
     cub->img.img = mlx_new_image(cub->connection, screenWidth, screenHeight);
     cub->img.addr = mlx_get_data_addr(cub->img.img, &cub->img.bits_per_pixel, &cub->img.line_length, &cub->img.endian);
     cub->direc = parse->player;
+    cub->map = parse->map;
     init_direction(cub, cub->direc);
     cub->posX = parse->x_pos + 0.5;
     cub->posY = parse->y_pos + 0.5;
@@ -39,7 +41,6 @@ int cub_rendering(t_cub *cub)
 
     while (x < screenWidth)
     {
-        //calculate ray position and direction
         perform_ray_casting(x, cub);
         perform_dda(cub, cub->parse);
         if (cub->side == 0) 
@@ -67,9 +68,10 @@ int main(int ac, char **av)
             return (free_data(parse), 0);
         cub = (t_cub *)malloc(sizeof(t_cub));
         if (!cub)
+        {
+            free_data(parse);
             exit(error_msg(ERR_MALLOC));
-        cub->map = parse->map;
-        cub_spawner(cub);
+        }
         cub_init(cub, parse);
         mlx_hook(cub->win, ON_KEY_UP, MASK_KEY_UP, handle_key_event, cub);
         mlx_hook(cub->win, ON_DESTROY, MASK_ON_DESTROY, handle_closing, cub);
@@ -78,5 +80,5 @@ int main(int ac, char **av)
         free_data(parse);
     }
     else
-        printf("Invalid Args\n");
+        exit(error_msg(ERR_SYS_ARGS));
 }

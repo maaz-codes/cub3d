@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   save_rgb.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rcreer <rcreer@student.42.fr>              +#+  +:+       +#+        */
+/*   By: maakhan <maakhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 18:04:31 by rcreer            #+#    #+#             */
-/*   Updated: 2025/03/06 17:46:27 by rcreer           ###   ########.fr       */
+/*   Updated: 2025/03/10 19:51:08 by maakhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,10 @@ int	skipper_val(char *remove_space)
 	return (skipper);
 }
 
-int	valid_num(int rgb_num, char *remove_space, char **remove_comma)
+int valid_num(int number)
 {
-	if (rgb_num > 255)
-	{
-		(free_double(remove_comma, 3), free(remove_space));
+	if (number < 0 || number > 255)
 		return (0);
-	}
 	return (1);
 }
 
@@ -45,15 +42,16 @@ int	set_values_rgb(char *file_check, t_parsing *parse, char *pos, int rgb_pos)
 
 	i = -1;
 	trim_pos = ft_strtrim(file_check, pos);
+	printf("Trim_pos:%s:\n", trim_pos);
 	remove_comma = ft_split(trim_pos, ',');
 	free(trim_pos);
 	while (++i < 3 && remove_comma[i] != NULL)
 	{
 		remove_space = ft_strtrim(remove_comma[i], " ");
 		rgb_num = ft_atoi(remove_space + skipper_val(remove_space));
-		if (!ft_strncmp(remove_space,"\n",1) || !valid_num(rgb_num, remove_space, remove_comma))
+		if (!ft_strncmp(remove_space,"\n",1) || !valid_num(rgb_num))
 		{
-			(free(remove_space),free_double(remove_comma, 3));
+			(free(remove_space), free_double(remove_comma, 3));
 			return (0);
 		}
 		free(remove_space);

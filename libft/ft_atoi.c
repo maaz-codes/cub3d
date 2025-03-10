@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rcreer <rcreer@student.42.fr>              +#+  +:+       +#+        */
+/*   By: maakhan <maakhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/25 13:01:48 by rcreer            #+#    #+#             */
-/*   Updated: 2024/07/01 15:30:09 by rcreer           ###   ########.fr       */
+/*   Updated: 2025/03/10 19:49:07 by maakhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	ft_atoi(const char *nptr)
 	{
 		c = c * 10 + *nptr - '0';
 		if (c > LLONG_MAX && conv == -1)
-			return (0);
+			return (-1);
 		if (c > LLONG_MAX)
 			return (-1);
 		nptr++;
