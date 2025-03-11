@@ -13,7 +13,7 @@
 #include "../cub3d.h"
 
 int	checkpoint(char **map, int row, int i)
-{	
+{
 	while (map[row][i])
 	{
 		if (map[row][i] == '1' || map[row][i] == ' ')
@@ -48,7 +48,7 @@ int	last_row(t_parsing *parse)
 	map = parse->map;
 	row = parse->map_length - 1;
 	while (row >= 0)
-	{	
+	{
 		i = 0;
 		while (map[row][i])
 		{
@@ -56,8 +56,8 @@ int	last_row(t_parsing *parse)
 				i++;
 			if (check_which_texture(map[row], i) == 7)
 				return (row);
-			else if(map[row][i] == '\n')
-				break;
+			else if (map[row][i] == '\n')
+				break ;
 			else
 				return (0);
 			i++;
@@ -67,12 +67,12 @@ int	last_row(t_parsing *parse)
 	return (0);
 }
 
-int	 check_top_down(char **map, int last_row)
+int	check_top_down(char **map, int last_row)
 {
 	int	i;
 
 	i = 0;
-	if(last_row == 0)
+	if (last_row == 0)
 		return (0);
 	while (map[0][i])
 	{
@@ -82,8 +82,9 @@ int	 check_top_down(char **map, int last_row)
 	}
 	i = 0;
 	while (map[last_row][i])
-	{	
-		if (map[last_row][i] != '1' && map[last_row][i] != ' ' && map[last_row][i] != '\n')
+	{
+		if (map[last_row][i] != '1' && map[last_row][i]
+			!= ' ' && map[last_row][i] != '\n')
 			return (0);
 		i++;
 	}
@@ -139,7 +140,7 @@ int	one_player(t_parsing *parse)
 				return (0);
 		}
 	}
-	if(player == 0)
+	if (player == 0)
 	{
 		printf("No Player\n");
 		return (0);

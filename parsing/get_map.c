@@ -51,7 +51,7 @@ int	get_location(char **file_data)
 			if (check_which_texture(file_data[row], len) == 7)
 				return (row);
 			else
-				break;
+				break ;
 		}
 		row++;
 	}
@@ -65,7 +65,7 @@ int	get_map(t_parsing *parse)
 
 	i = 0;
 	map_loc = get_location(parse->file_data);
-	if(!map_loc)
+	if (!map_loc)
 		return (0);
 	parse->map_length = (parse->row - map_loc);
 	parse->map = malloc((parse->row - map_loc + 1) * sizeof(char **));

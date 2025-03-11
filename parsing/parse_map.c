@@ -65,7 +65,7 @@ int	one_check(char **map, int row, int i)
 }
 
 int	pass_through(char **map, int *i, int row, t_parsing *parse)
-{	
+{
 	if (row == last_row(parse))
 		return (1);
 	while (map[row][*i] == ' ')
@@ -88,30 +88,20 @@ int	parse_map(t_parsing *parse)
 
 	map = parse->map;
 	row = 0;
-
-	if(!check_top_down(map, last_row(parse)))
+	if (!check_top_down(map, last_row(parse)) || !check_bottom(parse)
+		|| !one_player(parse))
 		return (0);
-	if(!check_bottom(parse))
-		return (0);
-	if(!one_player(parse))
-		return (0);
-	// if (!check_top_down(map, last_row(parse)) || !check_bottom(parse)
-	// 	|| !one_player(parse)) 
-	// {
-	// 	printf("go here\n");
-	// 	return (0);
-	// }
 	while (++row < parse->map_length)
 	{
 		i = -1;
 		while (map[row][++i])
-		{	
+		{
 			if (pass_through(map, &i, row, parse) == 0)
 				return (0);
 			else if (pass_through(map, &i, row, parse) == 1)
 				return (1);
 			else if (pass_through(map, &i, row, parse) == 2)
-				break;
+				break ;
 		}
 	}
 	return (1);

@@ -25,7 +25,7 @@ int	skipper_val(char *remove_space)
 	return (skipper);
 }
 
-int valid_num(int number)
+int	valid_num(int number)
 {
 	if (number < 0 || number > 255)
 		return (0);
@@ -42,14 +42,13 @@ int	set_values_rgb(char *file_check, t_parsing *parse, char *pos, int rgb_pos)
 
 	i = -1;
 	trim_pos = ft_strtrim(file_check, pos);
-	printf("Trim_pos:%s:\n", trim_pos);
 	remove_comma = ft_split(trim_pos, ',');
 	free(trim_pos);
 	while (++i < 3 && remove_comma[i] != NULL)
 	{
 		remove_space = ft_strtrim(remove_comma[i], " ");
 		rgb_num = ft_atoi(remove_space + skipper_val(remove_space));
-		if (!ft_strncmp(remove_space,"\n",1) || !valid_num(rgb_num))
+		if (!ft_strncmp(remove_space, "\n", 1) || !valid_num(rgb_num))
 		{
 			(free(remove_space), free_double(remove_comma, 3));
 			return (0);
@@ -73,7 +72,7 @@ int	rgb_save(t_parsing *parse)
 	{
 		i = 0;
 		while (file_check[row][i])
-		{	
+		{
 			if (check_which_texture(file_check[row], i) == 5)
 				if (!set_values_rgb(file_check[row], parse, "F", 0))
 					return (0);

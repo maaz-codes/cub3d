@@ -12,7 +12,8 @@
 
 #include "../cub3d.h"
 
-void	check_valid_values(char *file_check, int i, t_parsing *parse, char *mode)
+void	check_valid_values(char *file_check, int i,
+	t_parsing *parse, char *mode)
 {
 	if (!ft_strncmp(mode, "texture", 8))
 	{
@@ -52,16 +53,16 @@ int	is_valid(t_parsing *parse)
 		return (0);
 }
 
-int init_parse_struct(t_parsing **parse, char **av)
+int	init_parse_struct(t_parsing **parse, char **av)
 {
-	int i;
-	
+	int	i;
+
 	*parse = malloc(sizeof(t_parsing));
 	if (!(*parse))
-		return 0;
+		return (0);
 	(*parse)->check_valid = malloc(6 * sizeof(int **));
 	if (!(*parse)->check_valid)
-		return 0;
+		return (0);
 	i = -1;
 	while (++i < 6)
 	{
@@ -76,12 +77,13 @@ int init_parse_struct(t_parsing **parse, char **av)
 	(*parse)->rgb = NULL;
 	if (!init_textures_and_rgb(parse))
 		return (0);
-	return 1;
+	return (1);
 }
 
-int file_open(char *av)
+int	file_open(char *av)
 {
-	int file;
+	int	file;
+
 	file = open(av, O_RDONLY);
 	if (file == -1)
 	{
@@ -91,7 +93,7 @@ int file_open(char *av)
 	return (file);
 }
 
-int init_file_data(t_parsing *parse)
+int	init_file_data(t_parsing *parse)
 {
 	parse->file_data = malloc((parse->row + 1) * sizeof(char **));
 	if (!parse->file_data)
