@@ -38,7 +38,7 @@ void	draw_strip(int x, int start, int end, t_cub *cub)
 		ceil++;
 	}
 	draw_tex(x, start, end, cub);
-	while (floor < screenHeight)
+	while (floor < SCREENHEIGHT)
 	{
 		color_pxl(x, floor, cub->floor, cub);
 		floor++;
@@ -47,11 +47,11 @@ void	draw_strip(int x, int start, int end, t_cub *cub)
 
 void	get_drawing_coords(t_cub *cub)
 {
-	cub->lineHeight = (int)(screenHeight / cub->perpWallDist);
-	cub->drawStart = -cub->lineHeight / 2 + screenHeight / 2;
-	if (cub->drawStart < 0)
-		cub->drawStart = 0;
-	cub->drawEnd = cub->lineHeight / 2 + screenHeight / 2;
-	if (cub->drawEnd >= screenHeight)
-		cub->drawEnd = screenHeight - 1;
+	cub->line_height = (int)(SCREENHEIGHT / cub->perp_wall_dist);
+	cub->draw_start = -cub->line_height / 2 + SCREENHEIGHT / 2;
+	if (cub->draw_start < 0)
+		cub->draw_start = 0;
+	cub->draw_end = cub->line_height / 2 + SCREENHEIGHT / 2;
+	if (cub->draw_end >= SCREENHEIGHT)
+		cub->draw_end = SCREENHEIGHT - 1;
 }

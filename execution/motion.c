@@ -17,10 +17,10 @@ void	cub_motion(double move_x, double move_y, t_cub *cub)
 	if (move_x > 1 || move_y > 1 || move_y < cub->parse->map_length
 		|| move_x < (int)ft_strlen(cub->parse->map[(int)move_y]))
 	{
-		if (cub->map[(int)move_y][(int)cub->posX] == WALKABLE)
-			cub->posY = move_y;
-		if (cub->map[(int)cub->posY][(int)move_x] == WALKABLE)
-			cub->posX = move_x;
+		if (cub->map[(int)move_y][(int)cub->pos_x] == WALKABLE)
+			cub->pos_y = move_y;
+		if (cub->map[(int)cub->pos_y][(int)move_x] == WALKABLE)
+			cub->pos_x = move_x;
 	}
 }
 
@@ -38,34 +38,34 @@ void	rotation(int dir, t_cub *cub)
 		rot = -ROT_SPEED;
 	cos_rot = cos(rot);
 	sin_rot = sin(rot);
-	old_dir_x = cub->dirX;
-	cub->dirX = cub->dirX * cos_rot - cub->dirY * sin_rot;
-	cub->dirY = old_dir_x * sin_rot + cub->dirY * cos_rot;
-	old_plane_x = cub->planeX;
-	cub->planeX = cub->planeX * cos_rot - cub->planeY * sin_rot;
-	cub->planeY = old_plane_x * sin_rot + cub->planeY * cos_rot;
+	old_dir_x = cub->dir_x;
+	cub->dir_x = cub->dir_x * cos_rot - cub->dir_y * sin_rot;
+	cub->dir_y = old_dir_x * sin_rot + cub->dir_y * cos_rot;
+	old_plane_x = cub->plane_x;
+	cub->plane_x = cub->plane_x * cos_rot - cub->plane_y * sin_rot;
+	cub->plane_y = old_plane_x * sin_rot + cub->plane_y * cos_rot;
 }
 
 void	motion(double *mx, double *my, int dir, t_cub *cub)
 {
 	if (dir == KEY_W)
 	{
-		*mx = cub->posX + (cub->dirX * MOVE_SPEED);
-		*my = cub->posY + (cub->dirY * MOVE_SPEED);
+		*mx = cub->pos_x + (cub->dir_x * MOVE_SPEED);
+		*my = cub->pos_y + (cub->dir_y * MOVE_SPEED);
 	}
 	else if (dir == KEY_S)
 	{
-		*mx = cub->posX - (cub->dirX * MOVE_SPEED);
-		*my = cub->posY - (cub->dirY * MOVE_SPEED);
+		*mx = cub->pos_x - (cub->dir_x * MOVE_SPEED);
+		*my = cub->pos_y - (cub->dir_y * MOVE_SPEED);
 	}
 	else if (dir == KEY_D)
 	{
-		*mx = cub->posX + (cub->planeX * MOVE_SPEED);
-		*my = cub->posY + (cub->planeY * MOVE_SPEED);
+		*mx = cub->pos_x + (cub->plane_x * MOVE_SPEED);
+		*my = cub->pos_y + (cub->plane_y * MOVE_SPEED);
 	}
 	else if (dir == KEY_A)
 	{
-		*mx = cub->posX - (cub->planeX * MOVE_SPEED);
-		*my = cub->posY - (cub->planeY * MOVE_SPEED);
+		*mx = cub->pos_x - (cub->plane_x * MOVE_SPEED);
+		*my = cub->pos_y - (cub->plane_y * MOVE_SPEED);
 	}
 }

@@ -32,17 +32,17 @@ void	cub_init(t_cub *cub, t_parsing *parse)
 {
 	cub_spawner(cub);
 	cub->connection = mlx_init();
-	cub->win = mlx_new_window(cub->connection, screenWidth,
-			screenHeight, "cub3D");
-	cub->img.img = mlx_new_image(cub->connection, screenWidth,
-			screenHeight);
+	cub->win = mlx_new_window(cub->connection, SCREENWIDTH,
+			SCREENHEIGHT, "cub3D");
+	cub->img.img = mlx_new_image(cub->connection, SCREENWIDTH,
+			SCREENHEIGHT);
 	cub->img.addr = mlx_get_data_addr(cub->img.img, &cub->img.bits_per_pixel,
 			&cub->img.line_length, &cub->img.endian);
 	cub->direc = parse->player;
 	cub->map = parse->map;
 	init_direction(cub, cub->direc);
-	cub->posX = parse->x_pos + 0.5;
-	cub->posY = parse->y_pos + 0.5;
+	cub->pos_x = parse->x_pos + 0.5;
+	cub->pos_y = parse->y_pos + 0.5;
 	init_textures(cub, parse);
 	cub->floor = rgb_to_int(parse->rgb[0]);
 	cub->ceil = rgb_to_int(parse->rgb[1]);
@@ -56,16 +56,16 @@ int	cub_rendering(t_cub *cub)
 
 	x = 0;
 	y = 0;
-	while (x < screenWidth)
+	while (x < SCREENWIDTH)
 	{
 		perform_ray_casting(x, cub);
 		perform_dda(cub, cub->parse);
 		if (cub->side == 0)
-			cub->perpWallDist = (cub->sideDistX - cub->deltaDistX);
+			cub->perp_wall_dist = (cub->side_dist_x - cub->delta_dist_x);
 		else
-			cub->perpWallDist = (cub->sideDistY - cub->deltaDistY);
+			cub->perp_wall_dist = (cub->side_dist_y - cub->delta_dist_y);
 		get_drawing_coords(cub);
-		draw_strip(x, cub->drawStart, cub->drawEnd, cub);
+		draw_strip(x, cub->draw_start, cub->draw_end, cub);
 		x++;
 	}
 	mlx_put_image_to_window(cub->connection, cub->win, cub->img.img, 0, 0);

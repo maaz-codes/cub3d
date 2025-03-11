@@ -19,92 +19,92 @@ void	perform_dda(t_cub *cub, t_parsing *parse)
 	hit = 0;
 	while (hit == 0)
 	{
-		if (cub->sideDistX < cub->sideDistY)
+		if (cub->side_dist_x < cub->side_dist_y)
 		{
-			cub->sideDistX += cub->deltaDistX;
-			cub->mapX += cub->stepX;
+			cub->side_dist_x += cub->delta_dist_x;
+			cub->map_x += cub->step_x;
 			cub->side = 0;
 		}
 		else
 		{
-			cub->sideDistY += cub->deltaDistY;
-			cub->mapY += cub->stepY;
+			cub->side_dist_y += cub->delta_dist_y;
+			cub->map_y += cub->step_y;
 			cub->side = 1;
 		}
-		if (cub->mapX < 0 || cub->mapY < 0 || cub->mapY >= parse->map_length
-			|| cub->mapX >= (int)ft_strlen(parse->map[cub->mapY]))
+		if (cub->map_x < 0 || cub->map_y < 0 || cub->map_y >= parse->map_length
+			|| cub->map_x >= (int)ft_strlen(parse->map[cub->map_y]))
 			hit = 1;
-		else if (cub->map[cub->mapY][cub->mapX] == '1')
+		else if (cub->map[cub->map_y][cub->map_x] == '1')
 			hit = 1;
 	}
 }
 
 void	init_rays(int x, t_cub *cub)
 {
-	cub->cameraX = 2 * x / (double)screenWidth - 1;
-	cub->rayDirX = cub->dirX + cub->planeX * cub->cameraX;
-	cub->rayDirY = cub->dirY + cub->planeY * cub->cameraX;
-	cub->mapX = (int)cub->posX;
-	cub->mapY = (int)cub->posY;
-	if (cub->rayDirX == 0)
-		cub->deltaDistX = 1e30;
+	cub->camera_x = 2 * x / (double)SCREENWIDTH - 1;
+	cub->ray_dir_x = cub->dir_x + cub->plane_x * cub->camera_x;
+	cub->ray_dir_y = cub->dir_y + cub->plane_y * cub->camera_x;
+	cub->map_x = (int)cub->pos_x;
+	cub->map_y = (int)cub->pos_y;
+	if (cub->ray_dir_x == 0)
+		cub->delta_dist_x = 1e30;
 	else
-		cub->deltaDistX = fabs(1 / cub->rayDirX);
-	if (cub->rayDirY == 0)
-		cub->deltaDistY = 1e30;
+		cub->delta_dist_x = fabs(1 / cub->ray_dir_x);
+	if (cub->ray_dir_y == 0)
+		cub->delta_dist_y = 1e30;
 	else
-		cub->deltaDistY = fabs(1 / cub->rayDirY);
+		cub->delta_dist_y = fabs(1 / cub->ray_dir_y);
 }
 
 void	perform_ray_casting(int x, t_cub *cub)
 {
 	init_rays(x, cub);
-	if (cub->rayDirX < 0)
+	if (cub->ray_dir_x < 0)
 	{
-		cub->stepX = -1;
-		cub->sideDistX = (cub->posX - cub->mapX) * cub->deltaDistX;
+		cub->step_x = -1;
+		cub->side_dist_x = (cub->pos_x - cub->map_x) * cub->delta_dist_x;
 	}
 	else
 	{
-		cub->stepX = 1;
-		cub->sideDistX = (cub->mapX + 1.0 - cub->posX) * cub->deltaDistX;
+		cub->step_x = 1;
+		cub->side_dist_x = (cub->map_x + 1.0 - cub->pos_x) * cub->delta_dist_x;
 	}
-	if (cub->rayDirY < 0)
+	if (cub->ray_dir_y < 0)
 	{
-		cub->stepY = -1;
-		cub->sideDistY = (cub->posY - cub->mapY) * cub->deltaDistY;
+		cub->step_y = -1;
+		cub->side_dist_y = (cub->pos_y - cub->map_y) * cub->delta_dist_y;
 	}
 	else
 	{
-		cub->stepY = 1;
-		cub->sideDistY = (cub->mapY + 1.0 - cub->posY) * cub->deltaDistY;
+		cub->step_y = 1;
+		cub->side_dist_y = (cub->map_y + 1.0 - cub->pos_y) * cub->delta_dist_y;
 	}
 }
 
 void	init_direction(t_cub *cub, int direc)
 {
-	cub->dirX = 0;
-	cub->dirY = 0;
-	cub->planeX = 0;
-	cub->planeY = 0;
+	cub->dir_x = 0;
+	cub->dir_y = 0;
+	cub->plane_x = 0;
+	cub->plane_y = 0;
 	if (direc == 'N')
 	{
-		cub->dirY = -1;
-		cub->planeX = 0.66;
+		cub->dir_y = -1;
+		cub->plane_x = 0.66;
 	}
 	else if (direc == 'S')
 	{
-		cub->dirY = 1;
-		cub->planeX = -0.66;
+		cub->dir_y = 1;
+		cub->plane_x = -0.66;
 	}
 	else if (direc == 'E')
 	{
-		cub->dirX = 1;
-		cub->planeY = 0.66;
+		cub->dir_x = 1;
+		cub->plane_y = 0.66;
 	}
 	else if (direc == 'W')
 	{
-		cub->dirX = -1;
-		cub->planeY = 0.66;
+		cub->dir_x = -1;
+		cub->plane_y = 0.66;
 	}
 }

@@ -55,14 +55,14 @@ t_tex	*current_texture(t_cub *cub)
 
 	if (cub->side == 0)
 	{
-		if (cub->rayDirX > 0)
+		if (cub->ray_dir_x > 0)
 			tex = cub->south;
 		else
 			tex = cub->north;
 	}
 	else
 	{
-		if (cub->rayDirY > 0)
+		if (cub->ray_dir_y > 0)
 			tex = cub->east;
 		else
 			tex = cub->west;
@@ -80,18 +80,18 @@ void	draw_tex(int x, int start, int end, t_cub *cub)
 
 	tex = current_texture(cub);
 	if (cub->side == 0)
-		wall_x = cub->posY + cub->perpWallDist * cub->rayDirY;
+		wall_x = cub->pos_y + cub->perp_wall_dist * cub->ray_dir_y;
 	else
-		wall_x = cub->posX + cub->perpWallDist * cub->rayDirX;
+		wall_x = cub->pos_x + cub->perp_wall_dist * cub->ray_dir_x;
 	wall_x -= floor(wall_x);
 	tex_x = (int)(wall_x * (double)tex->wd);
-	if ((cub->side == 0 && cub->dirX < 0)
-		|| (cub->side == 1 && cub->dirY > 0))
+	if ((cub->side == 0 && cub->dir_x < 0)
+		|| (cub->side == 1 && cub->dir_y > 0))
 		tex_x = tex->wd - tex_x - 1;
 	while (start < end)
 	{
-		jump = tex->ht / cub->lineHeight;
-		tex_y = (start - (-cub->lineHeight / 2 + screenHeight / 2)) * jump;
+		jump = tex->ht / cub->line_height;
+		tex_y = (start - (-cub->line_height / 2 + SCREENHEIGHT / 2)) * jump;
 		color_pxl(x, start, get_texture_pixel(cub, tex_x, tex_y), cub);
 		start++;
 	}
