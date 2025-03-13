@@ -6,7 +6,7 @@
 /*   By: rcreer <rcreer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 17:54:28 by rcreer            #+#    #+#             */
-/*   Updated: 2025/03/06 18:13:13 by rcreer           ###   ########.fr       */
+/*   Updated: 2025/03/13 16:33:22 by rcreer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int	is_valid(t_parsing *parse)
 		return (0);
 }
 
-int	init_parse_struct(t_parsing **parse, char **av)
+int	init_parse_struct(t_parsing **parse)
 {
 	int	i;
 

@@ -6,7 +6,7 @@
 /*   By: rcreer <rcreer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 18:02:12 by rcreer            #+#    #+#             */
-/*   Updated: 2025/03/06 18:15:04 by rcreer           ###   ########.fr       */
+/*   Updated: 2025/03/13 16:33:44 by rcreer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,6 @@ void	free_data(t_parsing *parse)
 int	valid_cub_file(char *file_name)
 {
 	int		i;
-	char	buffer[1];
 	int		file_check;
 
 	i = -1;

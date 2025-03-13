@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maakhan <maakhan@student.42.fr>            +#+  +:+       +#+        */
+/*   By: rcreer <rcreer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 17:53:00 by rcreer            #+#    #+#             */
-/*   Updated: 2025/03/10 17:26:47 by maakhan          ###   ########.fr       */
+/*   Updated: 2025/03/13 16:34:07 by rcreer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ int	check_parse(t_parsing *parse, char *file)
 
 int	parse_init_save(t_parsing **parse, char **av)
 {
-	if (!init_parse_struct(parse, av))
+	if (!init_parse_struct(parse))
 		return (0);
 	if (!check_parse(*parse, av[1]))
 		return (0);
