@@ -69,7 +69,7 @@ int	valid_cub_file(char *file_name)
 		return (0);
 	else
 	{
-		if (!ft_strncmp(file_name + i, ".cub", 3))
+		if (!ft_strncmp(file_name + i, ".cub", 4))
 			return (1);
 		else
 		{

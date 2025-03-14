@@ -30,6 +30,7 @@ void	cub_spawner(t_cub *cub)
 
 void	cub_init(t_cub *cub, t_parsing *parse)
 {
+	cub->parse = parse;
 	cub_spawner(cub);
 	cub->connection = mlx_init();
 	cub->win = mlx_new_window(cub->connection, SCREENWIDTH,
@@ -46,7 +47,6 @@ void	cub_init(t_cub *cub, t_parsing *parse)
 	init_textures(cub, parse);
 	cub->floor = rgb_to_int(parse->rgb[0]);
 	cub->ceil = rgb_to_int(parse->rgb[1]);
-	cub->parse = parse;
 }
 
 int	cub_rendering(t_cub *cub)
