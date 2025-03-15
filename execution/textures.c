@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   textures.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rcreer <rcreer@student.42.fr>              +#+  +:+       +#+        */
+/*   By: maakhan <maakhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 18:02:12 by rcreer            #+#    #+#             */
-/*   Updated: 2025/03/06 18:15:04 by rcreer           ###   ########.fr       */
+/*   Updated: 2025/03/13 18:07:13 by maakhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 
 void	init_textures(t_cub *cub, t_parsing *parse)
 {
-	cub->west = get_texture(ft_strjoin("./", parse->textures[0]), cub);
-	cub->east = get_texture(ft_strjoin("./", parse->textures[1]), cub);
-	cub->north = get_texture(ft_strjoin("./", parse->textures[2]), cub);
-	cub->south = get_texture(ft_strjoin("./", parse->textures[3]), cub);
+	cub->north = get_texture(ft_strjoin("./", parse->textures[0]), cub);
+	cub->west = get_texture(ft_strjoin("./", parse->textures[1]), cub);
+	cub->south = get_texture(ft_strjoin("./", parse->textures[2]), cub);
+	cub->east = get_texture(ft_strjoin("./", parse->textures[3]), cub);
 }
 
 t_tex	*get_texture(char *path, t_cub *cub)

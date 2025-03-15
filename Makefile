@@ -36,18 +36,11 @@ SRC = 		main.c \
 
 OBJ = $(SRC:.c=.o)
 
-CC = cc -g3
+CC = cc
 CFLAGS = -Wall -Wextra -Werror
-MLX_FLAGS = -Lmlx -lmlx -framework OpenGL -framework AppKit -g3 -fsanitize=address
+MLX_FLAGS = -Lmlx -lmlx -framework OpenGL -framework AppKit
 
 all: $(NAME)
-
-# $(NAME): $(OBJ)
-# 	@echo "compiling..."
-# 	#@$(MAKE) all -C mlx
-# 	#$(MLX_FLAGS)
-# 	@$(CC) $(CFLAGS) $(OBJ) -o $(NAME)
-# 	@echo "Compilation finished: try: ./$(NAME)"
 
 $(NAME): $(OBJ)
 	@echo "compiling..."

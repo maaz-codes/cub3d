@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rcreer <rcreer@student.42.fr>              +#+  +:+       +#+        */
+/*   By: maakhan <maakhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 18:02:12 by rcreer            #+#    #+#             */
-/*   Updated: 2025/03/13 16:33:33 by rcreer           ###   ########.fr       */
+/*   Updated: 2025/03/13 17:51:23 by maakhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -193,7 +193,6 @@ int					rgb_check(t_parsing *parse, int *valid);
 int					is_valid(t_parsing *parse);
 void				print_rgb_map(t_parsing *parse);
 void				get_player_modif_map(t_parsing *parse);
-void				print_info(t_parsing *parse, char **av);
 void				print_rgb_map(t_parsing *parse);
 int					valid_xpm_file(t_parsing *parse);
 int					valid_cub_file(char *file_name);
@@ -214,7 +213,7 @@ int					valid_nsew(char **map, int row, int i);
 
 // main.c
 void				cub_spawner(t_cub *cub);
-void				cub_init(t_cub *cub, t_parsing *parse);
+void				cub_init(t_cub *cub, t_parsing **parse);
 int					cub_rendering(t_cub *cub);
 int					handle_key_event(int keycode, t_cub *cub);
 

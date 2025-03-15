@@ -3,42 +3,30 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rcreer <rcreer@student.42.fr>              +#+  +:+       +#+        */
+/*   By: maakhan <maakhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 17:53:00 by rcreer            #+#    #+#             */
-/*   Updated: 2025/03/13 16:34:07 by rcreer           ###   ########.fr       */
+/*   Updated: 2025/03/13 17:31:28 by maakhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
 
-void	print_info(t_parsing *parse, char **av)
-{
-	printf("%s %s VALID\n\n", av[0], av[1]);
-	printf("NO %s\n", parse->textures[0]);
-	printf("SO %s\n", parse->textures[1]);
-	printf("WE %s\n", parse->textures[2]);
-	printf("EA %s\n", parse->textures[3]);
-	printf("\n");
-	print_rgb_map(parse);
-	printf("\n");
-}
-
 int	check_parsing(t_parsing *parse, int *texture_count, int *rgb_count)
 {
 	if (!parse_map(parse))
 	{
-		printf("Invalid Map\n");
+		write(2, "Invalid Map\n", 13);
 		return (0);
 	}
 	if (!check_txt(parse, &(*texture_count), -1, -1))
 	{
-		printf("Invalid Textures/RGB\n");
+		write(2, "Invalid Textures/RGB\n", 22);
 		return (0);
 	}
 	if (!rgb_check(parse, &(*rgb_count)))
 	{
-		printf("Invalid RGB\n");
+		write(2, "Invalid RGB\n", 13);
 		return (0);
 	}
 	return (1);
@@ -87,7 +75,6 @@ int	parse_init_save(t_parsing **parse, char **av)
 		printf("Invalid RGB\n");
 		return (0);
 	}
-	print_info(*parse, av);
 	get_player_modif_map(*parse);
 	return (1);
 }
